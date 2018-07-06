@@ -1,31 +1,54 @@
 import React from 'react';
-import { Container, Row, Col, Button, Input } from 'mdbreact';
+import { Container, Row, Col, Button, input } from 'mdbreact';
+import { Link } from 'react-router-dom';
 
-// 
+// Edit code to prepopulate fields with values if updating
 
 const createEvent = () => {
     return (
         <Container>
+            <h1>Create Event</h1>
             <Row>
                 <Col md="1" />
-                <Col md="10">
-                    <form>
-                        <p className="h5 text-center mb-4">Create Event</p>
-                        <div className="grey-text">
-                            <Input label="Event Name" id="eventName "type="text" validate error="wrong" success="right" />
-                            {/* figure out how to fix the styling issues */}
-                            <Input label="Event Date"
-                             id="eventDate" type="date" validate error="wrong" success="right" />
-                             <Input label="Event Time"id="eventTime" type="time" validate error="wrong" success="right" />
-                            <Input label="Event Address" id="eventAddress" type="text" validate error="wrong" success="right" />
-                            <Input type="textarea" label="Event Description" id="eventDescription" validate error="wrong" success="right"/>
-                            <Input type="textarea" label="Event Tournament Scoring" id="eventScoring" validate error="wrong" success="right"/>
-                            {/* adjust styling issues */}
-                            <Input type="file" lable="Event Image" id="eventImage" validate error="wrong" success="right"/>
+                <Col md="10 text-left">
+                    <form className="grey-text">
+                        <div className="form-group">
+                            <label htmlFor="eventName">Event Name</label>
+                            <input type="text" className="form-control" id="eventName" placeholder="Enter Event Name" />
                         </div>
-                        <div className="text-center">
-                            <Button className="btn-block">Create Event</Button>
+                        <div className="form-group">
+                            <label htmlFor="eventDate">Event Date</label>
+                            <input type="date" className="form-control" id="eventDate" />
                         </div>
+                        <div className="form-group">
+                            <label htmlFor="eventTime">Event Time</label>
+                            <input type="time" className="form-control" id="eventTime" />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="eventAddress">Event Address</label>
+                            <input type="text" className="form-control" id="eventAddress" placeholder="Enter Event Address" />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="eventDescription">Event Description</label>
+                            <textarea className="form-control" id="eventDescription" rows="3" placeholder="Enter Event Description"></textarea>
+                        </div>
+                        <div className="custom-file mb-3">
+                            <label class="custom-file-label" htmlFor="eventImage">Upload Event Image</label>
+                            <input type="file" className="custom-file-input" id="eventImage" accept="image/png, image/jpeg" />
+                        </div>
+                        <div className="custom-file mb-3">
+                            <label class="custom-file-label" htmlFor="eventMap">Upload Event Map</label>
+                            <input type="file" className="custom-file-input" id="eventMap" accept="image/png, image/jpeg" />
+                        </div>
+                        <br />
+                        <Row>
+                            <Col>
+                                <Button className="btn-block">Preview Event</Button>
+                            </Col>
+                            <Col>
+                                <Link to="/admin"><Button className="btn-block">Create Event</Button></Link>
+                            </Col>
+                        </Row>
                     </form>
                 </Col>
             </Row>

@@ -10,17 +10,23 @@ import EventPage from '../components/ClientComponents/EventPage/EventPage';
 import AdminDashboard from '../components/AdminComponents/Dashboard/Dashboard';
 import AdminCreateEvent from '../components/AdminComponents/CreateEvent/CreateEvent';
 import AdminCreateProduct from '../components/AdminComponents/CreateProduct/CreateProduct';
+import AdminCreateSponsor from '../components/AdminComponents/CreateSponsor/CreateSponsor';
 import AdminProductList from '../components/AdminComponents/ProductList/ProductList';
+import AdminSponsorList from '../components/AdminComponents/SponsorList/SponsorList';
 import AdminParticipantList from '../components/AdminComponents/ParticipantList/ParticipantList';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Container } from 'mdbreact';
 class App extends Component {
   render() {
-
+    const style={
+      width:'100%'
+    }
     return (
       <div className="App">
         <Router>
           <div>
+            {/* Optional header image here. The navbar will stick to the top when we scroll past the image. */}
+            <img style={style} src="https://fixcom.azureedge.net/assets/content/14243/view-from-below-header.png" alt="Fishing Rod Header"/>
             <Header />
             <Container>
               <Switch>
@@ -31,7 +37,9 @@ class App extends Component {
                 <Route path='/event' component={EventPage} />
                 <Route path='/admin/createEvent' component={AdminCreateEvent} />
                 <Route path='/admin/createProduct' component ={AdminCreateProduct} />
+                <Route path='/admin/createSponsor' component ={AdminCreateSponsor} />
                 <Route path='/admin/product' component ={AdminProductList} />
+                <Route path='/admin/sponsor' component ={AdminSponsorList} />
                 <Route path='/admin/participant' component ={AdminParticipantList} />
                 <Route path='/admin' component={AdminDashboard} />
               </Switch>

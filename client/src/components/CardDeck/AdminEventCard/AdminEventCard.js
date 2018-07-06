@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Button, Col, Card, CardBody, CardImage, CardTitle, CardText } from 'mdbreact';
+import { Row, button, Col, Card, CardBody, CardImage, CardTitle, CardText } from 'mdbreact';
 import { Link } from 'react-router-dom';
 class AdminEventCard extends Component {
 
@@ -16,23 +16,23 @@ class AdminEventCard extends Component {
                         <CardText className="text-center">Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
                         <Row>
                             <Col md="4">
-                                <Link to="/admin/product"><Button className="btn-sm btn-primary">Products</Button> </Link>
+                                <Link to="/admin/product"><button className="btn p-1 m-1 btn-block btn-primary">Products</button> </Link>
                             </Col>
                             <Col md="4">
-                                <Link to="/admin/participant"><Button className="btn-sm btn-default">Participants</Button> </Link>
+                                <Link to="/admin/participant"><button className="btn p-1 m-1 btn-block btn-default">Participants</button> </Link>
                             </Col>
                             <Col md="4">
-                                <Link to="/admin/sponsor"><Button className="btn-sm btn-secondary">Sponsors</Button> </Link>
+                                <Link to="/admin/sponsor"><button className="btn p-1 m-1 btn-block btn-secondary">Sponsors</button> </Link>
                             </Col>
                             <Col md="4">
-                                <Link to="/admin/orders"><Button className="btn-sm btn-primary">Orders</Button> </Link>
+                                <Link to="/admin/orders"><button className="btn p-1 m-1 btn-block btn-primary">Orders</button> </Link>
                             </Col>
                             <Col md="4">
-                                <Link to="/admin/event/edit"><Button className="btn-sm btn-default">Edit Event</Button> </Link>
+                                <Link to="/admin/event/edit"><button className="btn p-1 m-1 btn-block btn-default">Update</button> </Link>
                             </Col>
                             <Col md="4">
                             {/* Add functionality to handle the button click */}
-                                <Button className="btn-sm btn-secondary">Delete Event</Button>
+                                <button className="btn p-1 m-1 btn-block btn-secondary">Delete</button>
                             </Col>
                         </Row>
                     </CardBody>
