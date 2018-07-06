@@ -1,6 +1,7 @@
 import React from 'react';
 import CardDeck from '../../../CardDeck/CardDeck';
 import SponsorCard from '../../../CardDeck/SponsorCard/SponsorCard';
+
 const eventSponsors = () => {
     return (
         <div>
