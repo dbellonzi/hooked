@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Button, input } from 'mdbreact';
+import { Container, Row, Col, Button } from 'mdbreact';
 import { Link } from 'react-router-dom';
 
 // Edit code to prepopulate fields with values if updating
