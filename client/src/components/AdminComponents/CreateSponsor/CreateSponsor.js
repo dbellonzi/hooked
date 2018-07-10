@@ -11,7 +11,7 @@ const CreateSponsor = () => {
                 <Col md="1" />
                 <Col md="10 text-left">
                     <form>
-                    <div class="form-group">
+                    <div className="form-group">
                             <label htmlFor="sponsorName">Sponsor Name</label>
                             <input type="text" class="form-control" id="sponsorName" placeholder="Enter Sponsor Name" />
                         </div>
