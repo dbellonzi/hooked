@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Button, Input } from 'mdbreact';
+import { Container, Row, Col, Button } from 'mdbreact';
 
 // Edit code to prepopulate fields with values if updating
 

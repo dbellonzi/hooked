@@ -19,7 +19,7 @@ const sponsorList = () => {
                 <SponsorCard />
             </CardDeck>
             <hr/>
-            <Link to="/admin/createSponsor"><button className="btn btn-primary">Add Sponsor</button></Link>
+            <Link to="/admin/createSponsor"><Button className="btn btn-primary">Add Sponsor</Button></Link>
         </Container>
     );
 }

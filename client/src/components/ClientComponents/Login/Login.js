@@ -1,35 +1,103 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Button } from 'mdbreact';
 import { Link } from 'react-router-dom';
+import Form from '../../Form/Form';
+// Login Component needs to be able to pull data from the database to validate an authorized user login.
+// Currently, validations for this login component only check for valid form inputs
+
 class Login extends Component {
-    // Remember to add state here for the applicable fields
+    state = {
+        showFormSuccess: false,
+        touched: {
+            email: false,
+            password: false
+        },
+        errors: {
+            email: false,
+            password: true
+        }
+    }
+
+    // This method is the one that should handle the form sumbits.
+    // Typically, it will send the form data with an ajax call to the server. IN REACT, YOU USUALLY USE THE AXIOS LIB FOR THAT
+    submit = () => {
+        // Replace this code with a working request to the backend when ready
+        // Currently it just displays a success message
+        this.setState({ showFormSuccess: true });
+        setTimeout(() => { this.setState({ showFormSuccess: false }); }, 5000)
+    }
+
+    _renderSuccessMessage() {
+        return (
+            <div className={"alert alert-success mt-4"} role="alert">
+                <p>Form was successfully validated and is ready to be submitted</p>
+            </div>
+        )
+    }
+
+    handleBlur = (field) => (evt) => {
+        this.setState({
+            touched: { ...this.state.touched, [field]: true },
+        });
+    }
+
     render() {
-        // Remember to add logic here to handle the form changes and for validations
+        const shouldMarkError = (field) => {
+            const hasError = this.state.errors[field];
+            const shouldShow = this.state.touched[field];
+            return hasError ? shouldShow : false;
+        };
         return (
             <Container>
                 <h1>Sign In</h1>
                 <Row>
                     <Col md="1" />
                     <Col md="10 text-left">
-                        <form className="grey-text">
-                            <div className="form-group">
-                                <label htmlFor="email">Email</label>
-                                <input type="email" className="form-control" id="email" placeholder="Enter Your Email" />
+                        <Form submit={this.submit}>
+                            <div className={"form-group"}>
+                                <label htmlFor={"email"}>Email</label>
+                                <input
+                                    id={"email"}
+                                    className={"form-control"}
+                                    required={true}
+                                    name={"email"}
+                                    type={"email"}
+                                    placeholder={"Enter Email"}
+                
+                                    onBlur={this.handleBlur('email')}
+                                />
+                                <div className="invalid-feedback" />
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="password">Password</label>
-                                <input type="password" className="form-control" id="password" placeholder="Enter Your Password" />
+                            <div className={"form-group"}>
+                                <label htmlFor={"password"}>Password</label>
+                                <input
+                                    id={"password"}
+                                    className={"form-control"}
+                                    required={true}
+                                    name={"password"}
+                                    type={"password"}
+                                    placeholder={"Enter Password"}
+                                    minLength={6}
+                                    pattern="(?=.*\d)(?=.*[a-z]).{6,}"
+                        
+                                    onBlur={this.handleBlur('email')}
+                                />
+                                <div className="invalid-feedback" />
                             </div>
-                                <Button className="btn-block">Login</Button>
-                            <br />
-                            <div className="text-center">
+                            <div className={"row justify-content-md-center"}>
+                                <div className={"col-sm-12"}>
+                                    <Button type={"submit"} className={"btn btn-primary btn-block"}>Login</Button>
+                                </div>
+                            </div>
+                        </Form>
+                        <div className="text-center mt-4">
                             <p>Not a registered user? | <Link to="/register"> Register here</Link></p>
                             <p>Forgot password? | <Link to="/resetpassword"> Reset password</Link></p>
-                            </div>
-                        </form>
+                        </div>
+                        {this.state.showFormSuccess ? this._renderSuccessMessage() : null}
                     </Col>
-                </Row>
-            </Container>
+                </Row >
+            </Container >
         );
     }
 };
