@@ -1,28 +1,19 @@
 const express = require ('express')
-const app = express ();
-const mysql = require('mysql');
-const session = require ('express-session');
-const path = require('path');
+const app = express ()
+// const mysql = require('mysql2')
+// const Sequelize = require('sequelize')
+const session = require ('express-session')
+const path = require('path')
 const bodyParser = require('body-parser')
+// const db = require('./config/db.config.js')
+const port = process.env.PORT || 3000;
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-const port = process.env.PORT || 3000;
-// var path = require('path')
 app.use(express.static(path.join(__dirname, "client/build/")));
+app.use(require('./routes/routes.js'))
 
-var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'hookeddb'
-})
-// creates the connection to the mysql workbench database
 
-connection.connect(function(err) {
-  if (err) throw err
-  console.log('You are now connected...')
-})
-//makes the connection to the mysql server 
 
 app.all("*", (req, res) => {
   res.sendFile(path.resolve("../client/build/index.html"));
