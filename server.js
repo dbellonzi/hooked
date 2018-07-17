@@ -1,11 +1,8 @@
 const express = require ('express')
 const app = express ()
-// const mysql = require('mysql2')
-// const Sequelize = require('sequelize')
 const session = require ('express-session')
 const path = require('path')
 const bodyParser = require('body-parser')
-// const db = require('./config/db.config.js')
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({extended: true}));

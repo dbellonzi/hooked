@@ -32,7 +32,7 @@ db.event = require ('../models/event.model.js')(connection, Sequelize);
 db.product = require ('../models/product.model.js')(connection, Sequelize);
 db.user = require ('../models/user.model.js')(connection,Sequelize);
 db.order = require ('../models/order.model.js')(connection, Sequelize);
-
+db.sponsor = require ('../models/sponsor.model.js')(connection, Sequelize);
 // import project models here
 
 

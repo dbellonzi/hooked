@@ -52,7 +52,15 @@ router.post('/api/users', (req,res)=>{
     })
 })
 
-router.get('/api/eventsall' ,(req, res) =>{
+router.get('/api/sponsor/all' ,(req, res) =>{
+    db.sponsor.findAll(). then((sponsor)=>{
+        res.json(sponsor)
+    }).catch((err)=>{
+        res.send(500).send({error:'could not retrieve sponsors'})
+    })
+})
+
+router.get('/api/events/all' ,(req, res) =>{
     db.product.findAll(). then((products)=>{
         res.json(events)
     }).catch((err)=>{
@@ -62,7 +70,7 @@ router.get('/api/eventsall' ,(req, res) =>{
 
 //creates user and puts into the database
 
-router.get('/api/productsall' ,(req, res) =>{
+router.get('/api/products/all' ,(req, res) =>{
     db.product.findAll(). then((products)=>{
         res.json(products)
     }).catch((err)=>{
@@ -72,12 +80,49 @@ router.get('/api/productsall' ,(req, res) =>{
 
 // retrieves all users from database
 
-router.get('/api/usersall' ,(req, res) =>{
+router.get('/api/users/all' ,(req, res) =>{
     db.user.findAll(). then((users)=>{
         res.json(users)
     }).catch((err)=>{
         res.send(500).send({error:'could not retrieve user'})
     })
 })
+
+router.delete('/api/product/:id', (req,res)=>{
+    const id = req.params.id;
+    db.product.destory({
+        where:{id:id}
+    }).then(deleteproduct =>{
+        res.json(deleteproduct)
+    }).catch((err)=>{
+        res.send(500).send({error:'could not delete product'})
+    })
+})
+// deletes instance of a product
+
+router.delete('/api/event/:id', (req,res)=>{
+    const id = req.params.id;
+    db.event.destory({
+        where:{id:id}
+    }).then(deleteEvent =>{
+        res.json(deleteEvent)
+    }).catch((err)=>{
+        res.send(500).send({error:'could not delete Event'})
+    })
+})
+// delete instance of and event
+
+router.delete('/api/sponsor/:id', (req,res)=>{
+    const id = req.params.id;
+    db.sponsor.destory({
+        where:{id:id}
+    }).then(sponsor =>{
+        res.json(sponsor)
+    }).catch((err)=>{
+        res.send(500).send({error:'could not delete Sponsor'})
+    })
+})
+
+// Still need to create the UPDATE ROUTES
 
 module.exports = router;
