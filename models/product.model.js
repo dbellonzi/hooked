@@ -12,7 +12,7 @@ module.exports =(connection, Sequelize) =>{
         size:{
             type: Sequelize.ENUM('X-Small','Small','Medium','Large','X-Large','2X-Large')
         },
-        productimage: {
+        product_image: {
             type:Sequelize.BLOB
         }
     })

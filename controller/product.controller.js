@@ -11,9 +11,11 @@ exports.findAll =(req, res) =>{
 
 exports.create =(req,res)=>{
     product.create({
-        productname: req.body.productname,
-        productdescription: req.body.productdescription,
-        productimage: req.body.productimage,
+        product_name: req.body.productname,
+        product_description: req.body.productdescription,
+        product_image: req.body.productimage,
+        size: req.body.size,
+        price: req.body.price,
     }). then((product)=>{
         res.json(product)
     }). catch((err)=>{

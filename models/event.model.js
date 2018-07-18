@@ -4,23 +4,20 @@ module.exports = (connection, Sequelize) =>{
             type: Sequelize.STRING,
             allowNull: false,
         },
+        date:{
+            type: Sequelize.DATE
+        },
+        time:{
+            type: Sequelize.TIME
+        },
+        location:{
+            type: Sequelize.STRING,
+        },
         description:{
             type: Sequelize.STRING
         },
         event_photo:{
             type: Sequelize.BLOB,
-        },
-        location:{
-            type: Sequelize.STRING,
-        },
-        time:{
-            type: Sequelize.TIME
-        },
-        date:{
-            type: Sequelize.DATE
-        },
-        details:{
-            type: Sequelize.STRING
         },
         map_photo:{
             type: Sequelize.BLOB

@@ -3,13 +3,11 @@ const db = require('../config/db.config.js')
 exports.create =(req, res)=>{
     db.event.create({
         title:req.body.title,
+        date: req.body.date,
+        time: req.body.time,
+        location: req.body.location,
         description: req.body.description,
         event_photo: req.body.event_photo,
-        location: req.body.event_photo,
-        location: req.body.location,
-        time: req.body.time,
-        date: req.body.date,
-        details: req.body.details,
         map_photo: req.body.map_photo,
     }). then((event)=>{
         res.json(event)

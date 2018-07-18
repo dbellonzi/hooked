@@ -10,22 +10,22 @@ const createProduct = () => {
             <Row>
                 <Col md="1" />
                 <Col md="10 text-left">
-                    <form className="grey-text" method="post">
+                    <form className="grey-text" method="post" action="/api/products">
                         <div class="form-group">
                             <label htmlFor="productName">Product Name</label>
-                            <input type="text" class="form-control" id="productName" placeholder="Enter Product Name" />
+                            <input type="text" class="form-control" id="productName" placeholder="Enter Product Name" name="productname" />
                         </div>
                         <div className="form-group">
                             <label htmlFor="productDescription">Product Description</label>
-                            <textarea className="form-control" id="productDescription" rows="3" placeholder="Enter Product Description"></textarea>
+                            <textarea className="form-control" id="productDescription" rows="3" placeholder="Enter Product Description" name="productdescription" ></textarea>
                         </div>
                         <div class="form-group">
                             <label htmlFor="productPrice">Product Price</label>
-                            <input type="text" class="form-control" id="productPrice" placeholder="Enter Product Price" />
+                            <input type="text" class="form-control" id="productPrice" placeholder="Enter Product Price" name="price"  />
                         </div>
                         <div class="form-group">
                             <label for="productSize">Product Size</label>
-                            <select class="form-control" id="productSize">
+                            <select class="form-control" id="productSize" name="size">
                                 <option value="one-size">One Size</option>
                                 <option value="x-small">X-Small</option>
                                 <option value="small">Small</option>
@@ -37,7 +37,7 @@ const createProduct = () => {
                         </div>
                         <div className="custom-file mb-3">
                             <label class="custom-file-label" htmlFor="productImage">Upload Product Image</label>
-                            <input type="file" className="custom-file-input" id="productImage" accept="image/png, image/jpeg"/>
+                            <input type="file" className="custom-file-input" id="productImage" accept="image/png, image/jpeg" name="productimage" />
                         </div>
                         <div className="text-center mt-2">
                             <Button className="btn-block" type="submit">Create Product</Button>
