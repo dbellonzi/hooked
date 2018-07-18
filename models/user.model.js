@@ -1,7 +1,7 @@
 
 module.exports = (connection, Sequelize) =>{
     const User = connection.define('user', {
-        first_tname: {
+        first_name: {
             type: Sequelize.STRING
         },
         last_name:{
@@ -14,7 +14,7 @@ module.exports = (connection, Sequelize) =>{
         phone_number:{
             type: Sequelize.INTEGER
         },
-        username:{
+        user_name:{
             type: Sequelize.STRING
         },
         password:{
