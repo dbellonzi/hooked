@@ -13,21 +13,20 @@ const order = require('../controller/order.controller');
 router.post('/api/events', event.create);
 router.post('/api/products', product.create);
 router.post('/api/users', user.create);
-router.post('/api/sponors', sponor.create)
-router.post('/api/orders', order.create)
+router.post('/api/sponors', sponsor.create);
+router.post('/api/orders', order.create);
 
-router.get('/api/sponsor/all' , sponsor.findAll)
+router.get('/api/sponsor/all' , sponsor.findAll);
 router.get('/api/events/all', event.findAll);
-router.get('/api/products/all', product.findAll)
+router.get('/api/products/all', product.findAll);
 router.get('/api/users/all' , user.findAll);
 router.get('/api/orders/all' , order.findAll);
 
-
-router.delete('/api/user/:id', user.delete)
-router.delete('/api/product/:id', product.delete)
-router.delete('/api/event/:id', event.delete)
-router.delete('/api/sponsor/:id', sponsor.delete)
-router.delete('/api/order/:id', order.delete)
+router.delete('/api/user/:id', user.delete);
+router.delete('/api/product/:id', product.delete);
+router.delete('/api/event/:id', event.delete);
+router.delete('/api/sponsor/:id', sponsor.delete);
+router.delete('/api/order/:id', order.delete);
 
 // Still need to create the UPDATE ROUTES
 // Still need to make individual query to database 

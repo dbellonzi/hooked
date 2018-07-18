@@ -10,7 +10,7 @@ const createProduct = () => {
             <Row>
                 <Col md="1" />
                 <Col md="10 text-left">
-                    <form className="grey-text">
+                    <form className="grey-text" method="post">
                         <div class="form-group">
                             <label htmlFor="productName">Product Name</label>
                             <input type="text" class="form-control" id="productName" placeholder="Enter Product Name" />
@@ -40,7 +40,7 @@ const createProduct = () => {
                             <input type="file" className="custom-file-input" id="productImage" accept="image/png, image/jpeg"/>
                         </div>
                         <div className="text-center mt-2">
-                            <Button className="btn-block">Create Product</Button>
+                            <Button className="btn-block" type="submit">Create Product</Button>
                         </div>
                     </form>
                 </Col>

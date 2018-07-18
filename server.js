@@ -11,7 +11,6 @@ app.use(express.static(path.join(__dirname, "client/build/")));
 app.use(require('./routes/routes.js'))
 
 
-
 app.all("*", (req, res) => {
   res.sendFile(path.resolve("../client/build/index.html"));
 });

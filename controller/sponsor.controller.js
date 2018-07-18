@@ -1,7 +1,7 @@
 const db = require('../config/db.config.js')
 const sponsor = db.sponsor
 
-exports.findALL =(req, res) =>{
+exports.findAll =(req, res) =>{
     sponsor.findAll(). then((sponsor)=>{
         res.json(sponsor)
     }).catch((err)=>{
