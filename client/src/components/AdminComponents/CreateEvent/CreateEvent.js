@@ -137,6 +137,7 @@ class CreateEvent extends Component {
             </Container>
         );
     }
+
 }
 
 export default CreateEvent;
