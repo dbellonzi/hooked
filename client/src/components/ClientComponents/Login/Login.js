@@ -11,10 +11,6 @@ class Login extends Component {
         touched: {
             email: false,
             password: false
-        },
-        errors: {
-            email: false,
-            password: true
         }
     }
 
@@ -42,11 +38,6 @@ class Login extends Component {
     }
 
     render() {
-        const shouldMarkError = (field) => {
-            const hasError = this.state.errors[field];
-            const shouldShow = this.state.touched[field];
-            return hasError ? shouldShow : false;
-        };
         return (
             <Container>
                 <h1>Sign In</h1>
@@ -63,8 +54,6 @@ class Login extends Component {
                                     name={"email"}
                                     type={"email"}
                                     placeholder={"Enter Email"}
-                
-                                    onBlur={this.handleBlur('email')}
                                 />
                                 <div className="invalid-feedback" />
                             </div>
@@ -79,8 +68,6 @@ class Login extends Component {
                                     placeholder={"Enter Password"}
                                     minLength={6}
                                     pattern="(?=.*\d)(?=.*[a-z]).{6,}"
-                        
-                                    onBlur={this.handleBlur('email')}
                                 />
                                 <div className="invalid-feedback" />
                             </div>
