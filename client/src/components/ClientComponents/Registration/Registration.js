@@ -42,112 +42,6 @@ class Registration extends Component {
         <Row>
           <Col md="1" />
           <Col md="10 text-left">
-            {/* <form
-              method="post"
-              name="userRegistrationForm"
-              // There is a warning because of something here.
-              // Warning: Received `true` for a non-boolean attribute `input`
-              onSubmit={() => this.submituserRegistrationForm}
-              action="/users"
-            >
-              <div className="form-group">
-                <label htmlFor="fname">First Name</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  id="fname"
-                  name="firstname"
-                  placeholder="Enter First Name"
-                  value={this.state.fields.firstname}
-                  onChange={() => this.handleChange()} />
-              </div>
-              <div className="errorMsg red-text">{this.state.errors.firstname}</div>
-
-              <div className="form-group">
-                <label htmlFor="lname">Last Name</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  id="lname"
-                  name="lastname"
-                  placeholder="Enter Last Name"
-                  value={this.state.fields.lastname}
-                  onChange={() => this.handleChange()} />
-              </div>
-              <div className="errorMsg red-text">{this.state.errors.lastname}</div>
-
-              <div className="form-group">
-                <label htmlFor="username">Username</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  id="username"
-                  name="username"
-                  placeholder="Enter User Name"
-                  value={this.state.fields.username}
-                  onChange={() => this.handleChange()} />
-              </div>
-              <div className="errorMsg red-text">{this.state.errors.username}</div>
-
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input
-                  className="form-control"
-                  type="email"
-                  id="email"
-                  name="emailid"
-                  placeholder="Enter Email"
-                  value={this.state.fields.emailid}
-                  onChange={() => this.handleChange()} />
-              </div>
-              <div className="errorMsg red-text">{this.state.errors.emailid}</div>
-
-              <div className="form-group">
-                <label htmlFor="phoneNumber">Phone Number</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  id="phoneNumber"
-                  name="mobileno"
-                  placeholder="Enter Phone Number"
-                  value={this.state.fields.mobileno}
-                  onChange={() => this.handleChange()} />
-              </div>
-              <div className="errorMsg red-text">{this.state.errors.mobileno}</div>
-
-              <div className="form-group">
-                <label htmlFor="pw">Password</label>
-                <input
-                  className="form-control"
-                  type="password"
-                  id="pw"
-                  name="password"
-                  placeholder="Enter Password"
-                  value={this.state.fields.password}
-                  onChange={() => this.handleChange()} />
-              </div>
-              <div className="errorMsg red-text">{this.state.errors.password}</div>
-
-
-              <div className="form-group">
-                <label htmlFor="passwordConfirm">Password Confirmation</label>
-                <input
-                  className="form-control"
-                  type="password"
-                  id="passwordConfirm"
-                  placeholder="Enter Password Confirmation"
-                // value={this.state.fields.password}
-                // onChange={()=>this.handleChange()} 
-                />
-              </div>
-
-              <Button input type="submit" value="Register" className="btn-block">Register</Button>
-              <br />
-              <div className="text-center">
-                <p>Already a registered user? | <Link to="/login"> Login here</Link></p>
-              </div>
-            </form> */}
-
             <Form submit={this.submit}>
               <div className="form-group">
                 <label htmlFor="fName">First Name</label>
@@ -204,7 +98,7 @@ class Registration extends Component {
                 />
                 <div className="invalid-feedback" />
               </div>
-
+              {/* tel input type selects a different input keyboard but does not include automatic pattern matching  */}
               <div className={"form-group"}>
                 <label htmlFor={"phone"}>Phone Number</label>
                 <input
@@ -212,7 +106,7 @@ class Registration extends Component {
                   className={"form-control"}
                   required={true}
                   name={"phone"}
-                  type={"text"}
+                  type={"tel"}
                   placeholder={"Enter Phone Number"}
                   minLength={7}
                   pattern="(?=.*\d).{7,}"
