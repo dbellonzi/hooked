@@ -1,120 +1,40 @@
-import React, { Component }from 'react';
+import React, { Component } from 'react';
 import { Container, Row, Col, Button } from 'mdbreact';
 import { Link } from 'react-router-dom';
-
-// This is a functional component and does not have access to state. If this component needs access to state then it needs to be changed to a stateful component
-
-// We still need to add logic into this component to handle validations and process input
-
+import Form from '../../Form/Form';
 class Registration extends Component {
-  constructor() {
-    super();
-    this.state = {
-      fields: {},
-      errors: {}
-    }
-
-    this.handleChange = this.handleChange.bind(this);
-    this.submituserRegistrationForm = this.submituserRegistrationForm.bind(this);
-
-  };
-
-  handleChange(e) {
-    let fields = this.state.fields;
-    fields[e.target.name] = e.target.value;
-    this.setState({
-      fields
-    });
-
+  state = {
+    showFormSuccess: false,
   }
 
-  submituserRegistrationForm(e) {
-    e.preventDefault();
-    if (this.validateForm()) {
-      let fields = {};
-      fields["firstname"] = "";
-      fields["lasttname"] = "";
-      fields["username"] = "";
-      fields["emailid"] = "";
-      fields["mobileno"] = "";
-      fields["password"] = "";
-      this.setState({ fields: fields });
-      alert("Form submitted");
+  // This method is the one that should handle the form sumbits.
+  // Typically, it will send the form data with an ajax call to the server. IN REACT, YOU USUALLY USE THE AXIOS LIB FOR THAT
+  submit = () => {
+    // Replace this code with a working request to the backend when ready
+    // Currently it just displays a success message
+    this.setState({ showFormSuccess: true });
+    setTimeout(() => { this.setState({ showFormSuccess: false }); }, 5000)
+  }
+
+  _renderSuccessMessage() {
+    return (
+      <div className={"alert alert-success mt-4"} role="alert">
+        <p>Form was successfully validated and is ready to be submitted</p>
+      </div>
+    )
+  }
+
+  // This gets called on input change to set our custom password match validation
+  checkPasswordMatch(e) {
+    let password = document.getElementById('password').value;
+    if (e.target.value !== password) {
+      e.target.setCustomValidity("Password confirmation must match password.")
+    } else {
+      // input is valid -- reset the error message
+      e.target.setCustomValidity("");
     }
   }
 
-  validateForm() {
-
-    let fields = this.state.fields;
-    let errors = {};
-    let formIsValid = true;
-
-    if (document.getElementById('fname').value.length < 2) {
-      formIsValid = false;
-      errors["firstname"] = "*Please enter a first name with at least 2 characters"
-    }
-
-    if (document.getElementById('lname').value.length < 2) {
-      formIsValid = false;
-      errors["lastname"] = "*Please enter a last name with at least 2 characters"
-    }
-
-    if (!fields["username"]) {
-      formIsValid = false;
-      errors["username"] = "*Please enter a username.";
-    }
-
-    // if (typeof fields["username"] !== "undefined") {
-    //   if (!fields["username"].match(/^[a-zA-Z ]*$/)) {
-    //     formIsValid = false;
-    //     errors["username"] = "*Please enter alphabet characters only.";
-    //   }
-    // }
-
-    if (!fields["emailid"]) {
-      formIsValid = false;
-      errors["emailid"] = "*Please enter your email-ID.";
-    }
-
-    if (typeof fields["emailid"] !== "undefined") {
-      //regular expression for email validation
-      var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
-      if (!pattern.test(fields["emailid"])) {
-        formIsValid = false;
-        errors["emailid"] = "*Please enter valid email-ID.";
-      }
-    }
-
-    if (!fields["mobileno"]) {
-      formIsValid = false;
-      errors["mobileno"] = "*Please enter your mobile no.";
-    }
-
-    if (typeof fields["mobileno"] !== "undefined") {
-      if (!fields["mobileno"].match(/^[0-9]{10}$/)) {
-        formIsValid = false;
-        errors["mobileno"] = "*Please enter valid mobile no.";
-      }
-    }
-
-    if (!fields["password"]) {
-      formIsValid = false;
-      errors["password"] = "*Please enter your password.";
-    }
-
-    if (typeof fields["password"] !== "undefined") {
-      if (!fields["password"].match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)) {
-        formIsValid = false;
-        errors["password"] = "*Must contain 1 capital letter and numeric number.";
-      }
-    }
-
-    this.setState({
-      errors: errors
-    });
-    return formIsValid;
-
-  }
   render() {
     return (
       <Container>
@@ -122,106 +42,120 @@ class Registration extends Component {
         <Row>
           <Col md="1" />
           <Col md="10 text-left">
-            <form method="post" name="userRegistrationForm" onSubmit={this.submituserRegistrationForm} action="/users" >
+            <Form submit={this.submit}>
               <div className="form-group">
-                <label htmlFor="fname">First Name</label>
+                <label htmlFor="fName">First Name</label>
                 <input
+                  id="fName"
                   className="form-control"
+                  required={true}
                   type="text"
-                  id="fname"
-                  name="firstname"
+                  name="fName"
                   placeholder="Enter First Name"
-                  value={this.state.fields.firstname}
-                  onChange={this.handleChange} />
-              </div>
-              <div className="errorMsg red-text">{this.state.errors.firstname}</div>
-
-              <div className="form-group">
-                <label htmlFor="lname">Last Name</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  id="lname"
-                  name="lastname"
-                  placeholder="Enter Last Name"
-                  value={this.state.fields.lastname}
-                  onChange={this.handleChange} />
-              </div>
-              <div className="errorMsg red-text">{this.state.errors.lastname}</div>
-
-              <div className="form-group">
-                <label htmlFor="username">Username</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  id="username"
-                  name="username"
-                  placeholder="Enter User Name"
-                  value={this.state.fields.username}
-                  onChange={this.handleChange} />
-              </div>
-              <div className="errorMsg red-text">{this.state.errors.username}</div>
-
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input
-                  className="form-control"
-                  type="email"
-                  id="email"
-                  name="emailid"
-                  placeholder="Enter Email"
-                  value={this.state.fields.emailid}
-                  onChange={this.handleChange} />
-              </div>
-              <div className="errorMsg red-text">{this.state.errors.emailid}</div>
-
-              <div className="form-group">
-                <label htmlFor="phoneNumber">Phone Number</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  id="phoneNumber"
-                  name="mobileno"
-                  placeholder="Enter Phone Number"
-                  value={this.state.fields.mobileno}
-                  onChange={this.handleChange} />
-              </div>
-              <div className="errorMsg red-text">{this.state.errors.mobileno}</div>
-
-              <div className="form-group">
-                <label htmlFor="pw">Password</label>
-                <input
-                  className="form-control"
-                  type="password"
-                  id="pw"
-                  name="password"
-                  placeholder="Enter Password"
-                  value={this.state.fields.password}
-                  onChange={this.handleChange} />
-              </div>
-              <div className="errorMsg red-text">{this.state.errors.password}</div>
-
-
-              <div className="form-group">
-                <label htmlFor="passwordConfirm">Password Confirmation</label>
-                <input
-                  className="form-control"
-                  type="password"
-                  id="passwordConfirm"
-                  placeholder="Enter Password Confirmation"
-                // value={this.state.fields.password}
-                // onChange={this.handleChange} 
+                  minLength={2}
+                  pattern="(?=.*[a-z]).{2,}"
                 />
+                <div className="invalid-feedback" />
               </div>
-              {/* Adjust for password confirmation */}
-              {/* <div className="errorMsg red-text">{this.state.errors.password}</div> */}
 
-              <Button input type="submit" value="Register" className="btn-block">Register</Button>
-              <br />
-              <div className="text-center">
-                <p>Already a registered user? | <Link to="/login"> Login here</Link></p>
+              <div className="form-group">
+                <label htmlFor="lName">Last Name</label>
+                <input
+                  id="lName"
+                  className="form-control"
+                  required={true}
+                  type="text"
+                  name="lName"
+                  placeholder="Enter Last Name"
+                  minLength={2}
+                  pattern="(?=.*[a-z]).{2,}"
+                />
+                <div className="invalid-feedback" />
               </div>
-            </form>
+
+              <div className="form-group">
+                <label htmlFor="username">Userame</label>
+                <input
+                  id="username"
+                  className="form-control"
+                  required={true}
+                  type="text"
+                  name="username"
+                  placeholder="Enter Username"
+                />
+                <div className="invalid-feedback" />
+              </div>
+
+              <div className={"form-group"}>
+                <label htmlFor={"email"}>Email</label>
+                <input
+                  id={"email"}
+                  className={"form-control"}
+                  required={true}
+                  name={"email"}
+                  type={"email"}
+                  placeholder={"Enter Email"}
+                />
+                <div className="invalid-feedback" />
+              </div>
+              {/* tel input type selects a different input keyboard but does not include automatic pattern matching  */}
+              <div className={"form-group"}>
+                <label htmlFor={"phone"}>Phone Number</label>
+                <input
+                  id={"phone"}
+                  className={"form-control"}
+                  required={true}
+                  name={"phone"}
+                  type={"tel"}
+                  placeholder={"Enter Phone Number"}
+                  minLength={7}
+                  pattern="(?=.*\d).{7,}"
+                />
+                <small className="form-text text-muted">Phone number must be at least 7 digits and without dashes</small>
+                <div className="invalid-feedback" />
+              </div>
+
+              <div className={"form-group"}>
+                <label htmlFor={"password"}>Password</label>
+                <input
+                  id={"password"}
+                  className={"form-control"}
+                  required={true}
+                  name={"password"}
+                  type={"password"}
+                  placeholder={"Enter Password"}
+                  minLength={6}
+                  pattern="(?=.*\d)(?=.*[a-z]).{6,}"
+                />
+                <small className="form-text text-muted">Password must be at least 6 characters long and contain letters and numbers</small>
+                <div className="invalid-feedback" />
+              </div>
+
+              <div className={"form-group"}>
+                <label htmlFor={"passwordConfirm"}>Password Confirmation</label>
+                <input
+                  id={"passwordConfirm"}
+                  className={"form-control"}
+                  required={true}
+                  name={"passwordConfirm"}
+                  type={"password"}
+                  placeholder={"Enter Password Confirmation"}
+                  onChange={this.checkPasswordMatch}
+                />
+                <div className="invalid-feedback" />
+              </div>
+
+              <div className={"row justify-content-md-center"}>
+                <div className={"col-sm-12"}>
+                  <Button type={"submit"} className={"btn btn-primary btn-block"}>Login</Button>
+                </div>
+              </div>
+
+            </Form>
+            <div className="text-center mt-4">
+              <p>Already a registered user? | <Link to="/login"> Login here</Link></p>
+            </div>
+            {this.state.showFormSuccess ? this._renderSuccessMessage() : null}
           </Col>
         </Row>
       </Container>
