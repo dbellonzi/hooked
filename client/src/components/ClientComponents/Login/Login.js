@@ -44,16 +44,16 @@ class Login extends Component {
                 <Row>
                     <Col md="1" />
                     <Col md="10 text-left">
-                        <Form submit={this.submit}>
+                        <form method="POST" action="/login">
                             <div className={"form-group"}>
                                 <label htmlFor={"email"}>Email</label>
                                 <input
-                                    id={"email"}
+                                    // id={"email"}
                                     className={"form-control"}
                                     required={true}
-                                    name={"email"}
-                                    type={"email"}
-                                    placeholder={"Enter Email"}
+                                    name="username"
+                                    type={"text"}
+                                    placeholder={"Enter username"}
                                 />
                                 <div className="invalid-feedback" />
                             </div>
@@ -63,7 +63,7 @@ class Login extends Component {
                                     id={"password"}
                                     className={"form-control"}
                                     required={true}
-                                    name={"password"}
+                                    name="password"
                                     type={"password"}
                                     placeholder={"Enter Password"}
                                     minLength={6}
@@ -73,10 +73,10 @@ class Login extends Component {
                             </div>
                             <div className={"row justify-content-md-center"}>
                                 <div className={"col-sm-12"}>
-                                    <Button type={"submit"} className={"btn btn-primary btn-block"}>Login</Button>
+                                    <Button type="submit" className={"btn btn-primary btn-block"}>Login</Button>
                                 </div>
                             </div>
-                        </Form>
+                        </form>
                         <div className="text-center mt-4">
                             <p>Not a registered user? | <Link to="/register"> Register here</Link></p>
                             <p>Forgot password? | <Link to="/resetpassword"> Reset password</Link></p>

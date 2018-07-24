@@ -16,7 +16,7 @@ const featuredEvent = () => {
                     <p>Event Blah Blah</p>
                 </Col>
                 <Col sm="8">
-                    <p>Event Description: blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah </p>
+                    <p>Event Description: Lorem ipsum dolor sit amet, vim ea case timeam scaevola, ne eum delectus postulant. Id nec debet convenire, in probatus senserit est. Te atqui conceptam vim, ei eum regione persius appareat. Mea mediocrem democritum te, qui dicat tincidunt ei. Vis at reque sonet commune, ridens nostrud ut his, est eu clita legimus. Putent scripta cum eu, autem praesent ne mea. </p>
                 </Col>
             </Row>
             <Link to="/event">

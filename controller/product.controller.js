@@ -16,8 +16,8 @@ exports.create =(req,res)=>{
         product_image: req.body.productimage,
         size: req.body.size,
         price: req.body.price,
-    }). then((product)=>{
-        res.json(product)
+    }). then(()=>{
+        res.redirect('/admin')
     }). catch((err)=>{
         res.status(501).send({error: 'problem entering product into database'})
     })

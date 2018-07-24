@@ -33,7 +33,7 @@ class CreateEvent extends Component {
                     <Col md="1" />
                     <Col md="10 text-left">
 
-                        <Form submit={this.submit}>
+                        <Form submit={this.submit} method="POST" action="/api/events">
                             {/* Figure out what validations we need for event names */}
                             <div className="form-group">
                                 <label htmlFor="eventName">Event Name</label>

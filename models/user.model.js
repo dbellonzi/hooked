@@ -18,10 +18,7 @@ module.exports = (connection, Sequelize) =>{
             unique: true,
         },
         phone_number:{
-            type: Sequelize.INTEGER,
-            validate:{
-                len:[10]
-            }
+            type: Sequelize.STRING,
         },
         user_name:{
             type: Sequelize.STRING,
