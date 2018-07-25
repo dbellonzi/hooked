@@ -19,14 +19,14 @@ import { Container } from 'mdbreact';
 class App extends Component {
   render() {
     const style={
-      width:'100%'
+      width:'100%',
     }
     return (
       <div className="App">
         <Router>
           <div>
             {/* Optional header image here. The navbar will stick to the top when we scroll past the image. */}
-            <img style={style} src="https://fixcom.azureedge.net/assets/content/14243/view-from-below-header.png" alt="Fishing Rod Header"/>
+            <img style={style} src="http://thelostanchovy.com/wp-content/uploads/2018/07/banner.jpg" alt="Fishing Rod Header" className="img-fluid"/>
             <Header />
             <Container>
               <Switch>

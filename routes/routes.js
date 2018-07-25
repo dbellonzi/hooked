@@ -28,6 +28,11 @@ router.delete('/api/event/:id', event.delete);
 router.delete('/api/sponsor/:id', sponsor.delete);
 router.delete('/api/order/:id', order.delete);
 
+router.post('/login', passport.authenticate('local', { 
+  failureRedirect: '/login',
+  successRedirect: '/',
+}))
+
 // Still need to create the UPDATE ROUTES
 // Still need to make individual query to database 
 

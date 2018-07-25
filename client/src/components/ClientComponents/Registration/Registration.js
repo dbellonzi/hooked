@@ -42,7 +42,7 @@ class Registration extends Component {
         <Row>
           <Col md="1" />
           <Col md="10 text-left">
-            <Form submit={this.submit}>
+            <form method="POST" action="/api/users">
               <div className="form-group">
                 <label htmlFor="fName">First Name</label>
                 <input
@@ -74,7 +74,7 @@ class Registration extends Component {
               </div>
 
               <div className="form-group">
-                <label htmlFor="username">Userame</label>
+                <label htmlFor="username">Username</label>
                 <input
                   id="username"
                   className="form-control"
@@ -92,7 +92,7 @@ class Registration extends Component {
                   id={"email"}
                   className={"form-control"}
                   required={true}
-                  name={"email"}
+                  name="email"
                   type={"email"}
                   placeholder={"Enter Email"}
                 />
@@ -105,7 +105,7 @@ class Registration extends Component {
                   id={"phone"}
                   className={"form-control"}
                   required={true}
-                  name={"phone"}
+                  name="phone"
                   type={"tel"}
                   placeholder={"Enter Phone Number"}
                   minLength={7}
@@ -121,7 +121,7 @@ class Registration extends Component {
                   id={"password"}
                   className={"form-control"}
                   required={true}
-                  name={"password"}
+                  name="password"
                   type={"password"}
                   placeholder={"Enter Password"}
                   minLength={6}
@@ -147,11 +147,10 @@ class Registration extends Component {
 
               <div className={"row justify-content-md-center"}>
                 <div className={"col-sm-12"}>
-                  <Button type={"submit"} className={"btn btn-primary btn-block"}>Login</Button>
+                  <Button type="submit" className={"btn btn-primary btn-block"}>Register</Button>
                 </div>
               </div>
-
-            </Form>
+            </form>
             <div className="text-center mt-4">
               <p>Already a registered user? | <Link to="/login"> Login here</Link></p>
             </div>

@@ -1,23 +1,49 @@
 const db = require('../config/db.config.js')
-const user = db.user
+const User = db.user
+const bcrypt = require('bcrypt')
+const passport = require('passport')
 
 exports.create =(req,res)=>{
-    user.create({
-        first_name: req.body.firstname,
-        last_name: req.body.lastname,
+    User.create({
+        first_name: req.body.fName,
+        last_name: req.body.lName,
         email: req.body.email,
-        phone_number: req.body.phonenumber,
+        phone_number: req.body.phone,
         user_name: req.body.username,
-        password: req.body.password,
-
+        password: bcrypt.hashSync(req.body.password, 10)
     }). then((user)=>{
-        res.json(user)
+        res.redirect('/')
     }). catch((err)=>{
         res.status(501).send({
             error: "could not add new user to the database"
         })
     })
 }
+
+// exports.create =(req,res)=>{
+//     User.findOne({
+//         where: {
+//          email: req.body.email
+//         }
+//       }).then((user)=>{
+//         if(!user){
+//           User.create({
+//             first_name: req.body.fName,
+//             last_name: req.body.lName,
+//             email: req.body.email,
+//             phone_number: req.body.phone,
+//             user_name: req.body.username,
+//             password: bcrypt.hashSync(req.body.password, 10)
+//           }).then((user)=>{
+//             passport.authenticate('local', {
+//                 failureRedirect:'/register', 
+//                 successRedirect: '/'})
+//           })
+//         } else {
+//           res.send("user exists")
+//         }
+//       })
+// }
 
 exports.delete = (req,res)=>{
     const id = req.params.id;
