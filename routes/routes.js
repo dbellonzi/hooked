@@ -22,11 +22,23 @@ router.get('/api/products/all', product.findAll);
 router.get('/api/users/all' , user.findAll);
 router.get('/api/orders/all' , order.findAll);
 
+router.get('/api/user/:id', user.findById);
+router.get('/api/product/:id', product.findById);
+router.get('/api/event/:id', event.findById);
+router.get('/api/sponsor/:id', sponsor.findById);
+router.get('/api/order/:id', order.findById);
+
 router.delete('/api/user/:id', user.delete);
 router.delete('/api/product/:id', product.delete);
 router.delete('/api/event/:id', event.delete);
 router.delete('/api/sponsor/:id', sponsor.delete);
 router.delete('/api/order/:id', order.delete);
+
+router.put('/api/user/:id', user.update);
+router.put('/api/product/:id', product.update);
+router.put('/api/event/:id', event.update);
+router.put('/api/sponsor/:id', sponsor.update);
+router.put('/api/order/:id', order.update);
 
 router.post('/login', passport.authenticate('local', { 
   failureRedirect: '/login',
