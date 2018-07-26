@@ -26,7 +26,7 @@ class App extends Component {
         <Router>
           <div>
             {/* Optional header image here. The navbar will stick to the top when we scroll past the image. */}
-            <img style={style} src="http://thelostanchovy.com/wp-content/uploads/2018/07/banner.jpg" alt="Fishing Rod Header" className="img-fluid"/>
+            <img style={style} src="http://thelostanchovy.com/wp-content/uploads/2018/07/banner-1.jpg" alt="Fishing Rod Header" className="img-fluid"/>
             <Header />
             <Container>
               <Switch>
