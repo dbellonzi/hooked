@@ -6,9 +6,9 @@ exports.create =(req,res)=>{
         total: req.body.total,
         sub_total: req.body.subtotal,
         sales_tax: req.body.salestax,
-        status: req.body,status,
-    }). then((sponsor)=>{
-        res.json(sponsor)
+        status: req.body.status,
+    }). then((order)=>{
+        res.json(order)
     }). catch((err)=>{
         res.status(501).send({
             error: "could not add new order to the database"
@@ -16,7 +16,7 @@ exports.create =(req,res)=>{
     })
 }
 
-exports.findAll = (req, resp)=>{
+exports.findAll = (req, res)=>{
     order.findAll(). then((orders)=>{
         res.json(orders)
     }).catch((err)=>{
@@ -24,14 +24,35 @@ exports.findAll = (req, resp)=>{
     })
 }
 
+exports.findById = (req, res) => {	
+	order.findById(req.params.id).then((order) => {
+		res.send(order);
+	})
+};
+
+
 exports.delete = (req,res)=>{
     const id = req.params.id;
-    order.destory({
-        where:{id:id}
-    }).then(deleteOrder =>{
-        res.json(deleteOrder)
+    order.destroy({
+        where: { id: id }
+    }).then(() => {
+        res.status(200).send('deleted successfully a customer with id = ' + id);
     }).catch((err)=>{
         res.send(500).send({error:'could not delete Order'})
-    })
+    });
 }
+
+exports.update = (req, res) => {
+	const id = req.params.id;
+	order.update( { 
+        total: req.body.total,
+        sub_total: req.body.subtotal,
+        sales_tax: req.body.salestax,
+        status: req.body.status,
+         }, 
+		{ where: {id: id} }
+	).then(() => {
+		res.status(200).send("updated successfully a customer with id = " + id);
+	});
+};
 

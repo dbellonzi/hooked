@@ -45,6 +45,22 @@ exports.create =(req,res)=>{
 //       })
 // }
 
+
+
+exports.findAll =(req, res) =>{
+    user.findAll(). then((users)=>{
+        res.json(users)
+    }).catch((err)=>{
+        res.send(500).send({error:'could not retrieve user'})
+    })
+}
+
+exports.findById = (req, res) => {	
+	user.findById(req.params.id).then((user) => {
+		res.send(user);
+	})
+};
+
 exports.delete = (req,res)=>{
     const id = req.params.id;
     user.destory({
@@ -56,10 +72,18 @@ exports.delete = (req,res)=>{
     })
 }
 
-exports.findAll =(req, res) =>{
-    user.findAll(). then((users)=>{
-        res.json(users)
-    }).catch((err)=>{
-        res.send(500).send({error:'could not retrieve user'})
-    })
-}
+exports.update = (req, res) => {
+	const id = req.params.id;
+	product.update( { 
+        first_name: req.body.fName,
+        last_name: req.body.lName,
+        email: req.body.email,
+        phone_number: req.body.phone,
+        user_name: req.body.username,
+        password: bcrypt.hashSync(req.body.password, 10)
+         }, 
+		{ where: {id: id} }
+	).then(() => {
+		res.status(200).send("updated successfully a customer with id = " + id);
+	});
+};
