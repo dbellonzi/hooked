@@ -30,7 +30,7 @@ exports.findById = (req, res) => {
 };
 
 exports.delete = (req,res)=>{
-    const id = req.params.id;
+    const id = req.params.productId;
     product.destory({
         where:{id:id}
     }).then(deleteproduct =>{
@@ -41,7 +41,7 @@ exports.delete = (req,res)=>{
 }
 
 exports.update = (req, res) => {
-	const id = req.params.id;
+	const id = req.params.productId;
 	product.update( { 
         product_name: req.body.productname,
         product_description: req.body.productdescription,

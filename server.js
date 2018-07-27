@@ -47,7 +47,6 @@ passport.deserializeUser((id, cb)=> {
   });
 });
 
-
 app.all("*", (req, res) => {
   res.sendFile(path.resolve("../client/build/index.html"));
 });

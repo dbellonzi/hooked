@@ -48,7 +48,7 @@ exports.create =(req,res)=>{
 
 
 exports.findAll =(req, res) =>{
-    user.findAll(). then((users)=>{
+    User.findAll(). then((users)=>{
         res.json(users)
     }).catch((err)=>{
         res.send(500).send({error:'could not retrieve user'})
@@ -56,15 +56,16 @@ exports.findAll =(req, res) =>{
 }
 
 exports.findById = (req, res) => {	
-	user.findById(req.params.id).then((user) => {
-		res.send(user);
-	})
+    User.findById(req.params.userId).then((user) => {
+		res.json(user);
+	}).catch((err)=>{
+        res.send(500).send({error:'could not retrieve user'})
+    })
 };
 
 exports.delete = (req,res)=>{
-    const id = req.params.id;
-    user.destory({
-        where:{id:id}
+    User.destroy({
+        where:{id:req.params.userId}
     }).then(deleteUser =>{
         res.json(deleteUser)
     }).catch((err)=>{
@@ -73,8 +74,8 @@ exports.delete = (req,res)=>{
 }
 
 exports.update = (req, res) => {
-	const id = req.params.id;
-	product.update( { 
+	const id = req.params.userId;
+	User.update( { 
         first_name: req.body.fName,
         last_name: req.body.lName,
         email: req.body.email,
