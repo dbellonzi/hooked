@@ -1,11 +1,11 @@
 .form-control:valid~.invalid-feedback {display: none;}
 .form-control:invalid~.invalid-feedback {display: block;}
-.form-control:invalid {
+/* .form-control:invalid {
     border: 1px solid red;
 }
 .form-control:valid {
     border: 1px solid grey;
-}
+} */
 /* 
  .btn-file {
     position: relative;
