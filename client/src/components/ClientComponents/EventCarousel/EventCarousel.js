@@ -50,42 +50,42 @@ class EventCarousel extends Component {
           <CarouselInner>
             <CarouselItem itemId="1">
               <View>
-                <img className="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(68).jpg" alt="First slide" />
-                <Mask overlay="black-light"></Mask>
+                <img className="d-block w-100 img-fluid" height="500px" src="http://thelostanchovy.com/wp-content/uploads/2017/08/Big-Sur-Coast-1.jpg" alt="First slide" />
+                <Mask overlay="light"></Mask>
               </View>
               <CarouselCaption>
-                <h3 className="h3-responsive">Light mask</h3>
-                <p>First text</p>
+                <h3 className="h3-responsive">Big Sur</h3>
+                <p>Where the Kayak meets the pure ocean</p>
               </CarouselCaption>
             </CarouselItem>
             <CarouselItem itemId="2">
               <View>
-                <img className="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(99).jpg" alt="Second slide" />
-                <Mask overlay="black-strong"></Mask>
+                <img className="d-block w-100 img-fluid" height="500px" src="http://thelostanchovy.com/wp-content/uploads/2017/08/20170805_134130.jpg" alt="Second slide" />
+                <Mask overlay="black-slight"></Mask>
               </View>
               <CarouselCaption>
-                <h3 className="h3-responsive">Strong mask</h3>
-                <p>Second text</p>
+                <h3 className="h3-responsive">Big Sur Vermillions</h3>
+                <p>Big Reds</p>
               </CarouselCaption>
             </CarouselItem>
             <CarouselItem itemId="3">
               <View>
-                <img className="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(17).jpg" alt="Third slide" />
-                <Mask overlay="black-slight"></Mask>
+                <img className="d-block w-100 img-fluid" height="500px"  src="http://thelostanchovy.com/wp-content/uploads/2017/08/GOPR5034.jpg" alt="Third slide" />
+                {/* <Mask overlay="black-slight"></Mask> */}
               </View>
               <CarouselCaption>
-                <h3 className="h3-responsive">Slight mask</h3>
-                <p>Third text</p>
+                <h3 className="h3-responsive">The Lost Anchovy</h3>
+                <p>Big Sur Vermillions</p>
               </CarouselCaption>
             </CarouselItem>
             <CarouselItem itemId="4">
               <View>
-                <img className="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20%28143%29.jpg" alt="Mattonit's item" />
+                <img className="d-block w-100 img-fluid" height="500px" src="http://thelostanchovy.com/wp-content/uploads/2017/08/DJI_0033-4.jpg" alt="Mattonit's item" />
                 <Mask overlay="black-light"></Mask>
               </View>
               <CarouselCaption>
-                <h3 className="h3-responsive">Sopot Beach</h3>
-                <p>Taken june 21th by @mattonit</p>
+                <h3 className="h3-responsive">Sunset in Big Sur</h3>
+                <p>June 21,2017</p>
               </CarouselCaption>
             </CarouselItem>
           </CarouselInner>
