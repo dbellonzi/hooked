@@ -44,7 +44,7 @@ class CreateProduct extends Component {
                                     type="text"
                                     placeholder="Enter Product Name"
                                     minLength={3}
-                                // pattern="(?=.*[a-z]).{2,}" (Determine if we want to limit to only letters)
+                                    maxLength={45}
                                 />
                                 <div className="invalid-feedback" />
                             </div>
@@ -57,7 +57,9 @@ class CreateProduct extends Component {
                                     className="form-control"
                                     required={true}
                                     rows="3"
-                                    placeholder="Enter Product Description"></textarea>
+                                    placeholder="Enter Product Description"
+                                    minLength={3}
+                                    maxLength={280}></textarea>
                                 <div className="invalid-feedback" />
                             </div>
 
@@ -66,6 +68,20 @@ class CreateProduct extends Component {
                                 <input
                                     id="productPrice"
                                     name="productPrice"
+                                    className="form-control"
+                                    required={true}
+                                    input type="text"
+                                    pattern="\d+(\.\d{2})?"
+                                />
+                                <small className="form-text text-muted">Product price to be listed in USD.</small>
+                                <div className="invalid-feedback" />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="salesTax">Sales Tax</label>
+                                <input
+                                    id="salesTax"
+                                    name="salesTax"
                                     className="form-control"
                                     required={true}
                                     input type="text"

@@ -4,6 +4,10 @@ import { Container, Row, Col, Button } from 'mdbreact';
 import Form from '../../Form/Form';
 // Edit code to prepopulate fields with values if updating
 
+
+
+// ADD CHECKBOX FOR MULTIDAY EVENTS FOR START/END DATE OR JUST DATE
+
 class CreateEvent extends Component {
     state = {
         showFormSuccess: false,
@@ -25,6 +29,11 @@ class CreateEvent extends Component {
             </div>
         )
     }
+
+    handleDateChange = (event) => {
+        // Code to validate for future date input
+    }
+
     render() {
         return (
             <Container>
@@ -34,7 +43,7 @@ class CreateEvent extends Component {
                     <Col md="10 text-left">
 
                         <Form submit={this.submit}>
-                            {/* Figure out what validations we need for event names */}
+                            {/* Event Name Validations: required, unique (call to check for uniqueness on change), length*/}
                             <div className="form-group">
                                 <label htmlFor="eventName">Event Name</label>
                                 <input
@@ -44,12 +53,12 @@ class CreateEvent extends Component {
                                     type="text"
                                     name="eventName"
                                     placeholder="Enter Event Name"
-                                    minLength={2}
-                                    pattern="(?=.*[a-z]).{2,}"
+                                    minLength={6}
                                 />
+                                <small>Event names need to be unique. For annual events, please include the event year.</small>
                                 <div className="invalid-feedback" />
                             </div>
-                            {/* custom validation for date in future */}
+                            {/* Event Date Validations: required, custom validation for date in future */}
                             <div className="form-group">
                                 <label htmlFor="eventDate">Event Date</label>
                                 <input
@@ -58,15 +67,16 @@ class CreateEvent extends Component {
                                     className="form-control"
                                     required={true}
                                     type="date"
+                                    onChange={(event) => this.handleDateChange(event)}
                                 />
                                 <div className="invalid-feedback" />
                             </div>
-
+                            {/* Event Time Validations: required */}
                             <div className="form-group">
-                                <label htmlFor="eventTime">Event Time</label>
+                                <label htmlFor="eventTime">Event Start Time</label>
                                 <input
-                                    id="eventTime"
-                                    name="eventTime"
+                                    id="eventStartTime"
+                                    name="eventStartTime"
                                     className="form-control"
                                     required={true}
                                     type="time"
@@ -74,6 +84,18 @@ class CreateEvent extends Component {
                                 <div className="invalid-feedback" />
                             </div>
 
+                            <div className="form-group">
+                                <label htmlFor="eventTime">Event End Time</label>
+                                <input
+                                    id="eventEndTime"
+                                    name="eventEndTime"
+                                    className="form-control"
+                                    required={true}
+                                    type="time"
+                                />
+                                <div className="invalid-feedback" />
+                            </div>
+                            {/* Double check for final validations */}
                             <div className="form-group">
                                 <label htmlFor="eventAddress">Event Address</label>
                                 <input
@@ -83,6 +105,7 @@ class CreateEvent extends Component {
                                     required={true}
                                     type="text"
                                     placeholder="Enter Event Address"
+                                    minLength={10}
                                 />
                                 <div className="invalid-feedback" />
                             </div>
@@ -94,7 +117,9 @@ class CreateEvent extends Component {
                                     className="form-control"
                                     required={true}
                                     rows="3"
-                                    placeholder="Enter Event Description"></textarea>
+                                    placeholder="Enter Event Description"
+                                    minLength={50}
+                                    maxLength={1000}></textarea>
                                 <div className="invalid-feedback" />
                             </div>
                             {/* Fix form inputs: label blocks file name*/}
@@ -118,6 +143,7 @@ class CreateEvent extends Component {
                                     className="custom-file-input"
                                     type="file"
                                     accept="image/png, image/jpeg" />
+                                <small>Accepted filetypes: png, jpeg</small>
                                 <div className="invalid-feedback" />
                             </div>
 
