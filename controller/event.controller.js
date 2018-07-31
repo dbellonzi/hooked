@@ -56,7 +56,7 @@ exports.update = (req, res) => {
         event_photo: req.body.event_photo,
         map_photo: req.body.map_photo,
          }, 
-		{ where: {id: id} }
+		{returning: true, where: {id: id} }
 	).then(() => {
 		res.status(200).send("updated successfully a customer with id = " + id);
 	});

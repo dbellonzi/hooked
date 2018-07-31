@@ -64,10 +64,11 @@ exports.findById = (req, res) => {
 };
 
 exports.delete = (req,res)=>{
+    const id = req.params.userId
     User.destroy({
-        where:{id:req.params.userId}
+        where:{id:id}
     }).then(deleteUser =>{
-        res.json(deleteUser)
+        res.send(`user ${id} has been deleted`)
     }).catch((err)=>{
         res.send(500).send({error:'could not delete User'})
     })
@@ -75,7 +76,7 @@ exports.delete = (req,res)=>{
 
 exports.update = (req, res) => {
 	const id = req.params.userId;
-	User.update( { 
+	User.update( {
         first_name: req.body.fName,
         last_name: req.body.lName,
         email: req.body.email,
@@ -83,7 +84,7 @@ exports.update = (req, res) => {
         user_name: req.body.username,
         password: bcrypt.hashSync(req.body.password, 10)
          }, 
-		{ where: {id: id} }
+		{ returning: true, where: {id: id} }
 	).then(() => {
 		res.status(200).send("updated successfully a customer with id = " + id);
 	});

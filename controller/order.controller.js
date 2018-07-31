@@ -53,7 +53,7 @@ exports.update = (req, res) => {
         sales_tax: req.body.salestax,
         status: req.body.status,
          }, 
-		{ where: {id: id} }
+		{returning: true,  where: {id: id} }
 	).then(() => {
 		res.status(200).send("updated successfully a customer with id = " + id);
 	});

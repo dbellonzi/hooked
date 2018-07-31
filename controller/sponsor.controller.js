@@ -53,7 +53,7 @@ exports.update = (req, res) => {
         img_Link: req.body.imglink,
         photo: req.body.photo,
          }, 
-        { where: {id: id} }
+        {returning: true, where: {id: id} }
         // possible to just use req.body to encapsulate everything instead of writing each one out
 	).then(() => {
 		res.status(200).send("updated successfully a customer with id = " + id);

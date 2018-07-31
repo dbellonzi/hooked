@@ -49,7 +49,7 @@ exports.update = (req, res) => {
         size: req.body.size,
         price: req.body.price,
          }, 
-		{ where: {id: id} }
+		{returning: true,  where: {id: id} }
 	).then(() => {
 		res.status(200).send("updated successfully a customer with id = " + id);
 	});
