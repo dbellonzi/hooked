@@ -25,21 +25,6 @@ class CreateSponsor extends Component {
         )
     }
 
-    handleFileInput(e) {
-        var fieldVal = document.getElementById('sponsorImage').value;;
-        // change the node's value by removing the fake path (Chrome)
-        fieldVal = fieldVal.replace("C:\\fakepath\\", "");
-
-        if (fieldVal !== undefined || fieldVal !== "") {
-            console.log(e)
-            var input = document.getElementById('sponsorImageLabel');
-            input.children = fieldVal
-            // this.next(".custom-file-label").attr('data-content', fieldVal);
-            // this.next(".custom-file-label").text(fieldVal);
-        }
-    }
-
-
     render() {
         return (
             <Container>
@@ -90,22 +75,7 @@ class CreateSponsor extends Component {
                                 <div className="invalid-feedback" />
                                 <img id="previewLogo" src="#" alt="Your Sponsor Logo" />
                             </div>
-
-                            {/* Fix form inputs: label blocks file name*/}
-                            {/* <div className="custom-file mb-3">
-                                <label id="sponsorImageLabel" className="custom-file-label" htmlFor="sponsorImage">Upload Sponsor Logo</label>
-                                <input
-                                    id="sponsorImage"
-                                    name="sponsorImage"
-                                    required={true}
-                                    className="custom-file-input"
-                                    type="file"
-                                    accept="image/png, image/jpeg"
-                                />
-                                <div className="invalid-feedback" />
-                                <img id="preview" src="#" alt="Your sponsor logo" />
-                            </div> */}
-
+                            {/* ADD CHECKBOX FOR SPONSOR LEVEL */}
                             <div className={"row justify-content-md-center"}>
                                 <Col>
                                     <Button type={"submit"} className="btn-block">Create Sponsor</Button>
