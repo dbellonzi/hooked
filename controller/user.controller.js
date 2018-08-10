@@ -1,10 +1,10 @@
 const db = require('../config/db.config.js')
-const User = db.user
+const user = db.user
 const bcrypt = require('bcrypt')
 const passport = require('passport')
 
 exports.create =(req,res)=>{
-    User.create({
+    user.create({
         first_name: req.body.fName,
         last_name: req.body.lName,
         email: req.body.email,
@@ -46,14 +46,20 @@ exports.create =(req,res)=>{
 // }
 
 
-
-exports.findAll =(req, res) =>{
-    User.findAll(). then((users)=>{
-        res.json(users)
+exports.findAll = (req, res)=>{
+    user.findAll(). then((user)=>{
+        res.json(user)
     }).catch((err)=>{
-        res.send(500).send({error:'could not retrieve user'})
+        res.send(500).send({error:'could not retrieve Users'})
     })
 }
+// exports.findAll =(req, res) =>{
+//     user.findAll().then((users)=>{
+//         res.json(users)
+//     }).catch((err)=>{
+//         res.send(500).send({error:'could not retrieve user'})
+//     })
+// }
 
 exports.findById = (req, res) => {	
     User.findById(req.params.userId).then((user) => {
@@ -75,8 +81,8 @@ exports.delete = (req,res)=>{
 }
 
 exports.update = (req, res) => {
-	const id = req.params.userId;
-	User.update( {
+  const id = req.params.id;
+	user.update( { 
         first_name: req.body.fName,
         last_name: req.body.lName,
         email: req.body.email,
@@ -84,7 +90,7 @@ exports.update = (req, res) => {
         user_name: req.body.username,
         password: bcrypt.hashSync(req.body.password, 10)
          }, 
-		{ returning: true, where: {id: id} }
+        { where: {id: id} }
 	).then(() => {
 		res.status(200).send("updated successfully a customer with id = " + id);
 	});
