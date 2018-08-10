@@ -18,7 +18,7 @@ const connection = new Sequelize(env.database, env.username, env.password, {
 
 connection.sync()
 .then(()=>console.log('database has been synced'))
-.catch((err)=>console.log(err))
+.catch((err)=>console.log('error creating database'))
 
 //creates the connection to the database
 

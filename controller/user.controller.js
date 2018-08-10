@@ -51,7 +51,7 @@ exports.findAll = (req, res)=>{
     user.findAll(). then((user)=>{
         res.json(user)
     }).catch((err)=>{
-        res.send(500).send({error:'could not retrieve orders'})
+        res.send(500).send({error:'could not retrieve Users'})
     })
 }
 // exports.findAll =(req, res) =>{
