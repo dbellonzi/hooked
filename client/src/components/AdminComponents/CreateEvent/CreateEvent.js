@@ -4,8 +4,6 @@ import { Container, Row, Col, Button } from 'mdbreact';
 import Form from '../../Form/Form';
 // Edit code to prepopulate fields with values if updating
 
-
-
 // ADD CHECKBOX FOR MULTIDAY EVENTS FOR START/END DATE OR JUST DATE
 
 class CreateEvent extends Component {
@@ -33,10 +31,12 @@ class CreateEvent extends Component {
     handleDateChange = (event) => {
         // Code to validate for future date input
     }
-
+    handleEndDateChange = (event) => {
+        // Code to toggle the end date input
+    }
     render() {
         return (
-            <Container>
+            <React.Fragment>
                 <h1>Create Event</h1>
                 <Row>
                     <Col md="1" />
@@ -160,7 +160,7 @@ class CreateEvent extends Component {
                         {this.state.showFormSuccess ? this._renderSuccessMessage() : null}
                     </Col>
                 </Row>
-            </Container>
+            </React.Fragment>
         );
     }
 

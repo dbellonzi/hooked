@@ -27,7 +27,7 @@ class CreateProduct extends Component {
     render() {
 
         return (
-            <Container>
+            <React.Fragment>
                 <h1>Create Product</h1>
                 <Row>
                     <Col md="1" />
@@ -124,7 +124,7 @@ class CreateProduct extends Component {
                         {this.state.showFormSuccess ? this._renderSuccessMessage() : null}
                     </Col>
                 </Row>
-            </Container>
+            </React.Fragment>
         );
     }
 }

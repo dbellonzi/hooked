@@ -37,7 +37,7 @@ class Registration extends Component {
 
   render() {
     return (
-      <Container>
+      <React.Fragment>
         <h1>Sign up</h1>
         <Row>
           <Col md="1" />
@@ -157,7 +157,7 @@ class Registration extends Component {
             {this.state.showFormSuccess ? this._renderSuccessMessage() : null}
           </Col>
         </Row>
-      </Container>
+      </React.Fragment>
     )
   }
 }

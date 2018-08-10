@@ -39,7 +39,7 @@ class Login extends Component {
 
     render() {
         return (
-            <Container>
+            <React.Fragment>
                 <h1>Sign In</h1>
                 <Row>
                     <Col md="1" />
@@ -73,7 +73,7 @@ class Login extends Component {
                             </div>
                             <div className={"row justify-content-md-center"}>
                                 <div className={"col-sm-12"}>
-                                    <Button type="submit" className={"btn btn-primary btn-block"}>Login</Button>
+                                    <Button onClick={this.props.login}type="submit" className={"btn btn-primary btn-block"}>Login</Button>
                                 </div>
                             </div>
                         </form>
@@ -84,7 +84,7 @@ class Login extends Component {
                         {this.state.showFormSuccess ? this._renderSuccessMessage() : null}
                     </Col>
                 </Row >
-            </Container >
+            </React.Fragment >
         );
     }
 };

@@ -2,9 +2,10 @@ import React from 'react';
 import CardDeck from '../../../CardDeck/CardDeck';
 import SponsorCard from '../../../CardDeck/SponsorCard/SponsorCard';
 
-const eventSponsors = () => {
+// eventSponsors component needs to receive the sponsors in order to send each sponsor to the SponsorCard components 
+const eventSponsors = (props) => {
     return (
-        <div>
+        <React.Fragment>
             <h3>Sponsors</h3>
             <CardDeck>
                 <SponsorCard />
@@ -16,7 +17,7 @@ const eventSponsors = () => {
                 <SponsorCard />
                 <SponsorCard />
             </CardDeck>
-        </div>
+        </React.Fragment>
     );
 }
 export default eventSponsors;
