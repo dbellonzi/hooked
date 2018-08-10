@@ -27,7 +27,7 @@ class CreateSponsor extends Component {
 
     render() {
         return (
-            <Container>
+            <React.Fragment>
                 <h1>Add Sponsor</h1>
                 <Row>
                     <Col md="1" />
@@ -85,7 +85,7 @@ class CreateSponsor extends Component {
                         {this.state.showFormSuccess ? this._renderSuccessMessage() : null}
                     </Col>
                 </Row>
-            </Container>
+            </React.Fragment>
         );
     }
 }

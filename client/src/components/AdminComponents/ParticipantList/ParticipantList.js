@@ -1,8 +1,9 @@
 import React from 'react';
 
-const participantList = () => {
+// participantList component will receive the a list of participants to dynamically display
+const participantList = (props) => {
     return (
-        <div className="text-left">
+        <React.Fragment>
             <h1>Event Participants</h1>
             <table className="table mt-4 text-center">
                 <thead className="thead-dark">
@@ -14,6 +15,7 @@ const participantList = () => {
                     </tr>
                 </thead>
                 <tbody>
+                    {/* Here is where you would loop through the particpant list */}
                     <tr>
                         <th scope="row">1</th>
                         <td>Keith</td>
@@ -34,7 +36,7 @@ const participantList = () => {
                     </tr>
                 </tbody>
             </table>
-        </div>
+        </React.Fragment>
     );
 }
 export default participantList;

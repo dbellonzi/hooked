@@ -41,7 +41,7 @@ class EventCarousel extends Component {
   render(){
     const { activeItem } = this.state;
     return(
-      <Container>
+      <React.Fragment>
         <h1 className="mt-5 mb-2">Current Featured Event Name</h1>
         <Carousel
           activeItem={this.state.activeItem}
@@ -98,7 +98,7 @@ class EventCarousel extends Component {
             <CarouselIndicator active={activeItem === 4 ? true : false} onClick={() => { this.goToIndex(4); }}></CarouselIndicator>
           </CarouselIndicators>
         </Carousel>
-      </Container>
+      </React.Fragment>
     );
   }
 }
