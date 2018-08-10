@@ -3,9 +3,9 @@ import CardDeck from '../../CardDeck/CardDeck';
 import AdminEventCard from '../../CardDeck/AdminEventCard/AdminEventCard';
 import { Link } from 'react-router-dom';
 
-// As the Admin Dashboard component, we need to be able to pull the correct events to populate the CardDeck component as well as validate some user settings to allow access to this part of the site
+// AdminDashboard will receive all events as props. We need to filter which events are available to the user based on access privilages to populate the card deck
 
-const dashboard = () => {
+const dashboard = (props) => {
     return (
         <div className="text-left">
             <CardDeck>

@@ -16,29 +16,29 @@ router.post('/api/users', user.create);
 router.post('/api/sponors', sponsor.create);
 router.post('/api/orders', order.create);
 
-router.get('/api/sponsor/all' , sponsor.findAll);
+router.get('/api/sponsors/all' , sponsor.findAll);
 router.get('/api/events/all', event.findAll);
 router.get('/api/products/all', product.findAll);
 router.get('/api/users/all' , user.findAll);
 router.get('/api/orders/all' , order.findAll);
 
-router.get('/api/user/:id', user.findById);
-router.get('/api/product/:id', product.findById);
-router.get('/api/event/:id', event.findById);
-router.get('/api/sponsor/:id', sponsor.findById);
-router.get('/api/order/:id', order.findById);
+router.get('/api/user/:userId', user.findById);
+router.get('/api/product/:productId', product.findById);
+router.get('/api/event/:eventId', event.findById);
+router.get('/api/sponsor/:sponsorId', sponsor.findById);
+router.get('/api/order/:orderId', order.findById);
 
-router.delete('/api/user/:id', user.delete);
-router.delete('/api/product/:id', product.delete);
-router.delete('/api/event/:id', event.delete);
-router.delete('/api/sponsor/:id', sponsor.delete);
-router.delete('/api/order/:id', order.delete);
+router.delete('/api/user/:userId', user.delete);
+router.delete('/api/product/:productId', product.delete);
+router.delete('/api/event/:eventId', event.delete);
+router.delete('/api/sponsor/:sponsorId', sponsor.delete);
+router.delete('/api/order/:orderId', order.delete);
 
-router.put('/api/user/:id', user.update);
-router.put('/api/product/:id', product.update);
-router.put('/api/event/:id', event.update);
-router.put('/api/sponsor/:id', sponsor.update);
-router.put('/api/order/:id', order.update);
+router.put('/api/user/:userId', user.update);
+router.put('/api/product/:productId', product.update);
+router.put('/api/event/:eventId', event.update);
+router.put('/api/sponsor/:sponsorId', sponsor.update);
+router.put('/api/order/:orderId', order.update);
 
 router.post('/login', passport.authenticate('local', { 
   failureRedirect: '/login',

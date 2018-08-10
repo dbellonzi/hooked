@@ -26,13 +26,15 @@ exports.findAll =(req, res) =>{
 }
 
 exports.findById = (req, res) => {	
-	sponsor.findById(req.params.id).then((sponsor) => {
-		res.send(sponsor);
-	})
+	sponsor.findById(req.params.sponsorId).then((sponsor) => {
+		res.json(sponsor)
+	}).catch((err)=>{
+        res.send(500).send({error:'could not retrieve sponsor'})
+    })
 };
 
 exports.delete =(req,res)=>{
-    const id = req.params.id;
+    const id = req.params.sponsorId;
     sponsor.destory({
         where:{id:id}
     }).then(deleteSponsor =>{
@@ -43,7 +45,7 @@ exports.delete =(req,res)=>{
 }
 
 exports.update = (req, res) => {
-	const id = req.params.id;
+	const id = req.params.productId;
 	product.update( { 
         sponsor_Name: req.body.sponorname,
         sponsor_Level: req.body.sponsorlevel,
@@ -51,7 +53,8 @@ exports.update = (req, res) => {
         img_Link: req.body.imglink,
         photo: req.body.photo,
          }, 
-		{ where: {id: id} }
+        {returning: true, where: {id: id} }
+        // possible to just use req.body to encapsulate everything instead of writing each one out
 	).then(() => {
 		res.status(200).send("updated successfully a customer with id = " + id);
 	});

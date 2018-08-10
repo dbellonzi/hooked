@@ -37,7 +37,7 @@ class Registration extends Component {
 
   render() {
     return (
-      <Container>
+      <React.Fragment>
         <h1>Sign up</h1>
         <Row>
           <Col md="1" />
@@ -48,10 +48,10 @@ class Registration extends Component {
                 <input
                   id="fName"
                   className="form-control"
-                  required={true}
                   type="text"
                   name="fName"
                   placeholder="Enter First Name"
+                  required={true}
                   minLength={2}
                   pattern="(?=.*[a-z]).{2,}"
                 />
@@ -63,16 +63,16 @@ class Registration extends Component {
                 <input
                   id="lName"
                   className="form-control"
-                  required={true}
                   type="text"
                   name="lName"
                   placeholder="Enter Last Name"
+                  required={true}
                   minLength={2}
                   pattern="(?=.*[a-z]).{2,}"
                 />
                 <div className="invalid-feedback" />
               </div>
-
+  {/* NEEDS TO BE UNIQUE */}
               <div className="form-group">
                 <label htmlFor="username">Username</label>
                 <input
@@ -85,7 +85,7 @@ class Registration extends Component {
                 />
                 <div className="invalid-feedback" />
               </div>
-
+  {/* NEEDS TO BE UNIQUE */}
               <div className={"form-group"}>
                 <label htmlFor={"email"}>Email</label>
                 <input
@@ -108,10 +108,10 @@ class Registration extends Component {
                   name="phone"
                   type={"tel"}
                   placeholder={"Enter Phone Number"}
-                  minLength={7}
-                  pattern="(?=.*\d).{7,}"
+                  minLength={10}
+                  pattern="(?=.*\d).{10,}"
                 />
-                <small className="form-text text-muted">Phone number must be at least 7 digits and without dashes</small>
+                <small className="form-text text-muted">Phone number must be at least 10 digits and without dashes</small>
                 <div className="invalid-feedback" />
               </div>
 
@@ -124,10 +124,10 @@ class Registration extends Component {
                   name="password"
                   type={"password"}
                   placeholder={"Enter Password"}
-                  minLength={6}
-                  pattern="(?=.*\d)(?=.*[a-z]).{6,}"
+                  minLength={8}
+                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                 />
-                <small className="form-text text-muted">Password must be at least 6 characters long and contain letters and numbers</small>
+                <small className="form-text text-muted">Password must be at least 8 characters long and contain uppercase and lowercase letters and numbers</small>
                 <div className="invalid-feedback" />
               </div>
 
@@ -157,7 +157,7 @@ class Registration extends Component {
             {this.state.showFormSuccess ? this._renderSuccessMessage() : null}
           </Col>
         </Row>
-      </Container>
+      </React.Fragment>
     )
   }
 }

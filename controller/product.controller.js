@@ -30,7 +30,7 @@ exports.findById = (req, res) => {
 };
 
 exports.delete = (req,res)=>{
-    const id = req.params.id;
+    const id = req.params.productId;
     product.destory({
         where:{id:id}
     }).then(deleteproduct =>{
@@ -41,7 +41,7 @@ exports.delete = (req,res)=>{
 }
 
 exports.update = (req, res) => {
-	const id = req.params.id;
+	const id = req.params.productId;
 	product.update( { 
         product_name: req.body.productname,
         product_description: req.body.productdescription,
@@ -49,7 +49,7 @@ exports.update = (req, res) => {
         size: req.body.size,
         price: req.body.price,
          }, 
-		{ where: {id: id} }
+		{returning: true,  where: {id: id} }
 	).then(() => {
 		res.status(200).send("updated successfully a customer with id = " + id);
 	});

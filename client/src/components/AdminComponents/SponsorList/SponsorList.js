@@ -2,25 +2,26 @@ import React from 'react';
 import { Container, Button } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import CardDeck from '../../CardDeck/CardDeck';
-import SponsorCard from '../../CardDeck/SponsorCard/SponsorCard';
+import AdminSponsorCard from '../../CardDeck/AdminSponsorCard/AdminSponsorCard';
 
-const sponsorList = () => {
+// sponsorList component needs to receive the list of sponsors as props to dynamically display content
+const sponsorList = (props) => {
     return (
-        <Container>
+        <React.Fragment>
             <CardDeck>
-                <SponsorCard />
-                <SponsorCard />
-                <SponsorCard />
-                <SponsorCard />
-                <SponsorCard />
-                <SponsorCard />
-                <SponsorCard />
-                <SponsorCard />
-                <SponsorCard />
+                <AdminSponsorCard />
+                <AdminSponsorCard />
+                <AdminSponsorCard />
+                <AdminSponsorCard />
+                <AdminSponsorCard />
+                <AdminSponsorCard />
+                <AdminSponsorCard />
+                <AdminSponsorCard />
+                <AdminSponsorCard />
             </CardDeck>
             <hr/>
             <Link to="/admin/createSponsor"><Button className="btn btn-primary">Add Sponsor</Button></Link>
-        </Container>
+        </React.Fragment>
     );
 }
 export default sponsorList;
