@@ -27,6 +27,10 @@ module.exports = (connection, Sequelize) =>{
         password:{
             type: Sequelize.STRING
         },
+        isAdmin:{
+            type: Sequelize.BOOLEAN,
+            default: false,
+        }
     })
     return User;
 }
