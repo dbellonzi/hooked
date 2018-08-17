@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Button } from 'mdbreact';
+import { Row, Col, Button } from 'mdbreact';
 import { Link } from 'react-router-dom';
-import Form from '../../Form/Form';
+// import Form from '../../Form/Form';
 class Registration extends Component {
   state = {
     showFormSuccess: false,
@@ -72,7 +72,6 @@ class Registration extends Component {
                 />
                 <div className="invalid-feedback" />
               </div>
-  {/* NEEDS TO BE UNIQUE */}
               <div className="form-group">
                 <label htmlFor="username">Username</label>
                 <input
@@ -85,7 +84,6 @@ class Registration extends Component {
                 />
                 <div className="invalid-feedback" />
               </div>
-  {/* NEEDS TO BE UNIQUE */}
               <div className={"form-group"}>
                 <label htmlFor={"email"}>Email</label>
                 <input
@@ -98,7 +96,6 @@ class Registration extends Component {
                 />
                 <div className="invalid-feedback" />
               </div>
-              {/* tel input type selects a different input keyboard but does not include automatic pattern matching  */}
               <div className={"form-group"}>
                 <label htmlFor={"phone"}>Phone Number</label>
                 <input
@@ -147,7 +144,7 @@ class Registration extends Component {
 
               <div className={"row justify-content-md-center"}>
                 <div className={"col-sm-12"}>
-                  <Button type="submit" className={"btn btn-primary btn-block"}>Register</Button>
+                  <Button className={"btn btn-primary btn-block"} onClick={this.submit}>Register</Button>
                 </div>
               </div>
             </form>

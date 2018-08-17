@@ -20,7 +20,7 @@ const header = (props) => {
                 </div>
                 {props.loggedIn ?
                     <div className="navbar-nav nav-item">
-                        <Link className="nav-link" to="/user">UserName</Link>
+                        <Link className="nav-link" to="/user">{props.userName}</Link>
                         <Link onClick={props.logout}  className="nav-link" to="/"> Logout</Link>
                     </div> :
                     <div className="navbar-nav nav-item">

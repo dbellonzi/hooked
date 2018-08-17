@@ -82,7 +82,7 @@ class Form extends Component {
         }
 
         return (
-            <form ref={form => this.formEl = form} onSubmit={this.submitHandler} {...props} className={classNames} noValidate>
+            <form method={this.props.method} action={this.props.action} ref={form => this.formEl = form} onSubmit={this.submitHandler} {...props} className={classNames} noValidate>
                 {this.props.children}
             </form>
         );
