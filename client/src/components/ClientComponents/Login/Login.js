@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Button } from 'mdbreact';
+import { Row, Col, Button } from 'mdbreact';
 import { Link } from 'react-router-dom';
-import Form from '../../Form/Form';
+// import Form from '../../Form/Form';
 // Login Component needs to be able to pull data from the database to validate an authorized user login.
 // Currently, validations for this login component only check for valid form inputs
 
@@ -46,9 +46,9 @@ class Login extends Component {
                     <Col md="10 text-left">
                         <form method="POST" action="/login">
                             <div className={"form-group"}>
-                                <label htmlFor={"email"}>Email</label>
+                                <label htmlFor={"username"}>Username</label>
                                 <input
-                                    // id={"email"}
+                                    id={"username"}
                                     className={"form-control"}
                                     required={true}
                                     name="username"
@@ -73,7 +73,7 @@ class Login extends Component {
                             </div>
                             <div className={"row justify-content-md-center"}>
                                 <div className={"col-sm-12"}>
-                                    <Button onClick={this.props.login}type="submit" className={"btn btn-primary btn-block"}>Login</Button>
+                                    <Button onClick={()=>this.props.login("Testing")}type="submit" className={"btn btn-primary btn-block"}>Login</Button>
                                 </div>
                             </div>
                         </form>

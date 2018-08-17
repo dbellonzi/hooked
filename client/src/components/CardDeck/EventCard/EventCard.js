@@ -9,12 +9,11 @@ const eventCard = (props) => {
             <Card className="m-3">
                 <CardImage className="img-fluid mt-3 p-0" src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(97).jpg" />
                 <CardBody>
-                    <CardTitle className="text-center">Event Name</CardTitle>
+                    <CardTitle className="text-center">{props.event.title}</CardTitle>
 
-                    {/* Remember to take a short substring from the event description */}
-                    <CardText className="text-center">Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                    <CardText className="text-center">{props.event.description}</CardText>
                     {/* Remember to make the link for the unique event id */}
-                    <Link to="/event"><button className="btn btn-primary">View Event</button> </Link>
+                    <Link to={`/event/${props.event.id}`}><button className="btn btn-primary">View Event</button> </Link>
                 </CardBody>
             </Card>
         </Col>

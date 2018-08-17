@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+
+import PrivateRoute from '../components/PrivateRoute/PrivateRoute';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 import Header from '../components/ClientComponents/Header/Header';
 import Footer from '../components/ClientComponents/Footer/Footer';
 import Dashboard from '../components/ClientComponents/Dashboard/Dashboard';
@@ -14,18 +19,24 @@ import AdminCreateSponsor from '../components/AdminComponents/CreateSponsor/Crea
 import AdminProductList from '../components/AdminComponents/ProductList/ProductList';
 import AdminSponsorList from '../components/AdminComponents/SponsorList/SponsorList';
 import AdminParticipantList from '../components/AdminComponents/ParticipantList/ParticipantList';
-import PrivateRoute from '../components/PrivateRoute/PrivateRoute';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 class App extends Component {
   state = {
     loggedIn: false,
-    isAdmin: false
+    isAdmin: false,
+    isSuper: false,
+    userName: "",
+    events: [],
+    error: null,
   }
 
   // lifecycle methods below
   componentDidMount() {
-    // fetch the data from the db here and trickle what we need to the child components as needed
+    this.setState({ isLoading: true });
+
+    axios.get('/api/events/all')
+      .then(result => this.setState({events: result.data}))
+      .catch(error => this.setState({error}));
   }
 
   // custom methods below
@@ -33,8 +44,9 @@ class App extends Component {
     this.setState({ loggedIn: false });
     this.setState({ isAdmin: false });
   }
-  loginHandler = () => {
-    // logic here to check if the user will have admin rights
+  loginHandler = (username) => {
+    this.setState({ loggedIn: true });
+    this.setState({ userName: username })
   }
 
   // toggle functions are only necessary for testing and will be removed for production
@@ -56,22 +68,22 @@ class App extends Component {
         <Router>
           <React.Fragment>
             <img style={style} src="http://thelostanchovy.com/wp-content/uploads/2018/07/banner-1.jpg" alt="Fishing Rod Header" className="img-fluid" />
-            <Header loggedIn={this.state.loggedIn} isAdmin={this.state.isAdmin} logout={this.logoutHandler} />
+            <Header loggedIn={this.state.loggedIn} isAdmin={this.state.isAdmin} logout={this.logoutHandler} userName={this.state.userName} />
             <div className="px-5">
               <button className="btn btn-primary" onClick={this.toggleAdminHandler}>Toggle Admin Status</button>
               <button className="btn btn-primary" onClick={this.toggleLoggedInHandler}>Toggle LoggedIn Status</button>
               <Switch>
-                <Route exact path='/' component={Dashboard} />
-                <Route path='/login' component={Login} />
                 {/* Writing the route for login this way allows us to pass props */}
-                <Route path='/login'
+                <Route exact path='/'
+                  render={(props) => <Dashboard {...props} events={this.state.events} />}
+                />
+                <Route exact path='/login'
                   render={(props) => <Login {...props} login={this.loginHandler} />}
                 />
-                <Route path='/register' component={Registration} />
-                <Route path='/resetPassword' component={ResetPassword} />
-                <Route path='/event' component={EventPage} />
-                <Route path='/user' component={UserProfile} />
-
+                <Route exact path='/register' component={Registration} />
+                <Route exact path='/resetPassword' component={ResetPassword} />
+                <Route path='/user/:userId' component={UserProfile} />
+                <Route path='/event/:eventId' component={EventPage} />
                 {/* Using the PrivateRoute component allows us to have protected routes based on admin status */}
                 <PrivateRoute authed={this.state.isAdmin} path='/admin/createEvent' component={AdminCreateEvent} />
                 <PrivateRoute authed={this.state.isAdmin} path='/admin/createProduct' component={AdminCreateProduct} />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from 'mdbreact';
+
 const eventMap = () => {
     return (
         <React.Fragment>

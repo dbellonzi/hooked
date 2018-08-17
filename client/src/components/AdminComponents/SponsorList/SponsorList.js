@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Button } from 'mdbreact';
+import { Button } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import CardDeck from '../../CardDeck/CardDeck';
 import AdminSponsorCard from '../../CardDeck/AdminSponsorCard/AdminSponsorCard';
