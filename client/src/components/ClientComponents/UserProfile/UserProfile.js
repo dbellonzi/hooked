@@ -15,8 +15,10 @@ const userProfile = (props) => {
                     <p>Email: Keithnguyen@hooked.com</p>
                     <p>Username: Admin2018</p>
                     <p>Phone Number: 408-555-9998</p>
+                     <button className="btn btn-warning">Update User Info</button>
+                     <button className="btn btn-success">Order History</button>
                 </div>
-                    <button className="btn btn-danger float-right">Order History</button>
+            
                 </Col>
             </Row>
 
