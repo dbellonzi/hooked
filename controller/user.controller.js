@@ -53,16 +53,9 @@ exports.findAll = (req, res)=>{
         res.send(500).send({error:'could not retrieve Users'})
     })
 }
-// exports.findAll =(req, res) =>{
-//     user.findAll().then((users)=>{
-//         res.json(users)
-//     }).catch((err)=>{
-//         res.send(500).send({error:'could not retrieve user'})
-//     })
-// }
 
 exports.findById = (req, res) => {	
-    User.findById(req.params.userId).then((user) => {
+    user.findById(req.params.userId).then((user) => {
 		res.json(user);
 	}).catch((err)=>{
         res.send(500).send({error:'could not retrieve user'})
@@ -71,7 +64,7 @@ exports.findById = (req, res) => {
 
 exports.delete = (req,res)=>{
     const id = req.params.userId
-    User.destroy({
+    user.destroy({
         where:{id:id}
     }).then(deleteUser =>{
         res.send(`user ${id} has been deleted`)
@@ -81,7 +74,7 @@ exports.delete = (req,res)=>{
 }
 
 exports.update = (req, res) => {
-  const id = req.params.id;
+  const id = req.params.userId;
 	user.update( { 
         first_name: req.body.fName,
         last_name: req.body.lName,

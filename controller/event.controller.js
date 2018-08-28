@@ -35,7 +35,7 @@ exports.findById = (req, res) => {
 // find event by id and all the relationships tide to this instance of the event
 exports.delete =(req,res)=>{
     const id = req.params.eventId;
-    event.destory({
+    event.destroy({
         where:{id:id}
     }).then(deleteEvent =>{
         res.json(deleteEvent)

@@ -10,9 +10,9 @@ module.exports = (connection, Sequelize) =>{
         },
         date:{
             type: Sequelize.DATE,
-            validate:{
-                isAfter: Date.now().toString()
-            }
+            // validate:{
+            //     isAfter: Date.now().toString()
+            // }
         },
         time:{
             type: Sequelize.TIME
@@ -20,15 +20,15 @@ module.exports = (connection, Sequelize) =>{
         // end time
         location:{
             type: Sequelize.STRING,
-            validate:{
-                len:[15]
-            }
+            // validate:{
+            //     len:[15]
+            // }
         },
         description:{
-            type: Sequelize.STRING,
-            validate:{
-                len:[50,1000]
-            }
+            type: Sequelize.TEXT,
+            // validate:{
+            //     len:[50,1000]
+            // }
         },
         event_photo:{
             type: Sequelize.BLOB,
