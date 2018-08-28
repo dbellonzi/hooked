@@ -46,7 +46,7 @@ exports.delete =(req,res)=>{
 }
 
 exports.update = (req, res) => {
-	const id = req.params.id;
+	const id = req.params.eventId;
 	event.update( { 
         title: req.body.title,
         date: req.body.date,
@@ -58,6 +58,6 @@ exports.update = (req, res) => {
          }, 
 		{returning: true, where: {id: id} }
 	).then(() => {
-		res.status(200).send("updated successfully a customer with id = " + id);
+		res.status(200).send("updated successfully an event with id = " + id);
 	});
 };
