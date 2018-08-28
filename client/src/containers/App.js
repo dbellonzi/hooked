@@ -12,6 +12,7 @@ import Registration from '../components/ClientComponents/Registration/Registrati
 import UserProfile from '../components/ClientComponents/UserProfile/UserProfile';
 import ResetPassword from '../components/ClientComponents/ResetPassword/ResetPassword';
 import EventPage from '../components/ClientComponents/EventPage/EventPage';
+import ParticipantList from '../components/ClientComponents/Participantslist/Participantslist';
 import AdminDashboard from '../components/AdminComponents/Dashboard/Dashboard';
 import AdminCreateEvent from '../components/AdminComponents/CreateEvent/CreateEvent';
 import AdminCreateProduct from '../components/AdminComponents/CreateProduct/CreateProduct';
@@ -84,6 +85,7 @@ class App extends Component {
                 <Route exact path='/resetPassword' component={ResetPassword} />
                 <Route path='/user/:userId' component={UserProfile} />
                 <Route path='/event/:eventId' component={EventPage} />
+                <Route path ='/participants' component={ParticipantList}/>
                 {/* Using the PrivateRoute component allows us to have protected routes based on admin status */}
                 <PrivateRoute authed={this.state.isAdmin} path='/admin/createEvent' component={AdminCreateEvent} />
                 <PrivateRoute authed={this.state.isAdmin} path='/admin/createProduct' component={AdminCreateProduct} />
