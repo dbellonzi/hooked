@@ -8,16 +8,19 @@ const featuredEvent = (props) => {
     console.log(props)
     return (
         <React.Fragment>
-            <img src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(97).jpg" alt="Placeholder"/>
+            <div className="container">
+            <img src="http://thelostanchovy.com/wp-content/uploads/2017/08/Big-Sur-Coast-1.jpg" alt="Placeholder" className="img-thumbnail"/>
+            </div>
             <br />
-            <Row>
-                <Col sm="4" className="text-left">
-                    <p>Event Date: </p>
-                    <p>Event Time: </p>
-                    <p>Event Address: </p>
-                </Col>
-                <Col sm="8">
-                    <h3>Event Description</h3>
+            <Row >
+                {/* <Col sm="3" className="text-left">
+                    <p>Event Date: Saturday, August 28, 2019 </p>
+                    <p>Event Time: 8:00 a.m -3p.m </p>
+                    <p>Event Location: Albion River Campground </p>
+                </Col> */}
+                <Col sm="12">
+                    <h3 className="text-center">Event Description</h3>
+                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
                     {/* <p>{props.event.description}</p> */}
                 </Col>
             </Row>

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
-import EventCarousel from '../EventCarousel/EventCarousel';
 import EventSponsors from './EventSponsors/EventSponsors';
 import EventMap from './EventMap/EventMap';
 import { Row, Col } from 'mdbreact';
@@ -27,25 +25,31 @@ class EventPage extends Component {
         return (
             <React.Fragment>
                <h1 className="text-center">{this.state.event.title}</h1> 
-               <img className="d-block w-100 img-fluid" height="500px" src="http://thelostanchovy.com/wp-content/uploads/2017/08/Big-Sur-Coast-1.jpg"/>
+               <img className="d-block w-100 img-fluid shadow" height="500px" src="http://thelostanchovy.com/wp-content/uploads/2017/08/Big-Sur-Coast-1.jpg"/>
                 <br />
-                <Row>
-                    <Col sm="4" className="text-left">
-                        <p>Event Date: {this.state.event.date}</p>
-                        <p>Event Time: {this.state.event.time}</p>
-                        <p>Event Address: {this.state.event.location}</p>
+                <Row className="container-fluid">
+                    <Col md="3" className="text-left">
+                        <p><i class="fas fa-calendar-alt mr-2"></i>Event Date: {this.state.event.date}</p>
+                        <p><i class="fas fa-clock mr-2"></i>Event Time: {this.state.event.time}</p>
+                        <p><i class="fas fa-map-marker-alt mr-2"></i>Event Location: {this.state.event.location}</p>
                     </Col>
-                    <Col sm="8">
-                        <h3>Event Description</h3>
+                    <Col md="6">
+                        <h3><i class="fas fa-clipboard-list mr-2"></i>Event Description</h3>
                         <p>{this.state.event.description}</p>
                     </Col>
+                    <Col md="3">
+                    <div>
+                        <Link to="/participants">
+                            <button className="btn btn-warning mx-5 rounded"> Participants List</button>
+                        </Link>
+                    </div>
+                    <div>
+                        <Link to="/event">
+                            <button className="btn btn-danger mx-5 rounded"> Register Here</button>
+                        </Link>
+                    </div>
+                    </Col>
                 </Row>
-                <Link to="/event">
-                    <button className="btn btn-warning mx-5"> Participant List</button>
-                </Link>
-                <Link to="/event">
-                    <button className="btn btn-success mx-5"> Register Here</button>
-                </Link>
                 <hr />
                 <EventMap />
                 <hr />

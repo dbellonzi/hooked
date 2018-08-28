@@ -22,7 +22,7 @@ const userProfile = (props) => {
                 </Col>
             </Row>
 
-            <Row className="mt-4 bg-light p-3 rounded m-2">
+            <Row className="mt-4 bg-light p-3 rounded m-2 shadow">
                 <Row className="mb-2">
                     <Col md="4">
                     <img className="img-thumbnail img-fluid" src="http://thelostanchovy.com/wp-content/uploads/2017/08/Big-Sur-Coast-1.jpg"    alt="Event Image"/>
