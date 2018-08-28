@@ -26,7 +26,8 @@ class EventPage extends Component {
     render() {
         return (
             <React.Fragment>
-                <EventCarousel />
+               <h1 className="text-center">{this.state.event.title}</h1> 
+               <img className="d-block w-100 img-fluid" height="500px" src="http://thelostanchovy.com/wp-content/uploads/2017/08/Big-Sur-Coast-1.jpg"/>
                 <br />
                 <Row>
                     <Col sm="4" className="text-left">
