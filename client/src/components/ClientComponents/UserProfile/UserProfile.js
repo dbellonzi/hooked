@@ -18,7 +18,6 @@ const userProfile = (props) => {
                      <button className="btn btn-warning">Update User Info</button>
                      <button className="btn btn-success">Order History</button>
                 </div>
-            
                 </Col>
             </Row>
 
