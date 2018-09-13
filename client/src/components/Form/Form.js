@@ -58,14 +58,17 @@ class Form extends Component {
         }
     }
 
+
     submitHandler = (event) => {
+        console.log('this is test')
         event.preventDefault();
 
         if (this.validate()) {
             this.props.submit();
         }
 
-        this.setState({ isValidated: true });
+        this.setState({ isValidated: true }); 
+
     }
 
     render() {
@@ -82,7 +85,7 @@ class Form extends Component {
         }
 
         return (
-            <form method={this.props.method} action={this.props.action} ref={form => this.formEl = form} onSubmit={this.submitHandler} {...props} className={classNames} noValidate>
+            <form  ref={form => this.formEl = form} onSubmit={this.submitHandler} {...props} className={classNames} noValidate>
                 {this.props.children}
             </form>
         );

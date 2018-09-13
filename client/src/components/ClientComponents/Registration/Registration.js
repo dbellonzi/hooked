@@ -1,15 +1,44 @@
 import React, { Component } from 'react';
 import { Row, Col, Button } from 'mdbreact';
 import { Link } from 'react-router-dom';
-// import Form from '../../Form/Form';
+import Form from '../../Form/Form';
+import axios from 'axios'
 class Registration extends Component {
   state = {
     showFormSuccess: false,
+    first_name:'',
+    last_name: '',
+    email: '',
+    phone_number: '',
+    user_name: '',
+    password: ''
   }
+
+  handlefNameChange = event => {this.setState({ first_name: event.target.value })}
+  handlelNameChange = event => {this.setState({ last_name: event.target.value })}
+  handleemailChange = event => {this.setState({ email: event.target.value })}
+  handlepasswordChange = event => {this.setState({ password: event.target.value })}
+  handleusernameChange = event => {this.setState({ user_name: event.target.value })}
+  handlephoneChange = event => {this.setState({ phone_number: event.target.value })}
 
   // This method is the one that should handle the form sumbits.
   // Typically, it will send the form data with an ajax call to the server. IN REACT, YOU USUALLY USE THE AXIOS LIB FOR THAT
   submit = () => {
+
+    const user = {
+      fName:this.state.first_name,
+      lName:this.state.last_name,
+      email:this.state.email,
+      username: this.state.user_name,
+      phone: this.state.phone_number, 
+      password: this.state.password
+    };
+
+    axios.post('/api/users', user)
+    .then(res => {
+      console.log(res);
+      console.log(res.data)
+    }) 
     // Replace this code with a working request to the backend when ready
     // Currently it just displays a success message
     this.setState({ showFormSuccess: true });
@@ -36,13 +65,14 @@ class Registration extends Component {
   }
 
   render() {
+    console.log(this.state)
     return (
       <React.Fragment>
         <h1>Sign up</h1>
         <Row>
           <Col md="1" />
           <Col md="10 text-left">
-            <form method="POST" action="/api/users">
+            <Form>
               <div className="form-group">
                 <label htmlFor="fName">First Name</label>
                 <input
@@ -51,6 +81,7 @@ class Registration extends Component {
                   type="text"
                   name="fName"
                   placeholder="Enter First Name"
+                  onChange={this.handlefNameChange}
                   required={true}
                   minLength={2}
                   pattern="(?=.*[a-z]).{2,}"
@@ -65,6 +96,7 @@ class Registration extends Component {
                   className="form-control"
                   type="text"
                   name="lName"
+                  onChange={this.handlelNameChange}
                   placeholder="Enter Last Name"
                   required={true}
                   minLength={2}
@@ -80,6 +112,7 @@ class Registration extends Component {
                   required={true}
                   type="text"
                   name="username"
+                  onChange={this.handleusernameChange}
                   placeholder="Enter Username"
                 />
                 <div className="invalid-feedback" />
@@ -91,6 +124,7 @@ class Registration extends Component {
                   className={"form-control"}
                   required={true}
                   name="email"
+                  onChange={this.handleemailChange}
                   type={"email"}
                   placeholder={"Enter Email"}
                 />
@@ -103,6 +137,7 @@ class Registration extends Component {
                   className={"form-control"}
                   required={true}
                   name="phone"
+                  onChange={this.handlephoneChange}
                   type={"tel"}
                   placeholder={"Enter Phone Number"}
                   minLength={10}
@@ -119,6 +154,7 @@ class Registration extends Component {
                   className={"form-control"}
                   required={true}
                   name="password"
+                  onChange={this.handlepasswordChange}
                   type={"password"}
                   placeholder={"Enter Password"}
                   minLength={8}
@@ -144,10 +180,10 @@ class Registration extends Component {
 
               <div className={"row justify-content-md-center"}>
                 <div className={"col-sm-12"}>
-                  <Button className={"btn btn-primary btn-block"} onClick={this.submit}>Register</Button>
+                  <Button className={"btn btn-primary btn-block"} onClick={this.submit} type="submit" >Register</Button>
                 </div>
               </div>
-            </form>
+            </Form>
             <div className="text-center mt-4">
               <p>Already a registered user? | <Link to="/login"> Login here</Link></p>
             </div>

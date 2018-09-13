@@ -9,6 +9,7 @@ import Footer from '../components/ClientComponents/Footer/Footer';
 import Dashboard from '../components/ClientComponents/Dashboard/Dashboard';
 import Login from '../components/ClientComponents/Login/Login';
 import Registration from '../components/ClientComponents/Registration/Registration';
+import Registration2 from '../components/ClientComponents/Registration/Registration2';
 import UserProfile from '../components/ClientComponents/UserProfile/UserProfile';
 import ResetPassword from '../components/ClientComponents/ResetPassword/ResetPassword';
 import EventPage from '../components/ClientComponents/EventPage/EventPage';
@@ -82,6 +83,7 @@ class App extends Component {
                   render={(props) => <Login {...props} login={this.loginHandler} />}
                 />
                 <Route exact path='/register' component={Registration} />
+                <Route exact path='/register2' component={Registration2} />
                 <Route exact path='/resetPassword' component={ResetPassword} />
                 <Route path='/user/:userId' component={UserProfile} />
                 <Route path='/event/:eventId' component={EventPage} />

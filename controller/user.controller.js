@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt')
 const passport = require('passport')
 
 exports.create =(req,res)=>{
+    console.log(req.body);
     user.create({
         first_name: req.body.fName,
         last_name: req.body.lName,
@@ -11,6 +12,7 @@ exports.create =(req,res)=>{
         phone_number: req.body.phone,
         user_name: req.body.username,
         password: bcrypt.hashSync(req.body.password, 10)
+        // password: req.body.password,
     }). then((user)=>{
         res.redirect('/')
     }). catch((err)=>{
