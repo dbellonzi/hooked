@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
 import PrivateRoute from '../components/PrivateRoute/PrivateRoute';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
 import Header from '../components/ClientComponents/Header/Header';
 import Footer from '../components/ClientComponents/Footer/Footer';
 import Dashboard from '../components/ClientComponents/Dashboard/Dashboard';
