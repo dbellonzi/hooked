@@ -11,18 +11,17 @@ import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import authReducer from './store/reducers/auth';
-
-const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : null || compose;
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 const rootReducer = combineReducers({
     auth: authReducer,
 })
 
-const store = createStore(rootReducer, applyMiddleware(thunk))
+// const store = createStore(rootReducer, applyMiddleware(thunk))
 
-// const store = createStore(rootReducer, composeEnhancers(
-//     applyMiddleware(thunk)
-// ))
+const store = createStore(rootReducer, composeWithDevTools(
+    applyMiddleware(thunk)
+))
 
 console.log(store)
 const app = (
