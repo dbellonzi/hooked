@@ -22,6 +22,8 @@ import AdminProductList from '../components/AdminComponents/ProductList/ProductL
 import AdminSponsorList from '../components/AdminComponents/SponsorList/SponsorList';
 import AdminParticipantList from '../components/AdminComponents/ParticipantList/ParticipantList';
 
+import * as actions from '../store/actions/index';
+
 class App extends Component {
   state = {
     loggedIn: false,
