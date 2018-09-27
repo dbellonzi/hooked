@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import PrivateRoute from '../components/PrivateRoute/PrivateRoute';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from '../components/ClientComponents/Header/Header';
 import Footer from '../components/ClientComponents/Footer/Footer';
 import Dashboard from '../components/ClientComponents/Dashboard/Dashboard';
@@ -20,6 +22,8 @@ import AdminProductList from '../components/AdminComponents/ProductList/ProductL
 import AdminSponsorList from '../components/AdminComponents/SponsorList/SponsorList';
 import AdminParticipantList from '../components/AdminComponents/ParticipantList/ParticipantList';
 
+import * as actions from '../store/actions/index';
+
 class App extends Component {
   state = {
     loggedIn: false,
@@ -30,10 +34,8 @@ class App extends Component {
     error: null,
   }
 
-  // lifecycle methods below
   componentDidMount() {
-    this.setState({ isLoading: true });
-
+    this.props.fetchAllEvents();
     axios.get('/api/events/all')
       .then(result => this.setState({events: result.data}))
       .catch(error => this.setState({error}));
@@ -104,4 +106,17 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.token !== null,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchAllEvents: () => dispatch(actions.fetchAllEvents()),
+    // onTryAutoSignup: () => dispatch(actions.authCheckState())
+  }
+}
+
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(App));
