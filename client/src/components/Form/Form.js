@@ -58,17 +58,13 @@ class Form extends Component {
         }
     }
 
-
     submitHandler = (event) => {
-        console.log('this is test')
         event.preventDefault();
 
         if (this.validate()) {
-            this.props.submit();
+            this.props.submit;
         }
-
         this.setState({ isValidated: true }); 
-
     }
 
     render() {

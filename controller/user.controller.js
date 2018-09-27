@@ -13,9 +13,12 @@ exports.create =(req,res)=>{
         user_name: req.body.username,
         password: bcrypt.hashSync(req.body.password, 10)
         // password: req.body.password,
-    }). then((user)=>{
-        res.redirect('/')
-    }). catch((err)=>{
+    }).then((user)=>{
+        console.log('input success')
+        res.json(user)
+        // res.redirect('/')
+    }).catch((err)=>{
+        console.log('invalid user')
         res.status(501).send({
             error: "could not add new user to the database"
         })

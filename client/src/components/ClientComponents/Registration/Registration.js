@@ -38,11 +38,10 @@ class Registration extends Component {
     .then(res => {
       console.log(res);
       console.log(res.data)
-    }) 
-    // Replace this code with a working request to the backend when ready
-    // Currently it just displays a success message
-    this.setState({ showFormSuccess: true });
-    setTimeout(() => { this.setState({ showFormSuccess: false }); }, 5000)
+      this.props.history.push('/')
+    }).catch(err=>{
+      console.log("this is the error;", err)
+    })
   }
 
   _renderSuccessMessage() {
@@ -65,14 +64,13 @@ class Registration extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <React.Fragment>
         <h1>Sign up</h1>
         <Row>
           <Col md="1" />
           <Col md="10 text-left">
-            <Form>
+            <Form submit = {this.submit}>
               <div className="form-group">
                 <label htmlFor="fName">First Name</label>
                 <input
