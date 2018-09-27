@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import PrivateRoute from '../components/PrivateRoute/PrivateRoute';
@@ -67,8 +67,6 @@ class App extends Component {
     }
     return (
       <div className="text-center">
-        <Router>
-          <React.Fragment>
             <img style={style} src="http://thelostanchovy.com/wp-content/uploads/2018/07/banner-1.jpg" alt="Fishing Rod Header" className="img-fluid" />
             <Header loggedIn={this.state.loggedIn} isAdmin={this.state.isAdmin} logout={this.logoutHandler} userName={this.state.userName} />
             <div className="px-5">
@@ -99,8 +97,6 @@ class App extends Component {
               </Switch>
             </div>
             <Footer />
-          </React.Fragment>
-        </Router>
       </div>
     );
   }
