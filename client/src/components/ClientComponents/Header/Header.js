@@ -13,8 +13,8 @@ const header = (props) => {
                 <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="basicExampleNav">
-                <div className="navbar-nav nav-item mr-auto">
-                    <Link to="/" className="nav-link ">Home</Link>
+                <div className="navbar-nav nav-item mr-auto" data-target=".navbar-collapse.show" data-toggle="collapse">
+                    <Link to="/" className="nav-link">Home</Link>
                     <Link to="/about" className="nav-link">Link</Link>
                     <Link to="/contact" className="nav-link">Contact</Link>
                     {props.isAdmin ?
@@ -22,11 +22,11 @@ const header = (props) => {
                     }
                 </div>
                 {props.loggedIn ?
-                    <div className="navbar-nav nav-item">
+                    <div className="navbar-nav nav-item" data-target=".navbar-collapse.show" data-toggle="collapse">
                         <Link className="nav-link" to="/user">{props.userName}</Link>
                         <Link onClick={props.logout}  className="nav-link" to="/"> Logout</Link>
                     </div> :
-                    <div className="navbar-nav nav-item">
+                    <div className="navbar-nav nav-item" data-target=".navbar-collapse.show" data-toggle="collapse">
                         <Link className="nav-link" to="/login"> Login</Link>
                         <Link className="nav-link" to="/register"> Register</Link>
                     </div>

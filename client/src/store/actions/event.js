@@ -48,6 +48,7 @@ export const fetchUserEventsSuccess = (events) => {
     };
 };
 
+
 export const fetchUserEventsFail = (error) => {
     return {
         type: actionTypes.FETCH_USER_EVENTS_FAIL,
