@@ -28,7 +28,6 @@ const store = createStore(rootReducer, composeWithDevTools(
     applyMiddleware(thunk)
 ))
 
-console.log(store)
 const app = (
     <Provider store={store}>
         <BrowserRouter>
