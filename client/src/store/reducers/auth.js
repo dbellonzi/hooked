@@ -4,7 +4,7 @@ import { updateObject } from '../../shared/utility';
 const initialState = {
     isAdmin: false,
     userId: null,
-    userName: null,
+    firstName: null,
     token: null,
     error: null,
 }
@@ -13,7 +13,7 @@ const authSuccess = (state,action) => {
     return updateObject(state, {
         isAdmin: action.isAdmin,
         userId: action.userId,
-        userName: action.userName,
+        firstName: action.firstName,
         token: action.token,
         error: null
     });
