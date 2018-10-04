@@ -2,9 +2,11 @@ const db = require('../config/db.config.js')
 const user = db.user
 const bcrypt = require('bcrypt')
 const passport = require('passport')
+const jwt = require('jsonwebtoken');
+
 
 exports.create =(req,res)=>{
-    console.log(req.body);
+    console.log('creating user: ',req);
     user.create({
         first_name: req.body.fName,
         last_name: req.body.lName,
@@ -14,9 +16,10 @@ exports.create =(req,res)=>{
         password: bcrypt.hashSync(req.body.password, 10)
         // password: req.body.password,
     }).then((user)=>{
-        console.log('input success')
-        res.json(user)
-        // res.redirect('/')
+        console.log(user)
+        var token = jwt.sign({name: user.first_name, _id: user.id, isAdmin: user.isAdmin},'123455');
+        res.json({success:true, token: 'JWT' + token, firstName: user.first_name, userId: user.id, isAdmin: user.isAdmin})
+        // res.json(user)
     }).catch((err)=>{
         console.log('invalid user')
         res.status(501).send({

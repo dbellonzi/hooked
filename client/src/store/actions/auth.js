@@ -2,24 +2,25 @@ import axios from 'axios';
 
 import * as actionTypes from './actionTypes';
 
-export const auth = (data, isRegister) => {
+export const auth = (data, isLogin) => {
     return dispatch => {
         let url = '/login';
         let authData = {
             email: data.email,
-            password: data.password,
-            // returnSecureToken: true {this is firebase syntax we need to use passport syntax}
+            password: data.password
         };
-        if (!isRegister) {
+        if (!isLogin) {
             url = '/api/users';
             authData = {
-                firstName: data.firstName,
-                lastName: data.lastName,
-                userName: data.userName,
+                fName: data.fName,
+                lName: data.lName,
+                username: data.username,
                 email: data.email,
                 phone: data.phone,
                 password: data.password
             }
+            console.log('action fName: data:', data.fName)
+            console.log('action fName: authData:', data.fName)
         };
         axios.post(url, authData).then(response => {
             // BELOW ARE FIREBASE AND LOCALSTORAGE THINGS WE WILL BE USING PASSPORT TO HOLD THIS DATA IM ASSUMING
@@ -32,8 +33,9 @@ export const auth = (data, isRegister) => {
 
             // NEED TO CHECK WHAT DATA COMES BACK AND WHAT WE NEED!
             console.log(response.data);
-            // dispatch(authSuccess(response.data));
+            dispatch(authSuccess(response.data));
         }).catch(error => {
+            console.log(error);
             dispatch(authFail(error.response.data.error));
         });
     }
@@ -44,7 +46,7 @@ export const authSuccess = (data) => {
         type: actionTypes.AUTH_SUCCESS,
         token: data.token,
         userId: data.userId,
-        userName: data.userName,
+        firstName: data.firstName,
         isAdmin: data.isAdmin
     };
 };
