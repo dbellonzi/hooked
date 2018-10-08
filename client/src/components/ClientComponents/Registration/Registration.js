@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import { Row, Col, Button } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import Form from '../../Form/Form';
+import * as actions from '../../../store/actions/index';
 import axios from 'axios'
 class Registration extends Component {
   state = {
-    showFormSuccess: false,
     first_name:'',
     last_name: '',
     email: '',
     phone_number: '',
     user_name: '',
-    password: ''
+    password: '',
+    submitted: false
   }
 
   handlefNameChange = event => {this.setState({ first_name: event.target.value })}
@@ -24,30 +27,27 @@ class Registration extends Component {
   // This method is the one that should handle the form sumbits.
   // Typically, it will send the form data with an ajax call to the server. IN REACT, YOU USUALLY USE THE AXIOS LIB FOR THAT
   submit = () => {
-
+    this.setState({submitted: true})
     const user = {
       fName:this.state.first_name,
       lName:this.state.last_name,
       email:this.state.email,
       username: this.state.user_name,
       phone: this.state.phone_number, 
-      password: this.state.password
+      password: this.state.password,
     };
-
-    axios.post('/api/users', user)
-    .then(res => {
-      console.log(res);
-      console.log(res.data)
+    console.log('fName: ', user.fName)
+    //this is the action from the auth reducer REFERENCE MAPDISPATCHTOPROPS
+    this.props.submitToBack(user)
+    if (!this.props.error && this.state.submitted){
       this.props.history.push('/')
-    }).catch(err=>{
-      console.log("this is the error;", err)
-    })
+    }
   }
 
-  _renderSuccessMessage() {
+  _renderErrorMessage() {
     return (
-      <div className={"alert alert-success mt-4"} role="alert">
-        <p>Form was successfully validated and is ready to be submitted</p>
+      <div className={"alert alert-danger mt-4"} role="alert">
+        <p>{this.props.error}</p>
       </div>
     )
   }
@@ -185,7 +185,7 @@ class Registration extends Component {
             <div className="text-center mt-4">
               <p>Already a registered user? | <Link to="/login"> Login here</Link></p>
             </div>
-            {this.state.showFormSuccess ? this._renderSuccessMessage() : null}
+            {this.props.error ? this._renderErrorMessage() : null}
           </Col>
         </Row>
       </React.Fragment>
@@ -193,4 +193,16 @@ class Registration extends Component {
   }
 }
 
-export default Registration;
+const mapStateToProps = state => {
+  return {
+    error: state.auth.error
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    submitToBack: (user) => dispatch(actions.auth(user, false))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Registration);
