@@ -11,6 +11,8 @@ import App from './containers/App';
 import registerServiceWorker from './registerServiceWorker';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'jquery/dist/jquery.min'
+import 'bootstrap/dist/js/bootstrap.bundle'
 import 'mdbreact/dist/css/mdb.css';
 import adminReducer from './store/reducers/admin';
 import authReducer from './store/reducers/auth';

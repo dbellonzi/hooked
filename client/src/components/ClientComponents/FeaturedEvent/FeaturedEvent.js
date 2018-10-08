@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 // featuredEvent component needs to receive a single event as props to use for dynamic content
 const featuredEvent = (props) => {
-    console.log(props)
+    console.log("From FeaturedEvent.js", props)
     return (
         <React.Fragment>
             <div className="container">
