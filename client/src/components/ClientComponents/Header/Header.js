@@ -2,9 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar } from 'mdbreact';
 
-
 // Need to fix the toggle button. It currently does not togggle when collapsed.
-
 const header = (props) => {
     return (
         <Navbar dark color="stylish-color-dark" expand="lg" sticky="top" className="mb-5">

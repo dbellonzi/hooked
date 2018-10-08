@@ -42,15 +42,6 @@ class Registration extends Component {
     if (!this.props.error && this.state.submitted){
       this.props.history.push('/')
     }
-
-    // axios.post('/api/users', user)
-    // .then(res => {
-    //   console.log(res);
-    //   console.log(res.data)
-    //   this.props.history.push('/')
-    // }).catch(err=>{
-    //   console.log("this is the error;", err)
-    // })
   }
 
   _renderErrorMessage() {
