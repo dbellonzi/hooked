@@ -5,7 +5,6 @@ export const fetchAllEvents = () => {
     return dispatch => {
         axios.get('/api/events/all')
             .then(res => {
-                console.log(res.data);
                 dispatch(fetchAllEventsSuccess(res.data));
             }).catch(err => {
                 dispatch(fetchAllEventsFail(err));
