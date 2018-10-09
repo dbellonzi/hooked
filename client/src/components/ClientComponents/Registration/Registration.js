@@ -36,14 +36,16 @@ class Registration extends Component {
     };
     //this is the action from the auth reducer REFERENCE MAPDISPATCHTOPROPS
     this.props.submitToBack(user)
-    if (!this.props.error && this.state.submitted) {
+
+    if (this.props.error && this.state.submitted){
       this.props.history.push('/')
     }
   }
 
   _renderErrorMessage() {
     return (
-      <div className={"alert alert-danger mt-4"} role="alert">
+      <div className={"alert alert-danger mt-4 alert-dismissible"} role="alert">
+      <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <p>{this.props.error}</p>
       </div>
     )

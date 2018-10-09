@@ -3,6 +3,7 @@ const user = db.user
 const bcrypt = require('bcrypt')
 const passport = require('passport')
 const jwt = require('jsonwebtoken');
+const config = require('../config/env.js')
 
 
 exports.create =(req,res)=>{
@@ -16,8 +17,7 @@ exports.create =(req,res)=>{
         password: bcrypt.hashSync(req.body.password, 10)
         // password: req.body.password,
     }).then((user)=>{
-        console.log(user)
-        var token = jwt.sign({name: user.first_name, _id: user.id, isAdmin: user.isAdmin},'123455');
+        var token = jwt.sign({name: user.first_name, _id: user.id, isAdmin: user.isAdmin},config.secret);
         res.json({success:true, token: 'JWT' + token, firstName: user.first_name, userId: user.id, isAdmin: user.isAdmin})
         // res.json(user)
     }).catch((err)=>{
@@ -70,3 +70,26 @@ exports.update = (req, res) => {
 		res.status(200).send("updated successfully a customer with id = " + id);
 	});
 };
+
+exports.signin =(req, res)=>{
+   user.findOne({ where:{email:req.body.email}
+}).then(user=>{
+    if(!user){
+        res.status(401).send({success: false, msg: 'Authentication failed. User not found.'})
+    }
+    if(user){
+        let hash = user.password
+        console.log(hash)
+        bcrypt.compare(req.body.password, hash, (err, result)=>{
+            if (result){
+                var token = jwt.sign({name: user.first_name, _id: user.id, isAdmin: user.isAdmin}, config.secret);
+                console.log(token)
+                res.json({success:true, token: 'JWT' + token})
+            }else{
+                res.status(401).send({sucess:false, msg: 'Authentication failed. Wrong password'})
+            }
+        })
+    }
+})
+
+}
