@@ -5,10 +5,10 @@ import { Row, Col, Button } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import Form from '../../Form/Form';
 import * as actions from '../../../store/actions/index';
-import axios from 'axios'
+
 class Registration extends Component {
   state = {
-    first_name:'',
+    first_name: '',
     last_name: '',
     email: '',
     phone_number: '',
@@ -17,28 +17,26 @@ class Registration extends Component {
     submitted: false
   }
 
-  handlefNameChange = event => {this.setState({ first_name: event.target.value })}
-  handlelNameChange = event => {this.setState({ last_name: event.target.value })}
-  handleemailChange = event => {this.setState({ email: event.target.value })}
-  handlepasswordChange = event => {this.setState({ password: event.target.value })}
-  handleusernameChange = event => {this.setState({ user_name: event.target.value })}
-  handlephoneChange = event => {this.setState({ phone_number: event.target.value })}
+  handlefNameChange = event => { this.setState({ first_name: event.target.value }) }
+  handlelNameChange = event => { this.setState({ last_name: event.target.value }) }
+  handleemailChange = event => { this.setState({ email: event.target.value }) }
+  handlepasswordChange = event => { this.setState({ password: event.target.value }) }
+  handleusernameChange = event => { this.setState({ user_name: event.target.value }) }
+  handlephoneChange = event => { this.setState({ phone_number: event.target.value }) }
 
-  // This method is the one that should handle the form sumbits.
-  // Typically, it will send the form data with an ajax call to the server. IN REACT, YOU USUALLY USE THE AXIOS LIB FOR THAT
   submit = () => {
     this.setState({submitted: true})
     const user = {
-      fName:this.state.first_name,
-      lName:this.state.last_name,
-      email:this.state.email,
+      fName: this.state.first_name,
+      lName: this.state.last_name,
+      email: this.state.email,
       username: this.state.user_name,
-      phone: this.state.phone_number, 
+      phone: this.state.phone_number,
       password: this.state.password,
     };
-    console.log('fName: ', user.fName)
     //this is the action from the auth reducer REFERENCE MAPDISPATCHTOPROPS
     this.props.submitToBack(user)
+
     if (this.props.error && this.state.submitted){
       this.props.history.push('/')
     }
@@ -71,7 +69,8 @@ class Registration extends Component {
         <Row>
           <Col md="1" />
           <Col md="10 text-left">
-            <Form submit = {this.submit}>
+            {this.props.error ? this._renderErrorMessage() : null}
+            <Form submit={this.submit}>
               <div className="form-group">
                 <label htmlFor="fName">First Name</label>
                 <input
@@ -186,7 +185,6 @@ class Registration extends Component {
             <div className="text-center mt-4">
               <p>Already a registered user? | <Link to="/login"> Login here</Link></p>
             </div>
-            {this.props.error ? this._renderErrorMessage() : null}
           </Col>
         </Row>
       </React.Fragment>

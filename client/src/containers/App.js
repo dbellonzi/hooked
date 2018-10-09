@@ -22,28 +22,13 @@ import AdminParticipantList from '../components/AdminComponents/ParticipantList/
 import * as actions from '../store/actions/index';
 
 class App extends Component {
-  // componentDidMount() {
-  //   this.props.fetchAllEvents();
-  // }
-
   render() {
     const style = {
       width: '100%',
     }
-    let events = [];
-    // for (let key in this.props.events) {
-    //   events.push({
-    //     ...this.props.events[key],
-    //     id: key
-    //   });
-    // }
-    // console.log('From App.js: ', events);
     let routes = (
       <Switch>
         <Route exact path='/' component={Dashboard} />
-        {/* <Route exact path='/'
-          render={(props) => <Dashboard {...props} events={this.props.events} />}
-        /> */}
         <Route exact path='/login' component={Login} />
         <Route exact path='/register' component={Registration} />
         <Route exact path='/resetPassword' component={ResetPassword} />
@@ -57,9 +42,6 @@ class App extends Component {
       routes = (
         <Switch>
           <Route exact path='/' component={Dashboard} />
-          {/* <Route exact path='/'
-            render={(props) => <Dashboard {...props} events={this.props.events} />}
-          /> */}
           <Route exact path='/login' component={Login} />
           <Route exact path='/register' component={Registration} />
           <Route exact path='/resetPassword' component={ResetPassword} />
@@ -95,13 +77,11 @@ const mapStateToProps = state => {
     isAuthenticated: state.auth.token !== null,
     userName: state.auth.userName,
     isAdmin: state.auth.isAdmin,
-    // events: state.event.events
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    // fetchAllEvents: () => dispatch(actions.fetchAllEvents()),
     // onTryAutoSignup: () => dispatch(actions.authCheckState())
   }
 }

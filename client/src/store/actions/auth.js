@@ -25,12 +25,10 @@ export const auth = (data, isLogin) => {
             // BELOW ARE FIREBASE AND LOCALSTORAGE THINGS WE WILL BE USING PASSPORT TO HOLD THIS DATA IM ASSUMING
 
             // const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-            // localStorage.setItem('token', response.data.idToken);
             // localStorage.setItem('expirationDate', expirationDate);
-            // localStorage.setItem('userId', response.data.localId);
-            
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('userId', response.data.userId);
 
-            // NEED TO CHECK WHAT DATA COMES BACK AND WHAT WE NEED!
             console.log(response.data);
             dispatch(authSuccess(response.data));
         }).catch(error => {
