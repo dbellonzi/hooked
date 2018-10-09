@@ -15,6 +15,7 @@ router.post('/api/products/:eventId', product.create);
 router.post('/api/users', user.create);
 router.post('/api/sponors/:eventId', sponsor.create);
 router.post('/api/orders/:eventId', order.create);
+router.post('/login', user.signin);
 
 router.get('/api/sponsors/all' , sponsor.findAll);
 router.get('/api/events/all', event.findAll);
@@ -40,10 +41,10 @@ router.put('/api/event/:eventId', event.update);
 router.put('/api/sponsor/:sponsorId', sponsor.update);
 router.put('/api/order/:orderId', order.update);
 
-router.post('/login', passport.authenticate('local', { 
-  failureRedirect: '/login',
-  successRedirect: '/',
-}))
+// router.post('/login', passport.authenticate('local', { 
+//   failureRedirect: '/login',
+//   successRedirect: '/',
+// }))
 
 // Still need to create the UPDATE ROUTES
 // Still need to make individual query to database 

@@ -21,31 +21,31 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, "client/build/")));
 app.use(require('./routes/routes.js'))
 
-passport.use(new Localstrategy ((username, pass, cb)=>{
-  var hashedPass = bcrypt.hashSync(pass,10)
-  db.user.findOne({
-    where: {
-      user_name: username
-    }
-  }).then(function(user, err){
-    if (err) { return cb(err); }
-    if (!user) { 
-    return cb(null, false); }
-    if (!bcrypt.compareSync(pass, user.password)){ 
-      return cb(null, false); }
-    return cb(null, user);
-  })
-}))
+// passport.use(new Localstrategy ((username, pass, cb)=>{
+//   var hashedPass = bcrypt.hashSync(pass,10)
+//   db.user.findOne({
+//     where: {
+//       user_name: username
+//     }
+//   }).then(function(user, err){
+//     if (err) { return cb(err); }
+//     if (!user) { 
+//     return cb(null, false); }
+//     if (!bcrypt.compareSync(pass, user.password)){ 
+//       return cb(null, false); }
+//     return cb(null, user);
+//   })
+// }))
 
-passport.serializeUser((user, cb)=>{
-  cb(null, user.id);
-});
+// passport.serializeUser((user, cb)=>{
+//   cb(null, user.id);
+// });
 
-passport.deserializeUser((id, cb)=> {
-  db.user.findById(id).then((user)=>{
-    cb(null, user);
-  });
-});
+// passport.deserializeUser((id, cb)=> {
+//   db.user.findById(id).then((user)=>{
+//     cb(null, user);
+//   });
+// });
 
 app.all("*", (req, res) => {
   res.sendFile(path.resolve("../client/build/index.html"));
