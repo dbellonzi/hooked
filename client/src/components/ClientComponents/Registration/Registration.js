@@ -25,7 +25,7 @@ class Registration extends Component {
   handlephoneChange = event => { this.setState({ phone_number: event.target.value }) }
 
   submit = () => {
-    this.setState({ submitted: true })
+    this.setState({submitted: true})
     const user = {
       fName: this.state.first_name,
       lName: this.state.last_name,
