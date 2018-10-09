@@ -34,7 +34,6 @@ class Registration extends Component {
       phone: this.state.phone_number,
       password: this.state.password,
     };
-    console.log('fName: ', user.fName)
     //this is the action from the auth reducer REFERENCE MAPDISPATCHTOPROPS
     this.props.submitToBack(user)
     if (!this.props.error && this.state.submitted) {

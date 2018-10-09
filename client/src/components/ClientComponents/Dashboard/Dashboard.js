@@ -6,7 +6,6 @@ import CardDeck from '../../CardDeck/CardDeck';
 import EventCard from '../../CardDeck/EventCard/EventCard';
 import * as actions from '../../../store/actions/index';
 
-// Need to pull data from db to populate FeaturedEvent
 // Instead of rotating through by data created, i think there needs to be an Admin option to make which event will the featured event. 
 
 class Dashboard extends Component {
