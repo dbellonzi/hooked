@@ -10,25 +10,24 @@ exports.create =(req,res)=>{
     }). then((order)=>{
         res.json(order)
     }). catch((err)=>{
-        res.status(501).send({
-            error: "could not add new order to the database"
-        })
+        res.status(501).send({ success: false, msg: 'Could not create order. Check parameters'})
     })
 }
 
 exports.findAll = (req, res)=>{
-    order.findAll(). then((orders)=>{
+    order.findAll().then((orders)=>{
         res.json(orders)
     }).catch((err)=>{
-        res.send(500).send({error:'could not retrieve orders'})
+        res.status(501).send({ success: false, msg: 'Could not retrieve orders'})
     })
 }
 
-exports.findById = (req, res) => {	
+exports.findById = (req, res) => {
+    const id = req.params.orderId
 	order.findById(req.params.orderId).then((order) => {
 		res.json(order);
 	}).catch((err)=>{
-        res.send(500).send({error:'could not retrieve order'})
+        res.send(500).send({error:'could not retrieve order id =' + id})
     })
 };
 
