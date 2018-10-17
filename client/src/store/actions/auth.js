@@ -92,3 +92,15 @@ export const authCheckState = () => {
         }
     };
 };
+
+// axios.defaults.headers.common['Authorization'] = AUTH_TOKEN; (This sets the Authorization Headers which is used to validate API request to the back.)
+
+// We can also add this line of code as well
+// function setToken (){
+//     var token = store.getState()
+//     if(token){
+//         axios.defaults.headers.common['Authorization'] = token
+//     }else{
+//         axios.defaults.headers.common['Authorization'] = null 
+//     }
+// }

@@ -16,12 +16,15 @@ router.post('/api/users', user.create);
 router.post('/api/sponors/:eventId', sponsor.create);
 router.post('/api/orders/:eventId', order.create);
 router.post('/login', user.signin);
+router.post ('/reset/:token', user.resetconfirm)
+router.post('/resetpassword', user.reset)
 
 router.get('/api/sponsors/all' , sponsor.findAll);
 router.get('/api/events/all', event.findAll);
 router.get('/api/products/all', product.findAll);
 router.get('/api/users/all' , user.findAll);
 router.get('/api/orders/all' , order.findAll);
+router.get ('/user/:token', user.reset_password)
 
 router.get('/api/user/:userId', user.findById);
 router.get('/api/product/:productId', product.findById);

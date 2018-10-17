@@ -55,6 +55,133 @@ exports.findAll = (req, res)=>{
 //     })
 // }
 
+exports.reset = (req, res, next) => {
+    //CREATES A CUSTOM TOKEN THAT IS SENT TO THE USER IN AN EMAIL STRING.
+    async.waterfall([
+        (done) => {
+            crypto.randomBytes(20, function (err, buf) {
+                var token = buf.toString('hex');
+                console.log("CRYPTO TOKEN:",token)
+                done(err, token);
+            });
+        },
+        (token, done) => {
+            User.findOne({ email: req.body.email }, (err, user) => {
+                if (err) throw err
+                if (!user) {
+                    res.status(501).send({ success: false, msg: 'Email not found. Please enter a valid email.'})
+                }
+            }).then((user) => {
+                user.resetPasswordToken = token;
+                user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+                user.save((err) => {
+                    done(err, token, user);
+                    res.json(user)
+                });
+            })
+        },
+        function (token, user, done) {
+            var smtpTransport = nodemailer.createTransport({
+                service: 'SendGrid',
+                auth: {
+                    user: 'username here',
+                    pass: 'password here',
+                }
+            });
+
+            var mailOptions = {
+                to: user.email,
+                from: 'passwordreset@nyjahwood.com',
+                subject: 'Nyjahwood Password Reset',
+                text: user.first_name +' , '+ 
+                    'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+                    'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                    'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+                    'If you did not request this, please ignore this email and your password will remain unchanged.\n',
+            };
+            smtpTransport.sendMail(mailOptions, function (err) {
+                done(err, 'done');
+            });
+        }
+    ], function (err) {
+        if (err) return next(err);
+        res.redirect('/reset-password');
+    });
+};
+
+exports.resetconfirm = (req, res) =>{
+    getAuthToken = function() {
+        if(req.headers.referer){
+            var parted =req.headers.referer.split('/')
+            return parted [4]
+        }else{
+            return null 
+        }
+    }
+    var token = getAuthToken(req.headers.referer)
+    // pulls the token from the req.headers.referer. Split it at / and return the part [4] which is the token
+    async.waterfall([
+        function(done) {
+          User.findOne({ resetPasswordToken: token},(err, user)=> {
+            if (err) throw err
+            if (!user) {
+                res.status(501).send({ success: false, msg: 'Password reset token is invalid or has expired.' })
+            }
+            console.log(user)
+            user.password = bcrypt.hashSync(req.body.password, 10)
+            console.log("req.body.password:",req.body.password)
+            console.log("Encrypted user passsword:",user.password)
+            // user.password = req.body.password;
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpires = undefined;
+            user.save(err=>{
+                if(err) throw err
+                done(err, user)
+            })
+          }).then(user=>{
+              res.json(user)
+          });
+        },
+        function(user, done) {
+          var smtpTransport = nodemailer.createTransport({
+            service: 'SendGrid',
+            auth: {
+              user: 'user credentials',
+              pass: 'password credientals'
+            }
+          });
+          var mailOptions = {
+            to: user.email,
+            from: 'admin@hooked.com',
+            subject: 'Your password has been changed',
+            text: 'Hello,\n\n' +  
+              'This is a confirmation that the password for your account ' + user.email + ' has just been changed at nyjahwood.com. Please contact our support staff if is any issue. Thank you. \n'
+          };
+          smtpTransport.sendMail(mailOptions,(err)=>{
+            done(err);
+          });
+        }
+      ], function(err) {
+         if(err) throw err
+      });
+}
+// TAKES THE PASSWORD FROM THE REQ.PARAMS.TOKEN AND CHECKS IT AGAINST THE RESETPASSWORD TOKEN THAT WAS CREATED TO MAKE. STILL NEED TO MAKE SURE IT CHECKS FOR THE RESETPASSWORD EXPIRES FIELD. 
+
+exports.reset_password = (req, res) => {
+    console.log(req.params)
+    User.findOne({
+        resetPasswordToken: req.params.token,
+        // resetPasswordExpires: { $gt: Date.now()}
+    }, (err, user) => {
+        if (err) throw err
+        if (!user || user.resetPasswordExpires < Date.now()) {
+            res.status(401).send({ success: false, msg: 'Password reset token is invalid or has expired please try again' })
+        }
+    }).then(user => {
+        res.json(user)
+    })
+}
+
 
 exports.findById = (req, res) => {	
     user.findById(req.params.userId).then((user) => {

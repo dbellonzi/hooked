@@ -4,7 +4,7 @@ import { Col, Container, Row, Footer } from 'mdbreact';
 // Update to show what content we want for our footer
 const footer = () => {
     return (
-        <Footer color="stylish-color-dark" className="font-small pt-4">
+        <Footer color="stylish-color-dark" className="font-small pt-4 fixed">
             <Container fluid className="text-center text-md-left">
                 <Row className="d-flex align-items-center">
                     <Col md="8" lg="8">
