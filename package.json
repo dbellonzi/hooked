@@ -11,6 +11,7 @@
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "jsonwebtoken": "^8.3.0",
+    "jwt-decode": "^2.2.0",
     "mysql2": "^1.5.3",
     "nodemailer": "^4.6.8",
     "npm": "^6.4.1",

@@ -21,43 +21,42 @@ exports.create =(req,res)=>{
         password: bcrypt.hashSync(req.body.password, 10)
     }).then((user)=>{
         var token = jwt.sign({name: user.first_name, _id: user.id, isAdmin: user.isAdmin},config.secret);
-        res.json({success:true, token: 'JWT' + token, firstName: user.first_name, userId: user.id, isAdmin: user.isAdmin})
+        res.json({success:true, token:token, firstName: user.first_name, userId: user.id, isAdmin: user.isAdmin})
     }).catch((err)=>{
         console.log('invalid user')
         res.status(501).send({ success: false, msg:'can not enter Event into DB'})
     })
 }
 
-exports.findAll = (req, res)=>{
-    user.findAll().then((user)=>{
-        res.json(user)
-    }).catch((err)=>{
-        res.status(501).send({ success: false, msg:'can not final all users in DB'})
-    })
-}
+// exports.findAll = (req, res)=>{
+//     user.findAll().then((user)=>{
+//         res.json(user)
+//     }).catch((err)=>{
+//         res.status(501).send({ success: false, msg:'can not final all users in DB'})
+//     })
+// }
 
 // WE ARE GOING TO USE THE BOTTOM CODE BUT NEED TO PUT AND GET THE JWT TOKEN FROM THE HEADERS OR FROM THE REDUX STORE. THIS ROUTE NEEDS TO BE PROTECTED. WILL USE (JWT.VERIFY) TO CHECK VALIDITY OF TOKEN AND CHECK IF isAdmin boolean is true || false. 
 
-// exports.findAll = (req, res) => {
-//     var token = req.body.token || req.query.token || getToken(req.headers)
-//     console.log('parced authorization token:', token)
-//     console.log('req.header:', req.headers)
-//     jwt.verify(token, config.secret, (err, user) => {
-//         console.log(user)
-//         if (err) {
-//             res.status(401).send({ success: false, msg: 'Please provide a valid token' })
-//         } else if (user.isAdmin == false || user.isAdmin == null) {
-//             res.status(401).send({ success: false, msg: 'Unauthorized' })
-//         } else {
-//             User.find()
-//                 .then((users) => {
-//                     res.json(users)
-//                 }).catch((err) => {
-//                     res.status(404).send({ error: 'could not retrieve user' })
-//                 })
-//         }
-//     })
-// }
+exports.findAll = (req, res) => {
+    var token = req.body.token || req.query.token || getToken(req.headers)
+    console.log('parced authorization token:', token)
+    console.log('req.header:', req.headers)
+    jwt.verify(token, config.secret, (err, result) => {
+        console.log(result)
+        if (err) {
+            res.status(401).send({ success: false, msg: 'Please provide a valid token' })
+        } else if (result.isAdmin == false || result.isAdmin == null) {
+            res.status(401).send({ success: false, msg: 'Unauthorized' })
+        } else {
+            db.user.findAll().then((users) => {
+                    res.json(users)
+                }).catch((err) => {
+                    res.status(404).send({ error: 'could not retrieve user' })
+                })
+        }
+    })
+}
 
 exports.reset = (req, res, next) => {
     //CREATES A CUSTOM TOKEN THAT IS SENT TO THE USER IN AN EMAIL STRING.
@@ -225,6 +224,7 @@ exports.update = (req, res) => {
 exports.signin =(req, res)=>{
    user.findOne({ where:{email:req.body.email}
 }).then(user=>{
+    console.log(user)
     if(!user){
         res.status(401).send({success: false, msg: 'Authentication failed. User not found.'})
     }
@@ -235,9 +235,9 @@ exports.signin =(req, res)=>{
             if (result){
                 var token = jwt.sign({name: user.first_name, _id: user.id, isAdmin: user.isAdmin}, config.secret);
                 console.log(token)
-                res.json({success:true, token: 'JWT' + token})
+                res.json({success:true, token: token,user: user})
             }else{
-                res.status(401).send({sucess:false, msg: 'Authentication failed. Wrong password'})
+                res.status(401).send({success:false, msg: 'Authentication failed. Wrong password'})
             }
         })
     }
