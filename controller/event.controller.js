@@ -13,7 +13,7 @@ exports.create =(req, res)=>{
     }). then((event)=>{
         res.json(event)
     }).catch((error)=>{
-        res.status(501).send({ success: false, msg: 'Could not create user. Please check parameters'})
+        res.status(501).send({ success: false, msg: 'Could not create event. Please check parameters'})
     })
 }
 

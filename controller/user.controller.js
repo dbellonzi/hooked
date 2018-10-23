@@ -4,6 +4,10 @@ const bcrypt = require('bcrypt')
 const passport = require('passport')
 const jwt = require('jsonwebtoken');
 const config = require('../config/env.js')
+var crypto = require('crypto');
+var async = require('async');
+var nodemailer = require('nodemailer')
+var decoded = require('jwt-decode');
 
 
 exports.create =(req,res)=>{
