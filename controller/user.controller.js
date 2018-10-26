@@ -59,43 +59,49 @@ exports.findAll = (req, res) => {
 }
 
 exports.reset = (req, res, next) => {
-    //CREATES A CUSTOM TOKEN THAT IS SENT TO THE USER IN AN EMAIL STRING.
     async.waterfall([
-        (done) => {
+        function (done) {
             crypto.randomBytes(20, function (err, buf) {
                 var token = buf.toString('hex');
                 console.log("CRYPTO TOKEN:",token)
                 done(err, token);
             });
         },
-        (token, done) => {
-            User.findOne({ email: req.body.email }, (err, user) => {
+        function (token, done){
+            user.findOne({ where: {email: req.body.email }}, (err) => {
                 if (err) throw err
+            }).then((user) => {
                 if (!user) {
                     res.status(501).send({ success: false, msg: 'Email not found. Please enter a valid email.'})
-                }
-            }).then((user) => {
+                } else{
+                console.log("this is the user", user)
                 user.resetPasswordToken = token;
                 user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-                user.save((err) => {
-                    done(err, token, user);
-                    res.json(user)
-                });
-            })
+                user.save();
+                 
+                }
+                done(token, user);
+                console.log("reset token:", token)
+                console.log("reset user", user.first_name) 
+                // user.save((err) => {
+                //     done(err, token, user)
+                //     res.json(user)
+                // });
+            });
         },
         function (token, user, done) {
             var smtpTransport = nodemailer.createTransport({
                 service: 'SendGrid',
                 auth: {
-                    user: 'username here',
-                    pass: 'password here',
+                    user: 'khoacn',
+                    pass: 'Noodleboy_79'
                 }
             });
 
             var mailOptions = {
                 to: user.email,
-                from: 'passwordreset@nyjahwood.com',
-                subject: 'Nyjahwood Password Reset',
+                from: 'passwordreset@hooked.com',
+                subject: 'Hooked Password Reset',
                 text: user.first_name +' , '+ 
                     'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
                     'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
@@ -108,7 +114,7 @@ exports.reset = (req, res, next) => {
         }
     ], function (err) {
         if (err) return next(err);
-        res.redirect('/reset-password');
+        // res.redirect('/reset-password');
     });
 };
 
@@ -125,7 +131,7 @@ exports.resetconfirm = (req, res) =>{
     // pulls the token from the req.headers.referer. Split it at / and return the part [4] which is the token
     async.waterfall([
         function(done) {
-          User.findOne({ resetPasswordToken: token},(err, user)=> {
+          user.findOne({ resetPasswordToken: token},(err, user)=> {
             if (err) throw err
             if (!user) {
                 res.status(501).send({ success: false, msg: 'Password reset token is invalid or has expired.' })

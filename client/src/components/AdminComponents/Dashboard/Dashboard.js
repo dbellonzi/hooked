@@ -6,18 +6,10 @@ import { Link } from 'react-router-dom';
 // AdminDashboard will receive all events as props. We need to filter which events are available to the user based on access privilages to populate the card deck
 
 const dashboard = (props) => {
+    console.log("Dashboard Props:",props)
     return (
         <div className="text-left">
             <CardDeck>
-                <AdminEventCard/>
-                <AdminEventCard/>
-                <AdminEventCard/>
-                <AdminEventCard/>
-                <AdminEventCard/>
-                <AdminEventCard/>
-                <AdminEventCard/>
-                <AdminEventCard/>
-                <AdminEventCard/>
                 <AdminEventCard/>
                 <AdminEventCard/>
                 <AdminEventCard/>

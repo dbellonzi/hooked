@@ -27,7 +27,6 @@ class Login extends Component {
         };
         console.log('From Login.js email: ', user.email)
         this.props.submitToBack(user)
-        // this.props.history.push('/')
         if (!this.props.error && this.state.submitted) {
             this.props.history.push('/')
         }

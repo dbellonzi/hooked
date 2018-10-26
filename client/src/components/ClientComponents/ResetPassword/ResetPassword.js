@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Button } from 'mdbreact';
 import { connect } from 'react-redux';
+import axios from 'axios'
 
 class resetPassword extends Component {
     state = {
@@ -13,6 +14,11 @@ class resetPassword extends Component {
 
     submit = () => {
         this.setState({ submitted: true })
+        const user = {
+            email: this.state.email,
+        };
+        axios.post('/resetpassword', user.email)
+        console.log('From ResetPassword.js email: ', user.email)
     }
 
     _renderErrorMessage() {
