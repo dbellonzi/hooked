@@ -93,8 +93,8 @@ exports.reset = (req, res, next) => {
             var smtpTransport = nodemailer.createTransport({
                 service: 'SendGrid',
                 auth: {
-                    user: 'khoacn',
-                    pass: 'Noodleboy_79'
+                    user: 'Nothing Here',
+                    pass: 'Nothing Here'
                 }
             });
 
@@ -155,8 +155,8 @@ exports.resetconfirm = (req, res) =>{
           var smtpTransport = nodemailer.createTransport({
             service: 'SendGrid',
             auth: {
-              user: 'user credentials',
-              pass: 'password credientals'
+                user: 'Nothing Here',
+                pass: 'Nothing Here'
             }
           });
           var mailOptions = {
