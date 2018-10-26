@@ -10,7 +10,7 @@ const product = require('../controller/product.controller');
 const sponsor = require('../controller/sponsor.controller');
 const order = require('../controller/order.controller');
 
-router.post('/api/events/:userId', event.create);
+router.post('/api/events', event.create);
 router.post('/api/products/:eventId', product.create);
 router.post('/api/users', user.create);
 router.post('/api/sponors/:eventId', sponsor.create);

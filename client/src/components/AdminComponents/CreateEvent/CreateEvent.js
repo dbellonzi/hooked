@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col, Button } from 'mdbreact';
 // import { Link } from 'react-router-dom';
 import Form from '../../Form/Form';
+import axios from 'axios'
 // Edit code to prepopulate fields with values if updating
 
 // ADD CHECKBOX FOR MULTIDAY EVENTS FOR START/END DATE OR JUST DATE
@@ -34,8 +35,12 @@ class CreateEvent extends Component {
             location: this.state.location,
             description: this.state.description,
           };
+          axios.post('/api/events', event).then(res=>{
+              console.log(res)
+          })
         this.setState({ showFormSuccess: true });
-        setTimeout(() => { this.setState({ showFormSuccess: false }); }, 5000)
+        this.props.history.push('/admin')
+        // setTimeout(() => { this.setState({ showFormSuccess: false }); }, 5000)
     }
 
     _renderSuccessMessage() {
@@ -69,9 +74,10 @@ class CreateEvent extends Component {
                                     className="form-control"
                                     required={true}
                                     type="text"
-                                    name="eventName"
+                                    name="title"
                                     placeholder="Enter Event Name"
                                     minLength={6}
+                                    onChange={this.handletitleChange}
                                 />
                                 <small>Event names need to be unique. For annual events, please include the event year.</small>
                                 <div className="invalid-feedback" />
@@ -85,7 +91,8 @@ class CreateEvent extends Component {
                                     className="form-control"
                                     required={true}
                                     type="date"
-                                    onChange={(event) => this.handleDateChange(event)}
+                                    // onChange={(event) => this.handleDateChange(event)}
+                                    onChange={this.handledateChange}
                                 />
                                 <div className="invalid-feedback" />
                             </div>
@@ -98,32 +105,22 @@ class CreateEvent extends Component {
                                     className="form-control"
                                     required={true}
                                     type="time"
+                                    onChange={this.handletimeChange}
                                 />
                                 <div className="invalid-feedback" />
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="eventTime">Event End Time</label>
-                                <input
-                                    id="eventEndTime"
-                                    name="eventEndTime"
-                                    className="form-control"
-                                    required={true}
-                                    type="time"
-                                />
-                                <div className="invalid-feedback" />
-                            </div>
-                            {/* Double check for final validations */}
-                            <div className="form-group">
                                 <label htmlFor="eventAddress">Event Address</label>
                                 <input
                                     id="eventAddress"
-                                    name="eventAddress"
+                                    name="location"
                                     className="form-control"
                                     required={true}
                                     type="text"
                                     placeholder="Enter Event Address"
                                     minLength={10}
+                                    onChange = {this.handlelocationChange}
                                 />
                                 <div className="invalid-feedback" />
                             </div>
@@ -131,11 +128,12 @@ class CreateEvent extends Component {
                                 <label htmlFor="eventDescription">Event Description</label>
                                 <textarea
                                     id="eventDescription"
-                                    name="eventDescription"
+                                    name="description"
                                     className="form-control"
                                     required={true}
                                     rows="3"
                                     placeholder="Enter Event Description"
+                                    onChange = {this.handledescriptionChange}
                                     minLength={50}
                                     maxLength={1000}></textarea>
                                 <div className="invalid-feedback" />
@@ -166,11 +164,11 @@ class CreateEvent extends Component {
                             </div>
 
                             <div className={"row justify-content-md-center"}>
-                                <Col>
+                                {/* <Col>
                                     <Button type={"submit"} className="btn-block">Preview Event</Button>
-                                </Col>
+                                </Col> */}
                                 <Col>
-                                    <Button type={"submit"} className="btn-block">Create Event</Button>
+                                    <Button type="submit" onClick={this.submit} className="btn-block">Create Event</Button>
                                 </Col>
                             </div>
 
