@@ -9,13 +9,31 @@ import Form from '../../Form/Form';
 class CreateEvent extends Component {
     state = {
         showFormSuccess: false,
+        title: '',
+        date: '',
+        time: '',
+        location: '',
+        description: '',
+        // still need add event photo  and map photo
     }
+  handletitleChange = event => { this.setState({ title: event.target.value }) }
+  handledateChange = event => { this.setState({ date: event.target.value }) }
+  handletimeChange = event => { this.setState({ time: event.target.value }) }
+  handlelocationChange = event => { this.setState({ location: event.target.value }) }
+  handledescriptionChange = event => { this.setState({ description: event.target.value }) }
 
     // This method is the one that should handle the form sumbits.
     // Typically, it will send the form data with an ajax call to the server. IN REACT, YOU USUALLY USE THE AXIOS LIB FOR THAT
     submit = () => {
         // Replace this code with a working request to the backend when ready
         // Currently it just displays a success message
+        const event = {
+            title: this.state.title,
+            date: this.state.date,
+            time: this.state.time,
+            location: this.state.location,
+            description: this.state.description,
+          };
         this.setState({ showFormSuccess: true });
         setTimeout(() => { this.setState({ showFormSuccess: false }); }, 5000)
     }
