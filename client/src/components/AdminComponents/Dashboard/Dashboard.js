@@ -1,25 +1,44 @@
-import React from 'react';
+import React, {Component} from 'react';
 import CardDeck from '../../CardDeck/CardDeck';
 import AdminEventCard from '../../CardDeck/AdminEventCard/AdminEventCard';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../../../store/actions/index';
 
 // AdminDashboard will receive all events as props. We need to filter which events are available to the user based on access privilages to populate the card deck
 
-const dashboard = (props) => {
-    console.log("Dashboard Props:",props)
-    return (
-        <div className="text-left">
-            <CardDeck>
-                <AdminEventCard/>
-                <AdminEventCard/>
-                <AdminEventCard/>
-                <AdminEventCard/>
-                <AdminEventCard/>
-                <AdminEventCard/>
-            </CardDeck>
-            <hr/>
-            <Link to="/admin/createEvent"><button className="btn btn-primary">Create Event</button></Link>
-        </div>
-    )
+class Dashboard extends Component {
+    componentDidMount() {
+        this.props.fetchAllEvents();
+    }
+    state = {  }
+    render() {
+        console.log("From Admin Dashboard.js", this.props.events) 
+        return ( 
+            <React.Fragment className="text-left">
+                <CardDeck>
+                {this.props.events.map((event) => {
+                            return <AdminEventCard key={event.id} event={event} />
+                    })
+                    }
+                </CardDeck>
+                <hr/>
+                <Link to="/admin/createEvent"><button className="btn btn-primary text-left">Create Event</button></Link>
+            </React.Fragment>
+         );
+    }
 }
-export default dashboard;
+const mapStateToProps = state => {
+    return {
+        events: state.event.events
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchAllEvents: () => dispatch(actions.fetchAllEvents()),
+    }
+}
+ 
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+

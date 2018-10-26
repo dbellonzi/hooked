@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import FeaturedEvent from '../FeaturedEvent/FeaturedEvent';
 import CardDeck from '../../CardDeck/CardDeck';
 import EventCard from '../../CardDeck/EventCard/EventCard';
