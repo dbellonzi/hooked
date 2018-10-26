@@ -5,12 +5,12 @@ class AdminEventCard extends Component {
 
     // Need to change component to pull dynamic content (from props?)
 
-    render(props) {
+    render() {
 
         return (
             <Col sm="4">
                 <Card className="m-1">
-                    <CardImage className="img-fluid mt-2 p-0" src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(97).jpg" />
+                    <CardImage className="img-fluid img-cover" width="100%" src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(97).jpg"  />
                     <CardBody>
                         <CardTitle className="text-center">{this.props.event.title}</CardTitle>
                         <CardText className="text-center">{this.props.event.description}.</CardText>
