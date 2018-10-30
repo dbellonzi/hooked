@@ -17,8 +17,11 @@ class resetPassword extends Component {
         const user = {
             email: this.state.email,
         };
-        axios.post('/resetpassword', user.email)
-        console.log('From ResetPassword.js email: ', user.email)
+        axios.post('/resetpassword', user).then(res=>{
+            console.log('From ResetPassword.js email: ', user.email)
+            console.log(res)
+        })
+        this.props.history.push('/')
     }
 
     _renderErrorMessage() {
@@ -56,7 +59,7 @@ class resetPassword extends Component {
                     </div>
                     <div className={"row justify-content-md-center"}>
                         <div className={"col-sm-12"}>
-                            <Button className={"btn btn-primary btn-block"} onClick={this.submit} type="submit" >Register</Button>
+                            <Button className={"btn btn-primary btn-block"} onClick={this.submit} type="submit" >Reset Password</Button>
                         </div>
                     </div> 
                 </form>

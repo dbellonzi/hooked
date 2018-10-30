@@ -1,13 +1,14 @@
 const express = require ('express')
 const app = express ()
 const path = require('path')
-const bcrypt = require('bcrypt')
 const passport = require('passport')
 const Localstrategy = require('passport-local').Strategy
 const session = require ('express-session')
 const bodyParser = require('body-parser')
 const port = process.env.PORT || 3000;
 const db = require('./config/db.config')
+require('dotenv').config()
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(session({

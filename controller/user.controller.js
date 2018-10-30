@@ -20,7 +20,7 @@ exports.create =(req,res)=>{
         user_name: req.body.username,
         password: bcrypt.hashSync(req.body.password, 10)
     }).then((user)=>{
-        var token = jwt.sign({name: user.first_name, _id: user.id, isAdmin: user.isAdmin},config.secret);
+        var token = jwt.sign({name: user.first_name, _id: user.id, isAdmin: user.isAdmin},process.env.SECRET);
         res.json({success:true, token:token, firstName: user.first_name, userId: user.id, isAdmin: user.isAdmin})
     }).catch((err)=>{
         console.log('invalid user')
@@ -28,21 +28,13 @@ exports.create =(req,res)=>{
     })
 }
 
-// exports.findAll = (req, res)=>{
-//     user.findAll().then((user)=>{
-//         res.json(user)
-//     }).catch((err)=>{
-//         res.status(501).send({ success: false, msg:'can not final all users in DB'})
-//     })
-// }
-
 // WE ARE GOING TO USE THE BOTTOM CODE BUT NEED TO PUT AND GET THE JWT TOKEN FROM THE HEADERS OR FROM THE REDUX STORE. THIS ROUTE NEEDS TO BE PROTECTED. WILL USE (JWT.VERIFY) TO CHECK VALIDITY OF TOKEN AND CHECK IF isAdmin boolean is true || false. 
 
 exports.findAll = (req, res) => {
     var token = req.body.token || req.query.token || getToken(req.headers)
     console.log('parced authorization token:', token)
     console.log('req.header:', req.headers)
-    jwt.verify(token, config.secret, (err, result) => {
+    jwt.verify(token, process.env.SECRET, (err, result) => {
         console.log(result)
         if (err) {
             res.status(401).send({ success: false, msg: 'Please provide a valid token' })
@@ -63,45 +55,43 @@ exports.reset = (req, res, next) => {
         function (done) {
             crypto.randomBytes(20, function (err, buf) {
                 var token = buf.toString('hex');
-                console.log("CRYPTO TOKEN:",token)
-                done(err, token);
+                console.log(token)
+                done(null, token);
             });
         },
-        function (token, done){
+        function (token, done) {
             user.findOne({ where: {email: req.body.email }}, (err) => {
                 if (err) throw err
             }).then((user) => {
                 if (!user) {
                     res.status(501).send({ success: false, msg: 'Email not found. Please enter a valid email.'})
-                } else{
-                console.log("this is the user", user)
+                } else {
                 user.resetPasswordToken = token;
-                user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-                user.save();
-                 
+                user.resetPasswordExpires = Date.now() + 3600000; // 1 hour  
+                res.json(user)
                 }
-                done(token, user);
-                console.log("reset token:", token)
-                console.log("reset user", user.first_name) 
-                // user.save((err) => {
-                //     done(err, token, user)
-                //     res.json(user)
-                // });
-            });
+                user.save().then(function(err){
+                    done(null, token, user)
+                    console.log("saved user", user.id)
+                    console.log("this is the token", token)
+                })
+            })
         },
         function (token, user, done) {
+           console.log("this is the new token: ", token)
+           console.log("this is the new user: " + user.email)
             var smtpTransport = nodemailer.createTransport({
                 service: 'SendGrid',
                 auth: {
-                    user: 'Nothing Here',
-                    pass: 'Nothing Here'
+                    user: process.env.USER_NAME,
+                    pass: process.env.CREDENTIALS
                 }
             });
 
             var mailOptions = {
                 to: user.email,
-                from: 'passwordreset@hooked.com',
-                subject: 'Hooked Password Reset',
+                from: 'Admin@hooked.com',
+                subject: 'Admin Password Reset',
                 text: user.first_name +' , '+ 
                     'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
                     'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
@@ -114,7 +104,7 @@ exports.reset = (req, res, next) => {
         }
     ], function (err) {
         if (err) return next(err);
-        // res.redirect('/reset-password');
+        res.redirect('/login');
     });
 };
 
@@ -145,7 +135,7 @@ exports.resetconfirm = (req, res) =>{
             user.resetPasswordExpires = undefined;
             user.save(err=>{
                 if(err) throw err
-                done(err, user)
+                done(null, user)
             })
           }).then(user=>{
               res.json(user)
@@ -178,7 +168,7 @@ exports.resetconfirm = (req, res) =>{
 
 exports.reset_password = (req, res) => {
     console.log(req.params)
-    User.findOne({
+    user.findOne({
         resetPasswordToken: req.params.token,
         // resetPasswordExpires: { $gt: Date.now()}
     }, (err, user) => {
@@ -239,7 +229,7 @@ exports.signin =(req, res)=>{
         console.log(hash)
         bcrypt.compare(req.body.password, hash, (err, result)=>{
             if (result){
-                var token = jwt.sign({name: user.first_name, _id: user.id, isAdmin: user.isAdmin}, config.secret);
+                var token = jwt.sign({name: user.first_name, _id: user.id, isAdmin: user.isAdmin}, process.env.SECRET);
                 console.log(token)
                 res.json({success:true, token: token,user: user})
             }else{

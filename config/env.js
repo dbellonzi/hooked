@@ -10,6 +10,6 @@ const env = {
         acquire: 30000,
         idle: 10000
     },
-    secret: 'Hooked_Team2018'
+    // secret: 'Hooked_Team2018'
 }
 module.exports = env;

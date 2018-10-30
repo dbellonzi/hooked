@@ -37,7 +37,7 @@ export const auth = (data, isLogin) => {
             console.log('response data from local storage:',response.data);
             dispatch(authSuccess(response.data));
         }).catch(error => {
-            console.error(error)
+            // console.error(error)
             dispatch(authFail(error.response.data.error));
         });
     }
