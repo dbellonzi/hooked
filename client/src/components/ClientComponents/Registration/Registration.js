@@ -1,54 +1,52 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import { Row, Col, Button } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import Form from '../../Form/Form';
-import axios from 'axios'
+import * as actions from '../../../store/actions/index';
+
 class Registration extends Component {
   state = {
-    showFormSuccess: false,
-    first_name:'',
+    first_name: '',
     last_name: '',
     email: '',
     phone_number: '',
     user_name: '',
-    password: ''
+    password: '',
+    submitted: false
   }
 
-  handlefNameChange = event => {this.setState({ first_name: event.target.value })}
-  handlelNameChange = event => {this.setState({ last_name: event.target.value })}
-  handleemailChange = event => {this.setState({ email: event.target.value })}
-  handlepasswordChange = event => {this.setState({ password: event.target.value })}
-  handleusernameChange = event => {this.setState({ user_name: event.target.value })}
-  handlephoneChange = event => {this.setState({ phone_number: event.target.value })}
+  handlefNameChange = event => { this.setState({ first_name: event.target.value }) }
+  handlelNameChange = event => { this.setState({ last_name: event.target.value }) }
+  handleemailChange = event => { this.setState({ email: event.target.value }) }
+  handlepasswordChange = event => { this.setState({ password: event.target.value }) }
+  handleusernameChange = event => { this.setState({ user_name: event.target.value }) }
+  handlephoneChange = event => { this.setState({ phone_number: event.target.value }) }
 
-  // This method is the one that should handle the form sumbits.
-  // Typically, it will send the form data with an ajax call to the server. IN REACT, YOU USUALLY USE THE AXIOS LIB FOR THAT
   submit = () => {
-
+    this.setState({submitted: true})
     const user = {
-      fName:this.state.first_name,
-      lName:this.state.last_name,
-      email:this.state.email,
+      fName: this.state.first_name,
+      lName: this.state.last_name,
+      email: this.state.email,
       username: this.state.user_name,
-      phone: this.state.phone_number, 
-      password: this.state.password
+      phone: this.state.phone_number,
+      password: this.state.password,
     };
+    //this is the action from the auth reducer REFERENCE MAPDISPATCHTOPROPS
+    this.props.submitToBack(user)
 
-    axios.post('/api/users', user)
-    .then(res => {
-      console.log(res);
-      console.log(res.data)
-    }) 
-    // Replace this code with a working request to the backend when ready
-    // Currently it just displays a success message
-    this.setState({ showFormSuccess: true });
-    setTimeout(() => { this.setState({ showFormSuccess: false }); }, 5000)
+    if (this.props.error && this.state.submitted){
+      this.props.history.push('/')
+    }
   }
 
-  _renderSuccessMessage() {
+  _renderErrorMessage() {
     return (
-      <div className={"alert alert-success mt-4"} role="alert">
-        <p>Form was successfully validated and is ready to be submitted</p>
+      <div className={"alert alert-danger mt-4 alert-dismissible"} role="alert">
+      <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <p>{this.props.error}</p>
       </div>
     )
   }
@@ -65,14 +63,14 @@ class Registration extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <React.Fragment>
         <h1>Sign up</h1>
         <Row>
           <Col md="1" />
           <Col md="10 text-left">
-            <Form>
+            {this.props.error ? this._renderErrorMessage() : null}
+            <Form submit={this.submit}>
               <div className="form-group">
                 <label htmlFor="fName">First Name</label>
                 <input
@@ -187,7 +185,6 @@ class Registration extends Component {
             <div className="text-center mt-4">
               <p>Already a registered user? | <Link to="/login"> Login here</Link></p>
             </div>
-            {this.state.showFormSuccess ? this._renderSuccessMessage() : null}
           </Col>
         </Row>
       </React.Fragment>
@@ -195,4 +192,16 @@ class Registration extends Component {
   }
 }
 
-export default Registration;
+const mapStateToProps = state => {
+  return {
+    error: state.auth.error
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    submitToBack: (user) => dispatch(actions.auth(user, false))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Registration);

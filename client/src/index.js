@@ -1,33 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 import './index.css';
 import App from './containers/App';
 import registerServiceWorker from './registerServiceWorker';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'jquery/dist/jquery.min'
+import 'bootstrap/dist/js/bootstrap.bundle'
 import 'mdbreact/dist/css/mdb.css';
+import adminReducer from './store/reducers/admin';
 import authReducer from './store/reducers/auth';
-
-const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : null || compose;
+import eventReducer from './store/reducers/event';
 
 const rootReducer = combineReducers({
+    admin: adminReducer,
     auth: authReducer,
+    event: eventReducer
 })
 
-const store = createStore(rootReducer, applyMiddleware(thunk))
+const store = createStore(rootReducer, composeWithDevTools(
+    applyMiddleware(thunk)
+))
 
-// const store = createStore(rootReducer, composeEnhancers(
-//     applyMiddleware(thunk)
-// ))
-
-console.log(store)
 const app = (
     <Provider store={store}>
-        <App />
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
     </Provider>
 )
 

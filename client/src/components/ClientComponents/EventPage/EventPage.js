@@ -4,6 +4,7 @@ import EventSponsors from './EventSponsors/EventSponsors';
 import EventMap from './EventMap/EventMap';
 import { Row, Col } from 'mdbreact';
 import { Link } from 'react-router-dom';
+import Moment from 'react-moment'
 
 // Maybe add a check to see if user is logged in and a participant to change link from "Register Here" to "" 
 // Maybe add a feature to show if limited spaces are available for the event
@@ -29,13 +30,13 @@ class EventPage extends Component {
                 <br />
                 <Row className="container-fluid">
                     <Col md="3" className="text-left">
-                        <p><i class="fas fa-calendar-alt mr-2"></i>Event Date: {this.state.event.date}</p>
+                        <p><i class="fas fa-calendar-alt mr-2"></i>Event Date: <Moment format="MMMM Do YYYY">{this.state.event.date}</Moment></p>
                         <p><i class="fas fa-clock mr-2"></i>Event Time: {this.state.event.time}</p>
                         <p><i class="fas fa-map-marker-alt mr-2"></i>Event Location: {this.state.event.location}</p>
                     </Col>
                     <Col md="6">
                         <h3><i class="fas fa-clipboard-list mr-2"></i>Event Description</h3>
-                        <p>{this.state.event.description}</p>
+                        <p className="text-justify">{this.state.event.description}</p>
                     </Col>
                     <Col md="3">
                     <div>

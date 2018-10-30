@@ -2,9 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar } from 'mdbreact';
 
-
 // Need to fix the toggle button. It currently does not togggle when collapsed.
-
 const header = (props) => {
     return (
         <Navbar dark color="stylish-color-dark" expand="lg" sticky="top" className="mb-5">
@@ -13,8 +11,8 @@ const header = (props) => {
                 <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="basicExampleNav">
-                <div className="navbar-nav nav-item mr-auto">
-                    <Link to="/" className="nav-link ">Home</Link>
+                <div className="navbar-nav nav-item mr-auto" data-target=".navbar-collapse.show" data-toggle="collapse">
+                    <Link to="/" className="nav-link">Home</Link>
                     <Link to="/about" className="nav-link">Link</Link>
                     <Link to="/contact" className="nav-link">Contact</Link>
                     {props.isAdmin ?
@@ -22,11 +20,11 @@ const header = (props) => {
                     }
                 </div>
                 {props.loggedIn ?
-                    <div className="navbar-nav nav-item">
+                    <div className="navbar-nav nav-item" data-target=".navbar-collapse.show" data-toggle="collapse">
                         <Link className="nav-link" to="/user">{props.userName}</Link>
                         <Link onClick={props.logout}  className="nav-link" to="/"> Logout</Link>
                     </div> :
-                    <div className="navbar-nav nav-item">
+                    <div className="navbar-nav nav-item" data-target=".navbar-collapse.show" data-toggle="collapse">
                         <Link className="nav-link" to="/login"> Login</Link>
                         <Link className="nav-link" to="/register"> Register</Link>
                     </div>
