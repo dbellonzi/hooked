@@ -11,21 +11,21 @@ import * as actions from '../../../store/actions/index';
 
 class Login extends Component {
     state = {
-        user_name: '',
+        email: '',
         password: '',
         submitted: false
     }
 
-    handleusernameChange = event => { this.setState({ user_name: event.target.value }) }
+    handleemailChange = event => { this.setState({ email: event.target.value }) }
     handlepasswordChange = event => { this.setState({ password: event.target.value }) }
 
     submit = () => {
         this.setState({ submitted: true })
         const user = {
-            username: this.state.user_name,
+            email: this.state.email,
             password: this.state.password,
         };
-        console.log('From Login.js username: ', user.user_name)
+        console.log('From Login.js email: ', user.email)
         this.props.submitToBack(user)
         if (!this.props.error && this.state.submitted) {
             this.props.history.push('/')
@@ -50,15 +50,15 @@ class Login extends Component {
                         {this.props.error ? this._renderErrorMessage() : null}
                         <Form submit={this.submit}>
                             <div className="form-group">
-                                <label htmlFor="username">Username</label>
+                                <label htmlFor="email">Email</label>
                                 <input
-                                    id="username"
+                                    id="email"
                                     className="form-control"
                                     required={true}
                                     type="text"
-                                    name="username"
-                                    onChange={this.handleusernameChange}
-                                    placeholder="Enter Username"
+                                    name="email"
+                                    onChange={this.handleemailChange}
+                                    placeholder="Enter Email"
                                 />
                                 <div className="invalid-feedback" />
                             </div>
@@ -81,7 +81,7 @@ class Login extends Component {
 
                             <div className={"row justify-content-md-center"}>
                                 <div className={"col-sm-12"}>
-                                    <Button type="submit" className={"btn btn-primary btn-block"}>Login</Button>
+                                    <Button onClick={this.submit} className={"btn btn-primary btn-block"}>Login</Button>
                                 </div>
                             </div>
                         </Form>

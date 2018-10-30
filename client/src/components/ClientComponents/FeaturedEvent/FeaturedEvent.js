@@ -29,9 +29,10 @@ const featuredEvent = (props) => {
             <Link to="/event">
                 <button className="btn btn-success mx-5"> Register Here</button>
             </Link>
-            <Link to="/event">
+            {/* <Link to="/event">
                 <button className="btn btn-primary mx-5"> Event Page </button>
-            </Link>
+            </Link> */}
+            <Link to={`/event/${props.event.id}`}><button className="btn btn-primary">Event Page</button> </Link>
         </React.Fragment>
     );
 }

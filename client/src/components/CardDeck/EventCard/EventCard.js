@@ -7,7 +7,7 @@ const eventCard = (props) => {
     return (
         <Col md="4">
             <Card className="m-3">
-                <CardImage className="img-fluid mt-3 p-0" src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(97).jpg" />
+                <CardImage className="img-fluid img-cover" src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(97).jpg" />
                 <CardBody>
                     <CardTitle className="text-center">{props.event.title}</CardTitle>
 

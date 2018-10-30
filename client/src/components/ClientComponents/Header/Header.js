@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar } from 'mdbreact';
+import { connect } from 'react-redux';
 
-// Need to fix the toggle button. It currently does not togggle when collapsed.
 const header = (props) => {
     return (
         <Navbar dark color="stylish-color-dark" expand="lg" sticky="top" className="mb-5">
@@ -33,4 +33,11 @@ const header = (props) => {
         </Navbar>
     );
 }
-export default header;
+
+
+const mapStateToProps = state => {
+    return {
+      logout: state.auth.logout
+    }
+  }
+export default connect(mapStateToProps)(header);

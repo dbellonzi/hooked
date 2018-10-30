@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-
 import Header from '../components/ClientComponents/Header/Header';
 import Footer from '../components/ClientComponents/Footer/Footer';
 import Dashboard from '../components/ClientComponents/Dashboard/Dashboard';
@@ -63,7 +62,7 @@ class App extends Component {
       <div className="text-center">
         <img style={style} src="http://thelostanchovy.com/wp-content/uploads/2018/07/banner-1.jpg" alt="Fishing Rod Header" className="img-fluid" />
         <Header loggedIn={this.props.isAuthenticated} isAdmin={this.props.isAdmin} userName={this.props.userName} />
-        <div className="px-5">
+        <div className="px-1">
           {routes}
         </div>
         <Footer />
