@@ -72,14 +72,10 @@ exports.reset = (req, res, next) => {
                 }
                 user.save().then(function(err){
                     done(null, token, user)
-                    console.log("saved user", user.id)
-                    console.log("this is the token", token)
                 })
             })
         },
         function (token, user, done) {
-           console.log("this is the new token: ", token)
-           console.log("this is the new user: " + user.email)
             var smtpTransport = nodemailer.createTransport({
                 service: 'SendGrid',
                 auth: {
@@ -92,11 +88,16 @@ exports.reset = (req, res, next) => {
                 to: user.email,
                 from: 'Admin@hooked.com',
                 subject: 'Admin Password Reset',
-                text: user.first_name +' , '+ 
-                    'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-                    'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-                    'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-                    'If you did not request this, please ignore this email and your password will remain unchanged.\n',
+                // text: user.first_name +' , '+ 
+                //     'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+                //     'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                //     'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+                //     'If you did not request this, please ignore this email and your password will remain unchanged.\n',
+                html: user.first_name +
+                      '<p>you are receiving this because you (or someone else) has requested the reset of the password for your account at Hooked.  Please click on the following link or paste this into your browser to complete the process</p>' + 
+                      'http://' + req.headers.host + '/reset/' + token  +
+                      '<p>If you did not request this, please ignore this email and your password will remain unchanged</p>' +
+                      '<p>Hooked IT team</p>'
             };
             smtpTransport.sendMail(mailOptions, function (err) {
                 done(err, 'done');
@@ -109,44 +110,30 @@ exports.reset = (req, res, next) => {
 };
 
 exports.resetconfirm = (req, res) =>{
-    getAuthToken = function() {
-        if(req.headers.referer){
-            var parted =req.headers.referer.split('/')
-            return parted [4]
-        }else{
-            return null 
-        }
-    }
-    var token = getAuthToken(req.headers.referer)
-    // pulls the token from the req.headers.referer. Split it at / and return the part [4] which is the token
     async.waterfall([
         function(done) {
-          user.findOne({ resetPasswordToken: token},(err, user)=> {
+          user.findOne({where:{ resetPasswordToken: req.params.token}},(err)=> {
             if (err) throw err
+          }).then(user=>{
             if (!user) {
                 res.status(501).send({ success: false, msg: 'Password reset token is invalid or has expired.' })
-            }
-            console.log(user)
+            } else{
             user.password = bcrypt.hashSync(req.body.password, 10)
-            console.log("req.body.password:",req.body.password)
-            console.log("Encrypted user passsword:",user.password)
-            // user.password = req.body.password;
-            user.resetPasswordToken = undefined;
-            user.resetPasswordExpires = undefined;
-            user.save(err=>{
-                if(err) throw err
+            user.resetPasswordToken = null;
+            user.resetPasswordExpires = null;
+            res.json(user)
+            }
+            user.save().then(()=>{
                 done(null, user)
             })
-          }).then(user=>{
-              res.json(user)
           });
         },
         function(user, done) {
           var smtpTransport = nodemailer.createTransport({
             service: 'SendGrid',
             auth: {
-                user: 'Nothing Here',
-                pass: 'Nothing Here'
+                user: process.env.USER_NAME,
+                pass: process.env.CREDENTIALS
             }
           });
           var mailOptions = {
@@ -154,7 +141,7 @@ exports.resetconfirm = (req, res) =>{
             from: 'admin@hooked.com',
             subject: 'Your password has been changed',
             text: 'Hello,\n\n' +  
-              'This is a confirmation that the password for your account ' + user.email + ' has just been changed at nyjahwood.com. Please contact our support staff if is any issue. Thank you. \n'
+              'This is a confirmation that the password for your account ' + user.email + ' has just been changed at hooked.com. Please contact our support staff if is any issue. Thank you. \n'
           };
           smtpTransport.sendMail(mailOptions,(err)=>{
             done(err);
@@ -167,20 +154,20 @@ exports.resetconfirm = (req, res) =>{
 // TAKES THE PASSWORD FROM THE REQ.PARAMS.TOKEN AND CHECKS IT AGAINST THE RESETPASSWORD TOKEN THAT WAS CREATED TO MAKE. STILL NEED TO MAKE SURE IT CHECKS FOR THE RESETPASSWORD EXPIRES FIELD. 
 
 exports.reset_password = (req, res) => {
-    console.log(req.params)
+    console.log('this is the req params',req.params)
     user.findOne({
-        resetPasswordToken: req.params.token,
+        where:{resetPasswordToken: req.params.token,}
         // resetPasswordExpires: { $gt: Date.now()}
-    }, (err, user) => {
-        if (err) throw err
-        if (!user || user.resetPasswordExpires < Date.now()) {
-            res.status(401).send({ success: false, msg: 'Password reset token is invalid or has expired please try again' })
-        }
+    }, (err) => {
+        if(err) throw err 
     }).then(user => {
-        res.json(user)
+        if (!user) {
+            res.status(401).send({ success: false, msg: 'Password reset token is invalid or has expired please try again' })
+        } else{
+            res.json(user)
+        }
     })
 }
-
 
 exports.findById = (req, res) => {	
     user.findById(req.params.userId).then((user) => {

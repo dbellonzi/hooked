@@ -17,6 +17,7 @@ import AdminCreateSponsor from '../components/AdminComponents/CreateSponsor/Crea
 import AdminProductList from '../components/AdminComponents/ProductList/ProductList';
 import AdminSponsorList from '../components/AdminComponents/SponsorList/SponsorList';
 import AdminParticipantList from '../components/AdminComponents/ParticipantList/ParticipantList';
+import Reset from '../components/ClientComponents/Reset/Reset'
 
 import * as actions from '../store/actions/index';
 
@@ -31,6 +32,7 @@ class App extends Component {
         <Route exact path='/login' component={Login} />
         <Route exact path='/register' component={Registration} />
         <Route exact path='/resetPassword' component={ResetPassword} />
+        <Route path='/reset/:token' component={Reset}/>
         <Route path='/user/:userId' component={UserProfile} />
         <Route path='/event/:eventId' component={EventPage} />
         <Route path='/participants' component={ParticipantList} />
