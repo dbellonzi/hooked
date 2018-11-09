@@ -29,18 +29,13 @@ export const auth = (data, isLogin) => {
             // const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
             // localStorage.setItem('expirationDate', expirationDate);
             setAuthorizationToken(response.data.token)
-            // if(response){
-            //     axios.defaults.headers.common['Authorization'] = response.data.token
-            // } else{
-            //     axios.defaults.headers.common['Authorization'] = null
-            // }
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('userId', response.data.user.id);
             localStorage.setItem('name', response.data.user.first_name)
             console.log('response data from local storage:',response.data);
             dispatch(authSuccess(response.data));
         }).catch(error => {
-            // console.error(error)
+            console.error(error)
             dispatch(authFail(error.response.data.error));
         });
     }

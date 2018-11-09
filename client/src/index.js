@@ -28,7 +28,7 @@ const rootReducer = combineReducers({
 const store = createStore(rootReducer, composeWithDevTools(
     applyMiddleware(thunk)
 ))
-
+// sets the authorization headers. If there is a token in the authorization headers it will push it into the all the pages even on refresh
 setAuthorizationToken(localStorage.token)
 
 const app = (
