@@ -18,7 +18,6 @@ class Reset extends Component {
         const params = this.props.match.params.token
         axios.get(`/user/${params}`)
             .then(res => {
-                console.log(res);
                 this.setState({ user: res.data })
             })
             .catch(error => this.setState({error}));
@@ -58,7 +57,7 @@ class Reset extends Component {
                 <Col md="1" />
                 <Col md="10 text-left">
                 {/* Should we wrap this in a FORM class?? */}
-                {/* {this.props.error ? this._renderErrorMessage() : null} */}
+                {this.props.error ? this._renderErrorMessage() : null}
                 <form>
                     <div className="form-group">
                         <label htmlFor="email">Password</label>

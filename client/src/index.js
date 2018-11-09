@@ -17,6 +17,7 @@ import 'mdbreact/dist/css/mdb.css';
 import adminReducer from './store/reducers/admin';
 import authReducer from './store/reducers/auth';
 import eventReducer from './store/reducers/event';
+import setAuthorizationToken from './shared/utility'
 
 const rootReducer = combineReducers({
     admin: adminReducer,
@@ -27,6 +28,8 @@ const rootReducer = combineReducers({
 const store = createStore(rootReducer, composeWithDevTools(
     applyMiddleware(thunk)
 ))
+
+setAuthorizationToken(localStorage.token)
 
 const app = (
     <Provider store={store}>

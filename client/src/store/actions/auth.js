@@ -1,5 +1,7 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
+import * as decoded from 'jsonwebtoken'
+import setAuthorizationToken from '../../shared/utility'
 
 export const auth = (data, isLogin) => {
     return dispatch => {
@@ -26,14 +28,15 @@ export const auth = (data, isLogin) => {
 
             // const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
             // localStorage.setItem('expirationDate', expirationDate);
-            if(response){
-                axios.defaults.headers.common['Authorization'] = response.data.token
-            } else{
-                axios.defaults.headers.common['Authorization'] = null
-            }
+            setAuthorizationToken(response.data.token)
+            // if(response){
+            //     axios.defaults.headers.common['Authorization'] = response.data.token
+            // } else{
+            //     axios.defaults.headers.common['Authorization'] = null
+            // }
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('userId', response.data.user.id);
-            localStorage.setItem('name', response.data.user.first_name);
+            localStorage.setItem('name', response.data.user.first_name)
             console.log('response data from local storage:',response.data);
             dispatch(authSuccess(response.data));
         }).catch(error => {
@@ -71,7 +74,7 @@ export const logout = () => {
     };
 };
 
-// THIS IS BASED ON FIREBASE HAVING TOKENS EXPIRE WILL NEED TO BE ADJUSTED FOR OUR DB AND PASSPORT
+// THIS IS BASED ON FIREBASE HAVING TOKENS EXPIRE WILL NEED TO BE ADJUSTED FOR OUR DB AND PASSPORT; AUTO CHECKOUT FOR EXPIRED TOKEN
 export const checkAuthTimeout = (expirationTime) => {
     return dispatch => {
         setTimeout(() => {
@@ -84,6 +87,15 @@ export const checkAuthTimeout = (expirationTime) => {
 export const authCheckState = () => {
     return dispatch => {
         const token = localStorage.getItem('token');
+        // Takes the token from localStorage. Decodeds the toke and checks the exp field. Compares the field to the local time.
+        // const tokenPayload = decoded(token)
+        // if(!token || tokenPayload.exp == false || tokenPayload.exp <= Date.now()){
+        //     dispatch(logout())
+        // } else{
+        //     const userId = localStorage.getItem('userId');
+        //     dispatch(authSuccess(token, userId));
+        //     dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
+        // }
         if (!token) {
             dispatch(logout());
         } else {
