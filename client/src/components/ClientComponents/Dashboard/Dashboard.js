@@ -10,6 +10,7 @@ import * as actions from '../../../store/actions/index';
 class Dashboard extends Component {
     componentDidMount() {
         this.props.fetchAllEvents();
+        // this.props.authCheckState();
     }
 
     render() {
@@ -49,6 +50,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchAllEvents: () => dispatch(actions.fetchAllEvents()),
+        // authCheckState: () => dispatch(actions. authCheckState())
     }
 }
 

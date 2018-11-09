@@ -18,10 +18,13 @@ import AdminProductList from '../components/AdminComponents/ProductList/ProductL
 import AdminSponsorList from '../components/AdminComponents/SponsorList/SponsorList';
 import AdminParticipantList from '../components/AdminComponents/ParticipantList/ParticipantList';
 import Reset from '../components/ClientComponents/Reset/Reset'
-
 import * as actions from '../store/actions/index';
 
 class App extends Component {
+  componentDidMount(){
+       this.props.authCheckState();
+  }
+
   render() {
     const style = {
       width: '100%',
@@ -83,7 +86,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    // onTryAutoSignup: () => dispatch(actions.authCheckState())
+      authCheckState: () => dispatch(actions.authCheckState()),
+      // logout: () => dispatch(actions.logout())
   }
 }
 

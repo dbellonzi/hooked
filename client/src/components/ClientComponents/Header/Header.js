@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar } from 'mdbreact';
-import { connect } from 'react-redux';
+
 
 const header = (props) => {
     return (
@@ -22,7 +22,7 @@ const header = (props) => {
                 {props.loggedIn ?
                     <div className="navbar-nav nav-item" data-target=".navbar-collapse.show" data-toggle="collapse">
                         <Link className="nav-link" to="/user">{props.userName}</Link>
-                        <Link onClick={props.logout}  className="nav-link" to="/"> Logout</Link>
+                        <Link className="nav-link" to="/"> Logout</Link>
                     </div> :
                     <div className="navbar-nav nav-item" data-target=".navbar-collapse.show" data-toggle="collapse">
                         <Link className="nav-link" to="/login"> Login</Link>
@@ -34,10 +34,4 @@ const header = (props) => {
     );
 }
 
-
-const mapStateToProps = state => {
-    return {
-      logout: state.auth.logout
-    }
-  }
-export default connect(mapStateToProps)(header);
+export default header;
