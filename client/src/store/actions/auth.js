@@ -10,7 +10,7 @@ export const auth = (data, isLogin) => {
             email: data.email,
             password: data.password
         };
-        if (!isLogin) {
+        if (isLogin == false) {
             url = '/api/users';
             authData = {
                 fName: data.fName,
@@ -36,8 +36,8 @@ export const auth = (data, isLogin) => {
             localStorage.setItem('exp', tokenPayload.exp)
             dispatch(authSuccess(tokenPayload));
         }).catch(error => {
-            console.error(error)
-            dispatch(authFail(error.response.data.error));
+            console.error("auth Error: ", error.response)
+            dispatch(authFail(error.response.data.msg));
         });
     }
 };
