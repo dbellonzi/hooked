@@ -22,8 +22,8 @@ exports.create =(req,res)=>{
         var token = jwt.sign({name: user.first_name, _id: user.id, isAdmin: user.isAdmin},process.env.SECRET, {expiresIn:  "24h" });
         res.json({success:true, token:token, firstName: user.first_name, userId: user.id, isAdmin: user.isAdmin})
     }).catch((err)=>{
-        console.log('invalid user')
-        res.status(501).send({ success: false, msg:'can not enter User into DB'})
+        console.log('Create User Error: ', err)
+        res.status(501).send({ success: false, msg:'can not enter Event into DB'})
     })
 }
 

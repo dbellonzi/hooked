@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Row, Col, Button } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import Form from '../../Form/Form';
-import * as actions from '../../../store/actions/index';
 
 class Registration extends Component {
   state = {
@@ -13,44 +12,26 @@ class Registration extends Component {
     phone_number: '',
     user_name: '',
     password: '',
-    submitted: false
   }
 
-  handlefNameChange = event => { this.setState({ first_name: event.target.value }) }
-  handlelNameChange = event => { this.setState({ last_name: event.target.value }) }
-  handleemailChange = event => { this.setState({ email: event.target.value }) }
-  handlepasswordChange = event => { this.setState({ password: event.target.value }) }
-  handleusernameChange = event => { this.setState({ user_name: event.target.value }) }
-  handlephoneChange = event => { this.setState({ phone_number: event.target.value }) }
-
-  submit = () => {
-    this.setState({submitted: true})
-    const user = {
-      fName: this.state.first_name,
-      lName: this.state.last_name,
-      email: this.state.email,
-      username: this.state.user_name,
-      phone: this.state.phone_number,
-      password: this.state.password,
-    };
-    //this is the action from the auth reducer REFERENCE MAPDISPATCHTOPROPS
-    this.props.submitToBack(user)
-
-    if (this.props.error && this.state.submitted){
-      this.props.history.push('/')
+  handlefNameChange = event => {
+    if (event.target.value.length < 2) {
+      event.target.setCustomValidity("Please enter a first name with at least 2 characters.")
+    } else {
+      // input is valid -- reset the error message
+      event.target.setCustomValidity("");
     }
+    this.setState({ first_name: event.target.value })
   }
-
-  _renderErrorMessage() {
-    return (
-      <div className={"alert alert-danger mt-4 alert-dismissible"} role="alert">
-      <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <p>{this.props.error}</p>
-      </div>
-    )
+  handlelNameChange = event => {
+    if (event.target.value.length < 2) {
+      event.target.setCustomValidity("Please enter a last name with at least 2 characters.")
+    } else {
+      // input is valid -- reset the error message
+      event.target.setCustomValidity("");
+    }
+    this.setState({ last_name: event.target.value })
   }
-
-  // This gets called on input change to set our custom password match validation
   checkPasswordMatch(e) {
     let password = document.getElementById('password').value;
     if (e.target.value !== password) {
@@ -60,8 +41,29 @@ class Registration extends Component {
       e.target.setCustomValidity("");
     }
   }
+  handleemailChange = event => { this.setState({ email: event.target.value }) }
+  handlepasswordChange = event => { this.setState({ password: event.target.value }) }
+  handleusernameChange = event => { this.setState({ user_name: event.target.value }) }
+  handlephoneChange = event => { this.setState({ phone_number: event.target.value }) }
+
+  _renderErrorMessage() {
+    return (
+      <div className={"alert alert-danger mt-4 alert-dismissible"} role="alert">
+        <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <p>{this.props.error}</p>
+      </div>
+    )
+  }
 
   render() {
+    let userData = {
+      fName: this.state.first_name,
+      lName: this.state.last_name,
+      email: this.state.email,
+      username: this.state.user_name,
+      phone: this.state.phone_number,
+      password: this.state.password,
+    };
     return (
       <React.Fragment>
         <h1>Sign up</h1>
@@ -69,7 +71,7 @@ class Registration extends Component {
           <Col md="1" />
           <Col md="10 text-left">
             {this.props.error ? this._renderErrorMessage() : null}
-            <Form submit={this.submit}>
+            <Form data={userData} isLogin={false}>
               <div className="form-group">
                 <label htmlFor="fName">First Name</label>
                 <input
@@ -197,10 +199,4 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    submitToBack: (user) => dispatch(actions.auth(user, false))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Registration);
+export default connect(mapStateToProps)(Registration);
