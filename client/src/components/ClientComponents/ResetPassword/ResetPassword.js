@@ -19,7 +19,6 @@ class resetPassword extends Component {
         };
         axios.post('/resetpassword', user).then(res=>{
             console.log('From ResetPassword.js email: ', user.email)
-            console.log(res)
         })
         this.props.history.push('/')
     }

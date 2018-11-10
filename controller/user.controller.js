@@ -1,7 +1,6 @@
 const db = require('../config/db.config.js')
 const user = db.user
 const bcrypt = require('bcrypt')
-const passport = require('passport')
 const jwt = require('jsonwebtoken');
 const config = require('../config/env.js')
 var crypto = require('crypto');
@@ -20,7 +19,7 @@ exports.create =(req,res)=>{
         user_name: req.body.username,
         password: bcrypt.hashSync(req.body.password, 10)
     }).then((user)=>{
-        var token = jwt.sign({name: user.first_name, _id: user.id, isAdmin: user.isAdmin},process.env.SECRET);
+        var token = jwt.sign({name: user.first_name, _id: user.id, isAdmin: user.isAdmin},process.env.SECRET, {expiresIn:  "24h" });
         res.json({success:true, token:token, firstName: user.first_name, userId: user.id, isAdmin: user.isAdmin})
     }).catch((err)=>{
         console.log('Create User Error: ', err)
@@ -31,9 +30,8 @@ exports.create =(req,res)=>{
 // WE ARE GOING TO USE THE BOTTOM CODE BUT NEED TO PUT AND GET THE JWT TOKEN FROM THE HEADERS OR FROM THE REDUX STORE. THIS ROUTE NEEDS TO BE PROTECTED. WILL USE (JWT.VERIFY) TO CHECK VALIDITY OF TOKEN AND CHECK IF isAdmin boolean is true || false. 
 
 exports.findAll = (req, res) => {
-    var token = req.body.token || req.query.token || getToken(req.headers)
+    var token = getToken(req.headers)
     console.log('parced authorization token:', token)
-    console.log('req.header:', req.headers)
     jwt.verify(token, process.env.SECRET, (err, result) => {
         console.log(result)
         if (err) {
@@ -44,20 +42,27 @@ exports.findAll = (req, res) => {
             db.user.findAll().then((users) => {
                     res.json(users)
                 }).catch((err) => {
-                    res.status(404).send({ error: 'could not retrieve user' })
+                    res.status(404).send({ error: 'could not retrieve users' })
                 })
         }
     })
 }
 
+
+
 exports.reset = (req, res, next) => {
     async.waterfall([
-        function (done) {
-            crypto.randomBytes(20, function (err, buf) {
-                var token = buf.toString('hex');
-                console.log(token)
-                done(null, token);
-            });
+        // function (done) {
+        //     crypto.randomBytes(20, function (err, buf) {
+        //         var token = buf.toString('hex');
+        //         console.log(token)
+        //         done(null, token);
+        //     });
+        // },
+        function(done){
+           var token = jwt.sign({name: 'user'}, process.env.SECRET, {expiresIn:'24h'})
+           console.log(token)
+           done(null, token)
         },
         function (token, done) {
             user.findOne({ where: {email: req.body.email }}, (err) => {
@@ -157,11 +162,10 @@ exports.reset_password = (req, res) => {
     console.log('this is the req params',req.params)
     user.findOne({
         where:{resetPasswordToken: req.params.token,}
-        // resetPasswordExpires: { $gt: Date.now()}
     }, (err) => {
-        if(err) throw err 
+        if(err) throw err
     }).then(user => {
-        if (!user) {
+        if (!user || user.resetPasswordExpires <= Date.now()) {
             res.status(401).send({ success: false, msg: 'Password reset token is invalid or has expired please try again' })
         } else{
             res.json(user)
@@ -216,9 +220,8 @@ exports.signin =(req, res)=>{
         console.log(hash)
         bcrypt.compare(req.body.password, hash, (err, result)=>{
             if (result){
-                var token = jwt.sign({name: user.first_name, _id: user.id, isAdmin: user.isAdmin}, process.env.SECRET);
-                console.log(token)
-                res.json({success:true, token: token,user: user})
+                var token = jwt.sign({name: user.first_name, _id: user.id, isAdmin: user.isAdmin}, process.env.SECRET, {expiresIn:  "24h" });
+                res.json({success:true, token: token, user: user})
             }else{
                 res.status(401).send({success:false, msg: 'Authentication failed. Wrong password'})
             }

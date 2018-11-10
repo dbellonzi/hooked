@@ -17,6 +17,7 @@ import 'mdbreact/dist/css/mdb.css';
 import adminReducer from './store/reducers/admin';
 import authReducer from './store/reducers/auth';
 import eventReducer from './store/reducers/event';
+import setAuthorizationToken from './shared/utility'
 
 const rootReducer = combineReducers({
     admin: adminReducer,
@@ -27,6 +28,8 @@ const rootReducer = combineReducers({
 const store = createStore(rootReducer, composeWithDevTools(
     applyMiddleware(thunk)
 ))
+// sets the authorization headers. If there is a token in the authorization headers it will push it into the all the pages even on refresh
+setAuthorizationToken(localStorage.token)
 
 const app = (
     <Provider store={store}>
