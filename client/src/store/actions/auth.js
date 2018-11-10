@@ -8,7 +8,7 @@ export const auth = (data, isLogin) => {
             email: data.email,
             password: data.password
         };
-        if (!isLogin) {
+        if (isLogin == false) {
             url = '/api/users';
             authData = {
                 fName: data.fName,
@@ -18,8 +18,6 @@ export const auth = (data, isLogin) => {
                 phone: data.phone,
                 password: data.password
             }
-            console.log('action fName: data:', data.fName)
-            console.log('action fName: authData:', data.fName)
         };
         axios.post(url, authData).then(response => {
             // BELOW ARE FIREBASE AND LOCALSTORAGE THINGS WE WILL BE USING PASSPORT TO HOLD THIS DATA IM ASSUMING
@@ -37,8 +35,8 @@ export const auth = (data, isLogin) => {
             console.log('response data from local storage:',response.data);
             dispatch(authSuccess(response.data));
         }).catch(error => {
-            // console.error(error)
-            dispatch(authFail(error.response.data.error));
+            console.error("auth Error: ", error.response)
+            dispatch(authFail(error.response.data.msg));
         });
     }
 };

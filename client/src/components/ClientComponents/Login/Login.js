@@ -1,46 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import { Row, Col, Button } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import Form from '../../Form/Form';
-import * as actions from '../../../store/actions/index';
-
-// Login Component needs to be able to pull data from the database to validate an authorized user login.
-// Currently, validations for this login component only check for valid form inputs
 
 class Login extends Component {
     state = {
         email: '',
-        password: '',
-        submitted: false
+        password: ''
     }
 
-    handleemailChange = event => { this.setState({ email: event.target.value }) }
-    handlepasswordChange = event => { this.setState({ password: event.target.value }) }
-
-    submit = () => {
-        this.setState({ submitted: true })
-        const user = {
-            email: this.state.email,
-            password: this.state.password,
-        };
-        console.log('From Login.js email: ', user.email)
-        this.props.submitToBack(user)
-        if (!this.props.error && this.state.submitted) {
-            this.props.history.push('/')
-        }
-    }
+    handleEmailChange = event => { this.setState({ email: event.target.value }) }
+    handlePasswordChange = event => { this.setState({ password: event.target.value }) }
 
     _renderErrorMessage() {
         return (
-            <div className={"alert alert-success mt-4"} role="alert">
-                <p>{this.props.error}</p>
-            </div>
+          <div className={"alert alert-danger mt-4 alert-dismissible"} role="alert">
+            <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>{this.props.error}</p>
+          </div>
         )
-    }
+      }
 
     render() {
+        let userData = {
+            email: this.state.email,
+            password: this.state.password,
+        };
         return (
             <React.Fragment>
                 <h1>Sign In</h1>
@@ -48,7 +34,7 @@ class Login extends Component {
                     <Col md="1" />
                     <Col md="10 text-left">
                         {this.props.error ? this._renderErrorMessage() : null}
-                        <Form submit={this.submit}>
+                        <Form data={userData} isLogin={true}>
                             <div className="form-group">
                                 <label htmlFor="email">Email</label>
                                 <input
@@ -57,7 +43,7 @@ class Login extends Component {
                                     required={true}
                                     type="text"
                                     name="email"
-                                    onChange={this.handleemailChange}
+                                    onChange={this.handleEmailChange}
                                     placeholder="Enter Email"
                                 />
                                 <div className="invalid-feedback" />
@@ -72,20 +58,20 @@ class Login extends Component {
                                     name="password"
                                     type={"password"}
                                     placeholder={"Enter Password"}
-                                    minLength={6}
+                                    minLength={8}
                                     pattern="(?=.*\d)(?=.*[a-z]).{6,}"
-                                    onChange={this.handlepasswordChange}
+                                    onChange={this.handlePasswordChange}
                                 />
                                 <div className="invalid-feedback" />
                             </div>
 
                             <div className={"row justify-content-md-center"}>
                                 <div className={"col-sm-12"}>
-                                    <Button onClick={this.submit} className={"btn btn-primary btn-block"}>Login</Button>
+                                    <Button className={"btn btn-primary btn-block"} onClick={this.submit} type="submit" >Login</Button>
                                 </div>
                             </div>
                         </Form>
-                        
+
                         <div className="text-center mt-4">
                             <p>Not a registered user? | <Link to="/register"> Register here</Link></p>
                             <p>Forgot password? | <Link to="/resetpassword"> Reset password</Link></p>
@@ -103,10 +89,4 @@ const mapStateToProps = state => {
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        submitToBack: (user) => dispatch(actions.auth(user, true))
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps)(Login);
