@@ -5,6 +5,7 @@ import Header from '../components/ClientComponents/Header/Header';
 import Footer from '../components/ClientComponents/Footer/Footer';
 import Dashboard from '../components/ClientComponents/Dashboard/Dashboard';
 import Login from '../components/ClientComponents/Login/Login';
+import Logout from '../components/ClientComponents/Login/Logout';
 import Registration from '../components/ClientComponents/Registration/Registration';
 import UserProfile from '../components/ClientComponents/UserProfile/UserProfile';
 import ResetPassword from '../components/ClientComponents/ResetPassword/ResetPassword';
@@ -33,6 +34,7 @@ class App extends Component {
       <Switch>
         <Route exact path='/' component={Dashboard} />
         <Route exact path='/login' component={Login} />
+        <Route exact path='/logout' component={Logout} />
         <Route exact path='/register' component={Registration} />
         <Route exact path='/resetPassword' component={ResetPassword} />
         <Route path='/reset/:token' component={Reset}/>
@@ -47,6 +49,7 @@ class App extends Component {
         <Switch>
           <Route exact path='/' component={Dashboard} />
           <Route exact path='/login' component={Login} />
+          <Route exact path='/logout' component={Logout} />
           <Route exact path='/register' component={Registration} />
           <Route exact path='/resetPassword' component={ResetPassword} />
           <Route path='/user/:userId' component={UserProfile} />
