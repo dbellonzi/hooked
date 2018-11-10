@@ -14,7 +14,6 @@ const header = (props) => {
             <div className="collapse navbar-collapse" id="basicExampleNav">
                 <div className="navbar-nav nav-item mr-auto" data-target=".navbar-collapse.show" data-toggle="collapse">
                     <Link to="/" className="nav-link">Home</Link>
-                    <Link to="/contact" className="nav-link">Contact</Link>
                     {props.isAdmin ?
                         <Link to="/admin" className="nav-link">Admin</Link> : null
                     }
@@ -22,7 +21,7 @@ const header = (props) => {
                 {props.loggedIn ?
                     <div className="navbar-nav nav-item" data-target=".navbar-collapse.show" data-toggle="collapse">
                         <Link className="nav-link" to="/user">Welcome {props.firstName}</Link>
-                        <Link className="nav-link" to="/"> Logout</Link>
+                        <Link className="nav-link" to="/logout"> Logout</Link>
                     </div> :
                     <div className="navbar-nav nav-item" data-target=".navbar-collapse.show" data-toggle="collapse">
                         <Link className="nav-link" to="/login"> Login</Link>
