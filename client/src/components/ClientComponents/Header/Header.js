@@ -4,6 +4,7 @@ import { Navbar } from 'mdbreact';
 
 
 const header = (props) => {
+    console.log('props from header',props)
     return (
         <Navbar dark color="stylish-color-dark" expand="lg" sticky="top" className="mb-5">
             <button className="navbar-toggler mx-auto" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav"
@@ -21,7 +22,7 @@ const header = (props) => {
                 </div>
                 {props.loggedIn ?
                     <div className="navbar-nav nav-item" data-target=".navbar-collapse.show" data-toggle="collapse">
-                        <Link className="nav-link" to="/user">{props.userName}</Link>
+                        <Link className="nav-link" to="/user">Welcome {props.firstName}</Link>
                         <Link className="nav-link" to="/"> Logout</Link>
                     </div> :
                     <div className="navbar-nav nav-item" data-target=".navbar-collapse.show" data-toggle="collapse">

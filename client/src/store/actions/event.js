@@ -27,7 +27,6 @@ export const fetchAllEventsFail = (error) => {
 };
 
 // THESE ACTIONS WOULD LOOK SIMILAR TO FETCHING ALL EVENTS WITH THE ADDITION OF FILTERING EVENTS TO ONLY INCLUDE THOSE WHERE THE USER IS A PARTICIPANT
-// fetchUserEvents
 export const fetchUserEvents = (userId) => {
     return dispatch => {
         axios.get('/api/events/all')

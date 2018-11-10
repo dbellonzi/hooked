@@ -181,15 +181,35 @@ exports.findById = (req, res) => {
     })
 };
 
+
+// Added authorization. Only admin is able to delete any user
 exports.delete = (req,res)=>{
-    const id = req.params.userId
-    user.destroy({
-        where:{id:id}
-    }).then(deleteUser =>{
-        res.status(200).send({success: true, msg:`user id: ${id} was successfully deleted`})
-    }).catch((err)=>{
-        res.status(401).send({ success: false, msg: 'error could not remove user from DB' })
+    var token = getToken(req.headers)
+    jwt.verify(token, process.env.SECRET, (err, result)=>{
+        console.log('result from delete', result)
+        if (err) {
+            res.status(401).send({ success: false, msg: 'Please provide a valid token' })
+        } else if (result.isAdmin == false || result.isAdmin == null) {
+            res.status(401).send({ success: false, msg: 'Unauthorized' })
+        }else{
+            const id = req.params.userId
+            user.destroy({
+                where:{id:id}
+            }).then(deleteUser =>{
+                res.status(200).send({success: true, msg:`user id: ${id} was successfully deleted`})
+            }).catch((err)=>{
+                res.status(401).send({ success: false, msg: 'error could not remove user from DB' })
+            })
+        }
     })
+    // const id = req.params.userId
+    // user.destroy({
+    //     where:{id:id}
+    // }).then(deleteUser =>{
+    //     res.status(200).send({success: true, msg:`user id: ${id} was successfully deleted`})
+    // }).catch((err)=>{
+    //     res.status(401).send({ success: false, msg: 'error could not remove user from DB' })
+    // })
 }
 
 exports.update = (req, res) => {
