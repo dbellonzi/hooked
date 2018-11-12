@@ -10,7 +10,6 @@ var decoded = require('jwt-decode');
 
 
 exports.create =(req,res)=>{
-    console.log('creating user: ',req);
     user.create({
         first_name: req.body.fName,
         last_name: req.body.lName,
@@ -22,8 +21,13 @@ exports.create =(req,res)=>{
         var token = jwt.sign({name: user.first_name, _id: user.id, isAdmin: user.isAdmin},process.env.SECRET, {expiresIn:  "24h" });
         res.json({success:true, token:token, firstName: user.first_name, userId: user.id, isAdmin: user.isAdmin})
     }).catch((err)=>{
-        console.log('Create User Error: ', err)
-        res.status(501).send({ success: false, msg:'can not enter Event into DB'})
+        let errorMSG = '';
+        if(err.errors[0].message === 'user_name must be unique'){
+            errorMSG = 'User name must be unique'
+        } else {
+            errorMSG = err.errors[0].message.charAt(0).toUpperCase() + err.errors[0].message.substring(1);
+        }
+        res.status(501).send({ success: false, msg:`Could not create new user. ${errorMSG}`})
     })
 }
 
@@ -31,9 +35,9 @@ exports.create =(req,res)=>{
 
 exports.findAll = (req, res) => {
     var token = getToken(req.headers)
-    console.log('parced authorization token:', token)
+    // console.log('parced authorization token:', token)
     jwt.verify(token, process.env.SECRET, (err, result) => {
-        console.log(result)
+        // console.log(result)
         if (err) {
             res.status(401).send({ success: false, msg: 'Please provide a valid token' })
         } else if (result.isAdmin == false || result.isAdmin == null) {
@@ -42,7 +46,7 @@ exports.findAll = (req, res) => {
             db.user.findAll().then((users) => {
                     res.json(users)
                 }).catch((err) => {
-                    res.status(404).send({ error: 'could not retrieve users' })
+                    res.status(404).send({ error: 'Could not retrieve users' })
                 })
         }
     })
@@ -61,7 +65,7 @@ exports.reset = (req, res, next) => {
         // },
         function(done){
            var token = jwt.sign({name: 'user'}, process.env.SECRET, {expiresIn:'24h'})
-           console.log(token)
+        //    console.log(token)
            done(null, token)
         },
         function (token, done) {
@@ -159,7 +163,7 @@ exports.resetconfirm = (req, res) =>{
 // TAKES THE PASSWORD FROM THE REQ.PARAMS.TOKEN AND CHECKS IT AGAINST THE RESETPASSWORD TOKEN THAT WAS CREATED TO MAKE. STILL NEED TO MAKE SURE IT CHECKS FOR THE RESETPASSWORD EXPIRES FIELD. 
 
 exports.reset_password = (req, res) => {
-    console.log('this is the req params',req.params)
+    // console.log('this is the req params',req.params)
     user.findOne({
         where:{resetPasswordToken: req.params.token,}
     }, (err) => {
@@ -177,7 +181,7 @@ exports.findById = (req, res) => {
     user.findById(req.params.userId).then((user) => {
 		res.json(user);
 	}).catch((err)=>{
-        res.send(501).send({success: false, msg:'could not retrieve user'})
+        res.send(501).send({success: false, msg:'Error: Could not retrieve user'})
     })
 };
 
@@ -186,7 +190,7 @@ exports.findById = (req, res) => {
 exports.delete = (req,res)=>{
     var token = getToken(req.headers)
     jwt.verify(token, process.env.SECRET, (err, result)=>{
-        console.log('result from delete', result)
+        // console.log('result from delete', result)
         if (err) {
             res.status(401).send({ success: false, msg: 'Please provide a valid token' })
         } else if (result.isAdmin == false || result.isAdmin == null) {
@@ -196,9 +200,9 @@ exports.delete = (req,res)=>{
             user.destroy({
                 where:{id:id}
             }).then(deleteUser =>{
-                res.status(200).send({success: true, msg:`user id: ${id} was successfully deleted`})
+                res.status(200).send({success: true, msg:`User with id: ${id} was successfully deleted`})
             }).catch((err)=>{
-                res.status(401).send({ success: false, msg: 'error could not remove user from DB' })
+                res.status(401).send({ success: false, msg: `Error: Could not remove user with id: ${id} from database` })
             })
         }
     })
@@ -224,26 +228,24 @@ exports.update = (req, res) => {
          }, 
         { where: {id: id} }
 	).then(() => {
-		res.status(200).send("updated successfully a customer with id = " + id);
+		res.status(200).send("Successfully updated customer with id: " + id);
 	});
 };
 
 exports.signin =(req, res)=>{
    user.findOne({ where:{email:req.body.email}
 }).then(user=>{
-    console.log(user)
     if(!user){
-        res.status(401).send({success: false, msg: 'Authentication failed. User not found.'})
+        res.status(401).send({success: false, msg: `Unable to login. User with email: ${req.body.email} not found.`})
     }
     if(user){
         let hash = user.password
-        console.log(hash)
         bcrypt.compare(req.body.password, hash, (err, result)=>{
             if (result){
                 var token = jwt.sign({name: user.first_name, _id: user.id, isAdmin: user.isAdmin}, process.env.SECRET, {expiresIn:  "24h" });
                 res.json({success:true, token: token, user: user})
             }else{
-                res.status(401).send({success:false, msg: 'Authentication failed. Wrong password'})
+                res.status(401).send({success:false, msg: 'Unable to login. Incorrect password.'})
             }
         })
     }

@@ -32,6 +32,7 @@ export const auth = (data, isLogin) => {
             localStorage.setItem('exp', tokenPayload.exp)
             dispatch(authSuccess(tokenPayload));
         }).catch(error => {
+            console.log(error.response.data.msg)
             dispatch(authFail(error.response.data.msg));
         });
         
@@ -57,6 +58,7 @@ export const authFail = (error) => {
 };
 
 export const logout = () => {
+    console.log('Inside auth logout')
     localStorage.removeItem('token');
     localStorage.removeItem('exp');
     localStorage.removeItem('userId');
@@ -85,6 +87,7 @@ export const checkAuthTimeout = (expirationTime) => {
 // THIS IS BASED OFF OF USE OF LOCALSTORAGE TO CHECK FOR AUTOLOGIN IF A TOKEN EXISTS AND IF IT IS NOT EXPIRED WE WILL NEED TO ADJUST FOR OUR USE
 export const authCheckState = () => {
     return dispatch => {
+        console.log('In authCheckState')
         const token = localStorage.getItem('token');
         // decodes the token and checks the exp date
         const decodedToken = (jwt.decode(token))

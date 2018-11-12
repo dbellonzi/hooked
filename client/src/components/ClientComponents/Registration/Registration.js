@@ -15,7 +15,7 @@ class Registration extends Component {
     password: '',
   }
 
-  componentDidUpdate(){
+  componentWillUnmount(){
     this.props.clearError();
   }
 
