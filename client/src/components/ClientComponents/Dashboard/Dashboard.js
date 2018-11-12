@@ -10,11 +10,9 @@ import * as actions from '../../../store/actions/index';
 class Dashboard extends Component {
     componentDidMount() {
         this.props.fetchAllEvents();
-        // this.props.authCheckState();
     }
 
     render() {
-        console.log("From Dashboard.js", this.props.events)
         let featuredEvent = <h3>No Featured Event</h3>
         let events = <h3>No Upcoming Events</h3>;
         if (this.props.events.length > 0) {
@@ -50,7 +48,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchAllEvents: () => dispatch(actions.fetchAllEvents()),
-        // authCheckState: () => dispatch(actions. authCheckState())
     }
 }
 

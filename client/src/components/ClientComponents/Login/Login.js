@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Row, Col, Button } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import Form from '../../Form/Form';
+import * as actions from '../../../store/actions/index';
 
 class Login extends Component {
     state = {
@@ -10,17 +11,21 @@ class Login extends Component {
         password: ''
     }
 
+    componentDidUpdate() {
+        this.props.clearError();
+    }
+
     handleEmailChange = event => { this.setState({ email: event.target.value }) }
     handlePasswordChange = event => { this.setState({ password: event.target.value }) }
 
     _renderErrorMessage() {
         return (
-          <div className={"alert alert-danger mt-4 alert-dismissible"} role="alert">
-            <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <p>{this.props.error}</p>
-          </div>
+            <div className={"alert alert-danger mt-4 alert-dismissible"} role="alert">
+                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>{this.props.error}</p>
+            </div>
         )
-      }
+    }
 
     render() {
         let userData = {
@@ -89,4 +94,10 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(Login);
+const mapDispatchToProps = dispatch => {
+    return {
+        clearError: () => dispatch(actions.clearError())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

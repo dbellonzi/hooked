@@ -22,8 +22,8 @@ import Reset from '../components/ClientComponents/Reset/Reset'
 import * as actions from '../store/actions/index';
 
 class App extends Component {
-  componentDidMount(){
-       this.props.authCheckState();
+  componentDidMount() {
+    this.props.authCheckState();
   }
 
   render() {
@@ -34,10 +34,9 @@ class App extends Component {
       <Switch>
         <Route exact path='/' component={Dashboard} />
         <Route exact path='/login' component={Login} />
-        <Route exact path='/logout' component={Logout} />
         <Route exact path='/register' component={Registration} />
         <Route exact path='/resetPassword' component={ResetPassword} />
-        <Route path='/reset/:token' component={Reset}/>
+        <Route path='/reset/:token' component={Reset} />
         <Route path='/user/:userId' component={UserProfile} />
         <Route path='/event/:eventId' component={EventPage} />
         <Route path='/participants' component={ParticipantList} />
@@ -48,9 +47,7 @@ class App extends Component {
       routes = (
         <Switch>
           <Route exact path='/' component={Dashboard} />
-          <Route exact path='/login' component={Login} />
           <Route exact path='/logout' component={Logout} />
-          <Route exact path='/register' component={Registration} />
           <Route exact path='/resetPassword' component={ResetPassword} />
           <Route path='/user/:userId' component={UserProfile} />
           <Route path='/event/:eventId' component={EventPage} />
@@ -69,7 +66,7 @@ class App extends Component {
     return (
       <div className="text-center">
         <img style={style} src="http://thelostanchovy.com/wp-content/uploads/2018/07/banner-1.jpg" alt="Fishing Rod Header" className="img-fluid" />
-        <Header loggedIn={this.props.isAuthenticated} isAdmin={this.props.isAdmin} firstName={this.props.firstName} />
+        <Header loggedIn={this.props.isAuthenticated} isAdmin={this.props.isAdmin} firstName={this.props.firstName} id={this.props.id} />
         <div className="px-1">
           {routes}
         </div>
@@ -83,14 +80,14 @@ const mapStateToProps = state => {
   return {
     isAuthenticated: state.auth.token !== null,
     firstName: state.auth.firstName,
+    id: state.auth.userId,
     isAdmin: state.auth.isAdmin,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-      authCheckState: () => dispatch(actions.authCheckState()),
-      // logout: () => dispatch(actions.logout())
+    authCheckState: () => dispatch(actions.authCheckState())
   }
 }
 

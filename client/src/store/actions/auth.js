@@ -22,10 +22,6 @@ export const auth = (data, isLogin) => {
             }
         };
         axios.post(url, authData).then(response => {
-            // BELOW ARE FIREBASE AND LOCALSTORAGE THINGS WE WILL BE USING PASSPORT TO HOLD THIS DATA IM ASSUMING
-
-            // const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-            // localStorage.setItem('expirationDate', expirationDate);
             var token = response.data.token
             // set the authorization headers; function is stored in shared utility
             setAuthorizationToken(token)
@@ -36,34 +32,21 @@ export const auth = (data, isLogin) => {
             localStorage.setItem('exp', tokenPayload.exp)
             dispatch(authSuccess(tokenPayload));
         }).catch(error => {
-            console.error("auth Error: ", error.response)
             dispatch(authFail(error.response.data.msg));
         });
+        
     }
 };
 
-
-// export const authSuccess = (data) => {
-//     console.log('authSuccess', data)
-//     return {
-//         type: actionTypes.AUTH_SUCCESS,
-//         token: data.token,
-//         userId: data.user.id, 
-//         firstName: data.user.first_name,
-//         isAdmin: data.user.isAdmin,
-//     };
-// };
-
 export const authSuccess = (data) => {
-    console.log('authSuccess', data)
     var token = localStorage.getItem('token')
     return {
         type: actionTypes.AUTH_SUCCESS,
         token: token,
         userId: data._id,
         firstName: data.name,
-        isAdmin: data.isAdmin, 
-    }; 
+        isAdmin: data.isAdmin,
+    };
 };
 
 export const authFail = (error) => {
@@ -73,7 +56,6 @@ export const authFail = (error) => {
     };
 };
 
-// THIS LOGOUT IS BASED OFF OF STORED ITEMS IN LOCALSTORAGE BUT WE WILL BE USING PASSPORT
 export const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('exp');
@@ -84,6 +66,12 @@ export const logout = () => {
         type: actionTypes.AUTH_LOGOUT
     };
 };
+
+export const clearError = () => {
+    return{
+        type: actionTypes.CLEAR_ERROR
+    }
+}
 
 // THIS IS BASED ON FIREBASE HAVING TOKENS EXPIRE WILL NEED TO BE ADJUSTED FOR OUR DB AND PASSPORT; AUTO CHECKOUT FOR EXPIRED TOKEN
 export const checkAuthTimeout = (expirationTime) => {
@@ -100,10 +88,9 @@ export const authCheckState = () => {
         const token = localStorage.getItem('token');
         // decodes the token and checks the exp date
         const decodedToken = (jwt.decode(token))
-        console.log('from authCheckState',decodedToken)
-         if (!token || decodedToken.exp >= Date.now()) {
+        if (!token || decodedToken.exp >= Date.now()) {
             dispatch(logout());
-        } 
+        }
         else {
             dispatch(authSuccess(decodedToken))
             // dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));

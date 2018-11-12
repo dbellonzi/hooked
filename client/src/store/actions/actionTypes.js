@@ -1,6 +1,7 @@
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const AUTH_FAIL = 'AUTH_FAIL';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
+export const CLEAR_ERROR = 'CLEAR_ERROR';
 
 export const FETCH_ALL_EVENTS_SUCCESS = 'FETCH_ALL_EVENTS_SUCCESS';
 export const FETCH_ALL_EVENTS_FAIL = 'FETCH_ALL_EVENTS_FAIL';
