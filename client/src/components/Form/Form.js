@@ -10,7 +10,6 @@ class Form extends Component {
     }
 
     validate = () => {
-        console.log("validating from form.js")
         const formLength = this.formEl.length;
         let validity = false
         if (this.formEl.checkValidity() === false) {
@@ -44,7 +43,6 @@ class Form extends Component {
         event.preventDefault();
         if (this.validate() === true) {
             this.props.submit(this.props.data, this.props.isLogin);
-            // this.props.history.push('/')
         }
         this.setState({ isValidated: true });
     }
@@ -63,11 +61,11 @@ class Form extends Component {
         }
 
         return (
-            <form 
-                ref={form => this.formEl = form} 
-                onSubmit={this.submitHandler} 
-                className={classNames} 
-                {...props} 
+            <form
+                ref={form => this.formEl = form}
+                onSubmit={this.submitHandler}
+                className={classNames}
+                {...props}
                 noValidate>
                 {this.props.children}
             </form>

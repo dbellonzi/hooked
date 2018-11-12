@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Row, Col, Button } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import Form from '../../Form/Form';
+import * as actions from '../../../store/actions/index';
 
 class Registration extends Component {
   state = {
@@ -12,6 +13,10 @@ class Registration extends Component {
     phone_number: '',
     user_name: '',
     password: '',
+  }
+
+  componentDidUpdate(){
+    this.props.clearError();
   }
 
   handlefNameChange = event => {
@@ -199,4 +204,10 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(Registration);
+const mapDispatchToProps = dispatch => {
+  return {
+      clearError: () => dispatch(actions.clearError())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Registration);

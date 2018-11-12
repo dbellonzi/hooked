@@ -16,7 +16,6 @@ class EventPage extends Component {
         const { match: { params } } = this.props;
         axios.get(`/api/event/${params.eventId}`)
             .then(res => {
-                console.log(res);
                 this.setState({ event: res.data })
             })
             .catch(error => this.setState({error}));
