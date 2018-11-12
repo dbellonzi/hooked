@@ -1,7 +1,7 @@
 {
   "name": "hooked",
   "version": "1.0.0",
-  "description": "hookded sever file",
+  "description": "hooked server file",
   "main": "server.js",
   "dependencies": {
     "async": "^2.6.1",
