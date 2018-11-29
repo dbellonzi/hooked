@@ -18,6 +18,7 @@ router.post('/api/orders/:eventId', order.create);
 router.post('/login', user.signin);
 router.post ('/reset/:token', user.resetconfirm)
 router.post('/resetpassword', user.reset)
+router.post ('/reset/:token', user.resetconfirm)
 
 router.get('/api/sponsors/all' , sponsor.findAll);
 router.get('/api/events/all', event.findAll);

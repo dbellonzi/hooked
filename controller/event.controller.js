@@ -34,6 +34,7 @@ exports.findById = (req, res) => {
 };
 // find event by id and all the relationships tide to this instance of the event
 exports.delete =(req,res)=>{
+    //put in code that only ADMIN is able to delete an event!! extra: If an event is deleted; a notificaiton should be sent to participants that the current event has been cancanlled for whatever reason?
     const id = req.params.eventId;
     event.destroy({
         where:{id:id}

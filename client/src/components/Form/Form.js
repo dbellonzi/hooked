@@ -1,43 +1,24 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/index';
 import PropTypes from 'prop-types';
 import './Form.css';
 
 class Form extends Component {
     state = {
-        isValidated: false
+        isValidated: false,
     }
 
     validate = () => {
         const formLength = this.formEl.length;
-
+        let validity = false
         if (this.formEl.checkValidity() === false) {
             for (var i = 0; i < formLength; i++) {
                 const elem = this.formEl[i];
                 const errorLabel = elem.parentNode.querySelector('.invalid-feedback');
 
                 if (errorLabel && elem.nodeName.toLowerCase() !== 'button') {
-                    if (errorLabel && elem.nodeName.toLowerCase() === 'passwordConfirm') {
-                        const pwCheck = this.formEl[i--];
-                        console.log("Checking password confirmation")
-                        console.log(pwCheck.textContent)
-                        if (elem.textContent !== pwCheck.textContent) {
-                            errorLabel.innerHTML = 'Password and Password Confirmation do not match'
-                        }
-                    } else if (errorLabel && elem.nodeName.toLowerCase() === 'fName') {
-                        if (elem.validity.valueMissing) {
-                            errorLabel.textContent = elem.validationMessage;
-                        }
-                        if (!elem.validity.valid) {
-                            errorLabel.innerHTML = "Please enter a first name with at least 2 characters";
-                        }
-                    } else if (errorLabel && elem.nodeName.toLowerCase() === 'lName') {
-                        if (elem.validity.valueMissing) {
-                            errorLabel.textContent = elem.validationMessage;
-                        }
-                        if (!elem.validity.valid) {
-                            errorLabel.innerHTML = "Please enter a last name with at least 2 characters";
-                        }
-                    } else if (!elem.validity.valid) {
+                    if (!elem.validity.valid) {
                         errorLabel.textContent = elem.validationMessage;
 
                     } else {
@@ -45,7 +26,6 @@ class Form extends Component {
                     }
                 }
             }
-            return false;
         } else {
             for (var j = 0; j < formLength; j++) {
                 const elem = this.formEl[j];
@@ -54,17 +34,17 @@ class Form extends Component {
                     errorLabel.textContent = '';
                 }
             };
-            return true;
+            validity = true;
         }
+        return validity
     }
 
     submitHandler = (event) => {
         event.preventDefault();
-
-        if (this.validate()) {
-            this.props.submit;
+        if (this.validate() === true) {
+            this.props.submit(this.props.data, this.props.isLogin);
         }
-        this.setState({ isValidated: true }); 
+        this.setState({ isValidated: true });
     }
 
     render() {
@@ -81,7 +61,12 @@ class Form extends Component {
         }
 
         return (
-            <form  ref={form => this.formEl = form} onSubmit={this.submitHandler} {...props} className={classNames} noValidate>
+            <form
+                ref={form => this.formEl = form}
+                onSubmit={this.submitHandler}
+                className={classNames}
+                {...props}
+                noValidate>
                 {this.props.children}
             </form>
         );
@@ -91,7 +76,16 @@ class Form extends Component {
 Form.propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
-    submit: PropTypes.func.isRequired
+    data: PropTypes.object,
+    isLogin: PropTypes.bool
 };
 
-export default Form;
+
+const mapDispatchToProps = dispatch => {
+    return {
+        submit: (user, isLogin) => dispatch(actions.auth(user, isLogin))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Form);
+

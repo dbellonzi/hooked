@@ -16,7 +16,6 @@ class EventPage extends Component {
         const { match: { params } } = this.props;
         axios.get(`/api/event/${params.eventId}`)
             .then(res => {
-                console.log(res);
                 this.setState({ event: res.data })
             })
             .catch(error => this.setState({error}));
@@ -31,7 +30,7 @@ class EventPage extends Component {
                 <Row className="container-fluid">
                     <Col md="3" className="text-left">
                         <p><i class="fas fa-calendar-alt mr-2"></i>Event Date: <Moment format="MMMM Do YYYY">{this.state.event.date}</Moment></p>
-                        <p><i class="fas fa-clock mr-2"></i>Event Time: {this.state.event.time}</p>
+                        <p><i class="fas fa-clock mr-2"></i>Event Time:{this.state.event.time}</p>
                         <p><i class="fas fa-map-marker-alt mr-2"></i>Event Location: {this.state.event.location}</p>
                     </Col>
                     <Col md="6">
